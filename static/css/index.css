@@ -1,4 +1,31 @@
+:root {
+    --white: #f7f5eb;
+}
+
 html,
 body {
+    background-color: var(--white);
     margin: 0;
+}
+
+.landing {
+    --h-padding: 15rem;
+    --v-padding: 1rem;
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    padding: var(--v-padding) var(--h-padding);
+    height: calc(100vh - var(--v-padding) * 2);
+    width: calc(100vw - var(--h-padding) * 2);
+}
+
+.landing__quote__container {
+    background-color: red;
+    flex: 1;
+}
+
+.landing__scroll-indicator__container {
+    background-color: pink;
+    height: 2rem;
+    width: 100%;
 }
