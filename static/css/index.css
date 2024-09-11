@@ -1,17 +1,18 @@
 :root {
     --white: #f7f5eb;
+    --black: #131417;
+    --dark-gray: #404248;
 }
 
 html,
 body {
-    background-color: var(--white);
+    background-color: var(--black);
     margin: 0;
 }
 
 .landing {
     --h-padding: 15rem;
     --v-padding: 1rem;
-    background-color: blue;
     display: flex;
     flex-direction: column;
     padding: var(--v-padding) var(--h-padding);
@@ -20,12 +21,25 @@ body {
 }
 
 .landing__quote__container {
-    background-color: red;
     flex: 1;
 }
 
 .landing__scroll-indicator__container {
-    background-color: pink;
+    display: flex;
+    justify-content: center;
     height: 2rem;
     width: 100%;
+}
+
+.landing__scroll-indicator {
+    height: 2rem;
+    width: 2rem;
+}
+
+.landing__scroll-indicator > line {
+    fill: none;
+    stroke: var(--dark-gray);
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+    stroke-width: 1px;
 }
