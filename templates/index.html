@@ -45,5 +45,21 @@
                 </svg>
             </div>
         </section>
+        <section class="test"></section>
+        <section class="test"></section>
+        <script>
+            // DOM
+            const nav = document.querySelector( '.nav' )
+
+            // state
+            let navVisible = false;
+
+            document.addEventListener("scroll", (event) => {
+                if ( window.scrollY >= window.innerWidth && !navVisible ) {
+                    nav.classList.add( 'nav__fade-in' )
+                    navVisible = true
+                }
+            })
+        </script>
     </body>
 </html>

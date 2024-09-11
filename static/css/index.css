@@ -87,8 +87,26 @@ body {
     z-index: 999;
     height: 3.5rem;
     display: flex;
+    opacity: 0;
     padding: 0 var(--h-padding);
     width: calc(100vw - var(--h-padding) * 2);
+}
+
+@keyframes nav-anim {
+    0% { 
+        opacity: 0;
+        transform: translateY(-16px);
+    }
+    75% {
+        transform: translateY(0px);
+    }
+    100% { 
+        opacity: 1; 
+    }
+}
+
+.nav__fade-in {
+    animation: nav-anim .75s ease-in-out forwards;
 }
 
 .nav__brand__container,
@@ -151,4 +169,9 @@ body {
     stroke-linecap: round;
     stroke-miterlimit: 10;
     stroke-width: 3px;
+}
+
+.test {
+    width: 100vw;
+    height: 100vh;
 }
