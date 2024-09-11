@@ -1,7 +1,7 @@
 :root {
-    --white: #f7f5eb;
+    --white: #eeece1;
     --black: #131417;
-    --dark-gray: #404248;
+    --medium-gray: #6a6d75;
 }
 
 html,
@@ -38,7 +38,7 @@ body {
 
 .landing__scroll-indicator > line {
     fill: none;
-    stroke: var(--dark-gray);
+    stroke: var(--medium-gray);
     stroke-linecap: round;
     stroke-miterlimit: 10;
     stroke-width: 1px;
@@ -75,4 +75,35 @@ body {
 .landing__scroll-indicator__anim-3 {
     opacity: 0;
     animation: lsi-anim-3 2s ease-in-out infinite;
+}
+
+.nav {
+    --h-padding: 15rem;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    height: 3.5rem;
+    display: flex;
+    padding: 0 var(--h-padding);
+    width: calc(100vw - var(--h-padding) * 2);
+}
+
+.nav__brand__container {
+    display: flex;
+    align-items: center;
+}
+
+.nav__brand__image {
+    height: 1rem;
+    margin-right: .75rem;
+}
+
+.nav__brand {
+    color: var(--white);
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 1.25rem;
 }
