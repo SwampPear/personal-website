@@ -43,3 +43,36 @@ body {
     stroke-miterlimit: 10;
     stroke-width: 1px;
 }
+
+@keyframes lsi-anim-1 {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.landing__scroll-indicator__anim-1 {
+    opacity: 0;
+    animation: lsi-anim-1 2s ease-in-out infinite;
+}
+
+@keyframes lsi-anim-2 {
+    10% { opacity: 0; }
+    60% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.landing__scroll-indicator__anim-2 {
+    opacity: 0;
+    animation: lsi-anim-2 2s ease-in-out infinite;
+}
+
+@keyframes lsi-anim-3 {
+    20% { opacity: 0; }
+    70% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.landing__scroll-indicator__anim-3 {
+    opacity: 0;
+    animation: lsi-anim-3 2s ease-in-out infinite;
+}
