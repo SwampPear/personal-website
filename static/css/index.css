@@ -80,6 +80,7 @@ body {
 .nav {
     --h-padding: 15rem;
     align-items: center;
+    justify-content: space-between;
     position: fixed;
     top: 0;
     left: 0;
@@ -90,14 +91,34 @@ body {
     width: calc(100vw - var(--h-padding) * 2);
 }
 
-.nav__brand__container {
+.nav__brand__container,
+.nav__menu__container {
     display: flex;
     align-items: center;
+}
+
+@keyframes shake {
+    0% { transform: translate(.2px, .2px) rotate(0deg); }
+    10% { transform: translate(-.2px, -.4px) rotate(-1deg); }
+    20% { transform: translate(-.6px, 0px) rotate(1deg); }
+    30% { transform: translate(.6px, .4px) rotate(0deg); }
+    40% { transform: translate(.2px, -.2px) rotate(1deg); }
+    50% { transform: translate(-.2px, .4px) rotate(-1deg); }
+    60% { transform: translate(-.6px, .2px) rotate(0deg); }
+    70% { transform: translate(.6px, .2px) rotate(-1deg); }
+    80% { transform: translate(-.2px, -.2px) rotate(1deg); }
+    90% { transform: translate(.2px, .4px) rotate(0deg); }
+    100% { transform: translate(.2px, -.4px) rotate(-1deg); }
 }
 
 .nav__brand__image {
     height: 1rem;
     margin-right: .75rem;
+}
+
+.nav__brand__image:hover {
+    animation: shake 0.5s;
+    animation-iteration-count: infinite;
 }
 
 .nav__brand {
@@ -106,4 +127,28 @@ body {
     font-weight: 300;
     font-style: italic;
     font-size: 1.25rem;
+}
+
+.nav__menu__button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.nav__menu__button__icon {
+    height: 1.25rem;
+    width: 1.25rem;
+}
+
+.nav__menu__button__icon > line {
+    fill: none;
+    stroke: var(--white);
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+    stroke-width: 3px;
 }
