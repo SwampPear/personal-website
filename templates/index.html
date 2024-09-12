@@ -27,10 +27,17 @@
                 </button>
             </div>
         </nav>
+        <section class="landing__graphic"></section>
         <section class="landing">
             <div class="landing__scroll-indicator__container">
             </div>
             <div class="landing__quote__container">
+                <div class="landing__quote">
+                    “do it squirt”
+                </div>
+                <div class="landing__quote__citation">
+                    - Noah
+                </div>
             </div>
             <div class="landing__scroll-indicator__container">
                 <svg class="landing__scroll-indicator" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.66 38.05">
@@ -45,19 +52,6 @@
         </section>
         <section class="test"></section>
         <section class="test"></section>
-        <script>
-            // DOM
-            const nav = document.querySelector( '.nav' )
-
-            // state
-            let navVisible = false;
-
-            document.addEventListener("scroll", (event) => {
-                if ( window.scrollY >= ( window.innerHeight * 0.9 ) && !navVisible ) {
-                    nav.classList.add( 'nav__fade-in' )
-                    navVisible = true
-                }
-            })
-        </script>
+        <script src="/js/index.js"></script>
     </body>
 </html>

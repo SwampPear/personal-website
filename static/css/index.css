@@ -10,7 +10,19 @@ body {
     margin: 0;
 }
 
+.landing__graphic {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 990;
+    height: 100vh;
+    width: 100vw;
+}
+
 .landing {
+    position: absolute;
+    top: 0;
+    left: 0;
     --h-padding: 15rem;
     --v-padding: 1rem;
     display: flex;
@@ -18,10 +30,46 @@ body {
     padding: var(--v-padding) var(--h-padding);
     height: calc(100vh - var(--v-padding) * 2);
     width: calc(100vw - var(--h-padding) * 2);
+    z-index: 998;
 }
 
 .landing__quote__container {
+    align-items: center;
+    display: flex;
     flex: 1;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@keyframes landing-quote-anim {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes landing-citation-anim {
+    0% { opacity: 0; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.landing__quote {
+    animation: landing-quote-anim 2s ease-in-out forwards;
+    color: var(--white);
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 2.25rem;
+    opacity: 0;
+}
+
+.landing__quote__citation {
+    animation: landing-citation-anim 4s ease-in-out forwards;
+    color: var(--medium-gray);
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 1.25rem;
+    opacity: 0;
 }
 
 .landing__scroll-indicator__container {
