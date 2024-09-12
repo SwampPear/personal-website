@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuButtonLine1 = document.querySelector( '.nav__menu__button__l1' )
     const menuButtonLine2 = document.querySelector( '.nav__menu__button__l2' )
     const menuButtonLine3 = document.querySelector( '.nav__menu__button__l3' )
+    const quoteContainer = document.querySelector( '.landing__quote__container' )
+    const quote = document.querySelector( '.landing__quote' )
+    const citation = document.querySelector( '.landing__quote__citation' )
 
     // state
     let navVisible = false
@@ -56,6 +59,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const onQuoteClick = () => {
+        quote.classList.remove( 'landing__quote__opening' )
+        citation.classList.remove( 'landing__citation__opening' )
+        quote.classList.remove( 'quote__dissolve__in' )
+        citation.classList.remove( 'quote__dissolve__in' )
+
+        quote.classList.add( 'quote__dissolve' )
+        citation.classList.add( 'quote__dissolve' )
+
+        setTimeout(() => {
+            quote.classList.add( 'quote__dissolve__in' )
+            citation.classList.add( 'quote__dissolve__in' )
+        }, 1500)
+    }
+
     document.addEventListener( 'scroll', onScroll )
     menuButton.addEventListener( 'click', onMenuOpen )
+    quoteContainer.addEventListener( 'click', onQuoteClick )
 })

@@ -8,21 +8,6 @@
     cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 37 37'%3E     %3Ccircle cx='18.5' cy='18.5' r='18' stroke='%236c6e77' fill='transparent' stroke-width='2px'/%3E   %3Ccircle cx='18.5' cy='18.28' r='1' stroke='%236c6e77' fill='%236c6e77' stroke-width='2px'/%3E  %3C/svg%3E") 8 8, auto;
 }
 
-/*
-80% {
-    transform: translate(0, 0);
-    filter: blur(0);
-    opacity: 1;
-  }
-  90% {
-    opacity: 0.9;
-  }
-  100% {
-    filter: blur(50px);
-    opacity: 0;
-  }
-*/
-
 html,
 body {
     background-color: var(--black);
@@ -71,25 +56,69 @@ body {
     100% { opacity: 1; }
 }
 
-.landing__quote {
+@keyframes quote-dissolve {
+    0% {
+        filter: blur(0);
+        opacity: 1;
+    }
+    30% {
+        opacity: 0.9;
+    }
+    100% {
+        filter: blur(50px);
+        opacity: 0;
+    }
+}
+
+@keyframes quote-dissolve-in {
+    0% {
+        filter: blur(50px);
+        opacity: 0;
+    }
+    30% {
+        opacity: 0.9;
+    }
+    100% {
+        filter: blur(0);
+        opacity: 1;
+    }
+}
+
+.quote__dissolve {
+    animation: quote-dissolve 1.5s ease-in-out forwards;
+}
+
+.quote__dissolve__in {
+    animation: quote-dissolve-in 1.5s ease-in-out forwards;
+}
+
+.landing__quote__opening {
     animation: landing-quote-anim 2s ease-in-out forwards;
+}
+
+.landing__citation__opening {
+    animation: landing-citation-anim 4s ease-in-out forwards;
+}
+
+.landing__quote {
     color: var(--white);
     font-family: "Cormorant Garamond", serif;
     font-weight: 300;
     font-style: italic;
     font-size: 2.25rem;
-    opacity: 0;
+    opacity: 1;
     cursor: url('/svg/cursor.svg') auto;
+    filter: blur(0);
 }
 
 .landing__quote__citation {
-    animation: landing-citation-anim 4s ease-in-out forwards;
     color: var(--medium-gray);
     font-family: "Cormorant Garamond", serif;
     font-weight: 300;
     font-style: italic;
     font-size: 1.25rem;
-    opacity: 0;
+    opacity: 1;
+    filter: blur(0);
 }
 
 .landing__scroll-indicator__container {
