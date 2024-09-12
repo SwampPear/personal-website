@@ -9,15 +9,18 @@
 }
 
 /*
-
-%3circle stroke='#6c6e77' fill='#6c6e77' stroke-width='2' cx='18.5' cy='18.5' r='18'/%3E
-%3circle stroke='#6c6e77' fill='#6c6e77' stroke-width='2px' cx='18.5' cy='18.5' r='18'/%3E
-*/
-/*
-<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 37 37">
-<circle fill="#6c6e77" cx="18.5" cy="18.5" r="18"/>
-<circle fill="#6c6e77" cx="18.5" cy="18.28" r="1"/>
-</svg>
+80% {
+    transform: translate(0, 0);
+    filter: blur(0);
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    filter: blur(50px);
+    opacity: 0;
+  }
 */
 
 html,
