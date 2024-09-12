@@ -4,7 +4,21 @@
     --medium-gray: #6a6d75;
 }
 
+* {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 37 37'%3E     %3Ccircle cx='18.5' cy='18.5' r='18' stroke='%236c6e77' fill='transparent' stroke-width='2px'/%3E   %3Ccircle cx='18.5' cy='18.28' r='1' stroke='%236c6e77' fill='%236c6e77' stroke-width='2px'/%3E  %3C/svg%3E") 8 8, auto;
+}
 
+/*
+
+%3circle stroke='#6c6e77' fill='#6c6e77' stroke-width='2' cx='18.5' cy='18.5' r='18'/%3E
+%3circle stroke='#6c6e77' fill='#6c6e77' stroke-width='2px' cx='18.5' cy='18.5' r='18'/%3E
+*/
+/*
+<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 37 37">
+<circle fill="#6c6e77" cx="18.5" cy="18.5" r="18"/>
+<circle fill="#6c6e77" cx="18.5" cy="18.28" r="1"/>
+</svg>
+*/
 
 html,
 body {
@@ -129,7 +143,6 @@ body {
 }
 
 .nav {
-    background-color: red;
     --h-padding: 15rem;
     align-items: center;
     justify-content: space-between;
@@ -171,13 +184,14 @@ body {
 
 .nav__menu__wrapper {
     position: relative;
-    transform: translateX(1.75rem);
+    display: flex;
+    transform: translateX(calc(2rem * 2));
     overflow: hidden;
 }
 
 @keyframes menu-open-anim {
     0% {
-        transform: translateX(1.75rem);
+        transform: translateX(calc(2rem * 2));
     }
     100% {
         transform: translateX(0rem);
@@ -193,7 +207,7 @@ body {
         transform: translateX(0rem);
     }
     100% {
-        transform: translateX(1.75rem);
+        transform: translateX(calc(2rem * 2));
     }
 }
 
@@ -286,7 +300,7 @@ Menu Button
     cursor: pointer;
     outline: none;
     margin: 0;
-    margin-right: .5rem;
+    margin-right: .75rem;
     padding: 0;
     width: 1.25rem;
     height: 1.25rem;
@@ -298,18 +312,112 @@ Menu Button
     width: 1.25rem;
 }
 
-.nav__menu__button__icon > line {
-    stroke: var(--white);
+.nav__menu__button__icon > line,
+.nav__menu__button__icon > path {
+    stroke: var(--medium-gray);
     stroke-linecap: round;
     stroke-miterlimit: 10;
     stroke-width: 2.5px;
 }
 
-.nav__menu__link__icon {
-    fill: var(--white);
+.nav__menu__link__icon > path {
+    fill: var(--medium-gray);
+    stroke-linecap: round;
+    stroke-miterlimit: 10;
+    stroke-width: 2.5px;
 }
 
 .test {
     width: 100vw;
     height: 100vh;
+}
+
+.nav__menu__button__l1 {
+    d: path("M2.5 1 L29.5 1");
+}
+
+@keyframes menu-button-1-open {
+    0% {
+        d: path('M2.5 1 L29.5 1')
+    }
+    100% {
+        d: path('M5 1 L29.5 13')
+    }
+}
+
+.nav__menu__button-1__open {
+    animation: menu-button-1-open .25s ease-in-out forwards;
+}
+
+@keyframes menu-button-1-close {
+    0% {
+        d: path('M5 1 L29.5 13')
+    }
+    100% {
+        d: path('M2.5 1 L29.5 1')
+    }
+}
+
+.nav__menu__button-1__close {
+    animation: menu-button-1-close .25s ease-in-out forwards;
+}
+
+.nav__menu__button__l3 {
+    d: path("M2.5 25 L29.5 25");
+}
+
+@keyframes menu-button-3-open {
+    0% {
+        d: path('M2.5 25 L29.5 25')
+    }
+    100% {
+        d: path('M5 25 L29.5 13')
+    }
+}
+
+.nav__menu__button-3__open {
+    animation: menu-button-3-open .25s ease-in-out forwards;
+}
+
+@keyframes menu-button-3-close {
+    0% {
+        d: path('M5 25 L29.5 13')
+    }
+    100% {
+        d: path('M2.5 25 L29.5 25')
+    }
+}
+
+.nav__menu__button-3__close {
+    animation: menu-button-3-close .25s ease-in-out forwards;
+}
+
+.nav__menu__button__l2 {
+    d: path("M5.5 13 L26.5 13");
+}
+
+@keyframes menu-button-2-open {
+    0% {
+        d: path("M5.5 13 L26.5 13")
+    }
+    100% {
+        d: path("M26.5 13 L26.5 13")
+    }
+}
+
+.nav__menu__button-2__open {
+    animation: menu-button-2-open .25s ease-in-out forwards;
+}
+
+@keyframes menu-button-2-close {
+    0% {
+        d: path('M29.5 13 L29.5 13')
+    }
+    100% {
+        d: path("M5.5 13 L26.5 13")
+    }
+}
+
+.nav__menu__button-2__close {
+    animation: menu-button-2-close .25s ease-in-out forwards;
 }
