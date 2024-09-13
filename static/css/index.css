@@ -101,6 +101,8 @@ body {
 }
 
 .landing__quote {
+    text-align: center;
+    vertical-align: middle;
     color: var(--white);
     font-family: "Cormorant Garamond", serif;
     font-weight: 300;

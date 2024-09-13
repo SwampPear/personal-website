@@ -14,6 +14,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // state
     let navVisible = false
     let menuOpen = false
+    let quotes = [
+        {
+            quote: "\“I... a universe of atoms, an atom in the universe.\”",
+            citation: "- Richard P. Feynman"
+        },
+        {
+            quote: "\"Nobody ever figures out what life is all about, and it doesn't matter. Explore the world. Nearly everything is really interesting if you go into it deeply enough.\"",
+            citation: "- Richard P. Feynman"
+        }
+    ]
+
+    const randInt = ( max ) => {
+        return Math.floor( Math.random() * ( max + 1 ) )
+    }
 
     const onScroll = () => {
         if ( window.scrollY >= ( window.innerHeight * 0.9 ) && !navVisible ) {
@@ -69,6 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
         citation.classList.add( 'quote__dissolve' )
 
         setTimeout(() => {
+            let i = randInt( quotes.length - 1 )
+
+            quote.textContent = quotes[ i ].quote
+            citation.textContent = quotes[ i ].citation
             quote.classList.add( 'quote__dissolve__in' )
             citation.classList.add( 'quote__dissolve__in' )
         }, 1500)
