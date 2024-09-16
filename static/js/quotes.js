@@ -6,5 +6,14 @@ let quotes = [
     {
         quote: "\"Nobody ever figures out what life is all about, and it doesn't matter. Explore the world. Nearly everything is really interesting if you go into it deeply enough.\"",
         citation: "- Richard P. Feynman"
+    },
+    {
+        quote: "\"Don't panic.\"",
+        citation: "Douglas Adams"
     }
 ]
+
+let ex = {
+    quote: "\"Don't panic.\"",
+    citation: "Douglas Adams"
+}

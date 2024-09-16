@@ -1,0 +1,1 @@
+/Users/michaelvaden/Desktop/dev/personal-website/website-graphics/target/wasm32-unknown-unknown/release/website_graphics.wasm: /Users/michaelvaden/Desktop/dev/personal-website/website-graphics/src/lib.rs
