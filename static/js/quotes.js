@@ -14,6 +14,6 @@ let quotes = [
 ]
 
 let ex = {
-    quote: "\"Don't panic.\"",
-    citation: "Douglas Adams"
+    quote: "\"\"",
+    citation: ""
 }
