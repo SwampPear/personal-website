@@ -85,7 +85,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
                 c = 1.17 - pow(c, 1.4);
 
                 vec3 color = vec3(pow(abs(c), 8.0));
-                color = clamp(color + vec3(0.0, 0.35, 0.5), 0.0, 1.0);
+                color = clamp(color + vec3(0.0, 0.0, 0.0), 0.0, 1.0);
 
                 gl_FragColor = vec4(color, 1.0);
             }
@@ -125,7 +125,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
         resizeCanvas()
 
         const render = ( time ) => {
-            time *= 0.001   // seconds
+            time *= 0.0005   // seconds
 
             gl.clearColor( 0.0, 0.0, 0.0, 0.0 ) 
             gl.clear( gl.COLOR_BUFFER_BIT )
