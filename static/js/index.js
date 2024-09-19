@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuButtonLine1 = document.querySelector( '.nav__menu__button__l1' )
     const menuButtonLine2 = document.querySelector( '.nav__menu__button__l2' )
     const menuButtonLine3 = document.querySelector( '.nav__menu__button__l3' )
-    const quoteContainer = document.querySelector( '.landing__quote__container' )
     const quote = document.querySelector( '.landing__quote' )
     const citation = document.querySelector( '.landing__quote__citation' )
 
@@ -63,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const onQuoteClick = () => {
+    const transitionQuote = () => {
         quote.classList.remove( 'landing__quote__opening' )
         citation.classList.remove( 'landing__citation__opening' )
         quote.classList.remove( 'quote__dissolve__in' )
@@ -82,7 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1500)
     }
 
+    setInterval( transitionQuote, 10000 )
+
     document.addEventListener( 'scroll', onScroll )
     menuButton.addEventListener( 'click', onMenuOpen )
-    quoteContainer.addEventListener( 'click', onQuoteClick )
 })
