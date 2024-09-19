@@ -2,6 +2,8 @@
     --white: #eeece1;
     --black: #131417;
     --medium-gray: #6a6d75;
+    --tech-gold: #b3a369;
+    --tech-gold-lighter: #c5b681;
 }
 
 * {
@@ -20,7 +22,7 @@ body {
       rgba(0,0,0, 0) 98%, rgba(0,0,0, 0) 0
     ) 100% 50% / 100% 100% repeat-x;
 
-    opacity: 0.03;
+    opacity: 0.05;
     position: absolute;
     top: 0;
     left: 0;
@@ -372,11 +374,6 @@ Menu Button
     stroke-width: 2.5px;
 }
 
-.test {
-    width: 100vw;
-    height: 100vh;
-}
-
 .nav__menu__button__l1 {
     d: path("M2.5 1 L29.5 1");
 }
@@ -465,4 +462,127 @@ Menu Button
 
 .nav__menu__button-2__close {
     animation: menu-button-2-close .25s ease-in-out forwards;
+}
+
+/*
+About
+================================================================================
+*/
+
+
+.about {
+    margin-top: 100vh;
+    --h-padding: 15rem;
+    --v-padding: 10rem;
+    display: flex;
+    flex-direction: column;
+    padding: var(--v-padding) var(--h-padding);
+    height: calc(100vh - var(--v-padding) * 2);
+    width: calc(100vw - var(--h-padding) * 2);
+    z-index: 998;
+}
+
+.about__row {
+    display: flex;
+    height: fit-content;
+    width: 100%;
+}
+
+.about__image {
+    height: 24rem;
+    width: 24rem;
+}
+
+.about__about {
+    padding: 0 0 0 3rem;
+    flex: 1;
+}
+
+.about__greeting {
+    color: var(--white);
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+}
+
+.about__statement {
+    color: var(--white);
+    font-family: "Literata", sans-serif;
+    font-weight: 300;
+    font-size: 1.125rem;
+}
+
+.tech {
+    color: transparent;
+    font-weight: 600;
+    background-image: linear-gradient(
+        to right,
+        var(--tech-gold) 0%,
+        var(--tech-gold-lighter) 50%,
+        var(--tech-gold-lighter) 60%,
+        var(--tech-gold) 100%
+    );
+    background-position: 0 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.about__timeline {
+    padding-top: 3rem;
+    width: 24rem;
+}
+
+.about__timeline > ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.about__timeline > ul > li {
+    align-items: center;
+    display: flex;
+    margin: 0;
+    padding: .25rem 0;
+    list-style-type: none;
+}
+
+.about__timeline > ul > li > .fill {
+    background-color: var(--medium-gray);
+    flex: 1;
+    height: 1px;
+    margin: 0 1rem;
+}
+
+.about__timeline > ul > li > .fill:first {
+    margin: 0 1rem 0 0;
+}
+
+.about__timeline > ul > li > .date,
+.about__timeline > ul > li > .position {
+    color: var(--white);
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 300;
+    font-size: 1.125rem;
+}
+
+.about__projects {
+    padding: 0 0 0 1.5rem;
+    margin: 3rem 0 0 3rem;
+    flex: 1;
+    height: 10rem;
+    border-left: 1px solid var(--medium-gray);
+}
+
+.project__title {
+    color: var(--white);
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 400;
+    font-size: 1.25rem;
+}
+
+.project__description {
+    color: var(--white);
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 300;
+    font-size: 1.125rem;
 }
