@@ -1,5 +1,5 @@
 <h1 style="align: center">Personal Website</h1>
-<img style="height: 16px" src="/.github/made_with_love.svg">
+<img style="height: 24px" src="/.github/made_with_love.svg">
 
 Welcome! If for some reason you didn't notice, you've stumbled upon the 
 repository for my personal website. It serves as a platform to share a little 
