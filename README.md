@@ -1,5 +1,5 @@
 <div style="width: 100%; display: flex; justify-content: center">
-    <h1>Personal Website</h1>
+    <h1 style="text-align: center">Personal Website</h1>
 </div>
 
 
