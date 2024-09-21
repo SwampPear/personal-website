@@ -36,8 +36,24 @@ let quotes = [
         citation: "- Steve Jobs"
     },
     {
-        quote: "\"\"",
-        citation: ""
+        quote: "\"The creation of a single world comes from a huge number of fragments and chaos.\"",
+        citation: "- Hayao Miyazaki"
+    },
+    {
+        quote: "\"The greatest danger to our future is apathy.\"",
+        citation: "- Jane Goodall"
+    },
+    {
+        quote: "\"All that I saw and learned was a new delight to me...\"",
+        citation: "- Marie Curie"
+    },
+    {
+        quote: "\"I would never die for my beliefs because I might be wrong.\"",
+        citation: "- Bertrand Russel"
+    },
+    {
+        quote: "\"I discover that there are other minds in understanding what other people say and do.\"",
+        citation: "- Gilbert Ryle"
     }
 ]
 
@@ -46,9 +62,4 @@ let ex = {
     citation: ""
 }
 
-let q = 8
-
-
-
-
-
+/* 14 */
