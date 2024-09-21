@@ -1,4 +1,4 @@
-<p style="text-align: center; font-size: 3rem; width: 100%">Personal Website</p>
+<p style="text-align: center; font-size: 36px; width: 100%">Personal Website</p>
 
 Welcome! In case you didn't notice, you've stumbled upon the repository for my
 personal website. It serves as a platform to share a little bit about me, my 
