@@ -1,9 +1,10 @@
 <h1 style="align: center">Personal Website</h1>
+<img src="/.github/made_with_love.svg">
 
-Welcome! In case you didn't notice, you've stumbled upon the repository for my
-personal website. It serves as a platform to share a little bit about me, my 
-projects, and other content that reflects my personal interests and professional
-journey.
+Welcome! If for some reason you didn't notice, you've stumbled upon the 
+repository for my personal website. It serves as a platform to share a little 
+bit about me, my projects, and other content that reflects my personal interests 
+and professional journey.
 
 ### Running Locally
 
