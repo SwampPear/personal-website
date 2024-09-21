@@ -1,7 +1,4 @@
-<div style="width: 100%; display: flex; justify-content: center">
-    <h1 style="text-align: center">Personal Website</h1>
-</div>
-
+<p style="text-align: center">Personal Website</p>
 
 Welcome! In case you didn't notice, you've stumbled upon the repository for my
 personal website. It serves as a platform to share a little bit about me, my 
