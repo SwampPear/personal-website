@@ -1,5 +1,6 @@
 :root {
     --white: #eeece1;
+    --off-white: #cac8bf;
     --black: #131417;
     --medium-gray: #6a6d75;
     --tech-gold: #b3a369;
@@ -502,14 +503,19 @@ About
     color: var(--white);
     font-family: "Noto Sans", sans-serif;
     font-weight: 400;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
 }
 
 .about__statement {
-    color: var(--white);
+    color: var(--off-white);
     font-family: "Literata", sans-serif;
     font-weight: 300;
     font-size: 1.125rem;
+    margin: .75rem 0;
+}
+
+.about__statement__first {
+    margin: 1rem 0 .5rem 0;
 }
 
 .tech {
@@ -616,7 +622,7 @@ About
 }
 
 .project__description {
-    color: var(--white);
+    color: var(--off-white);
     font-family: "Literata", sans-serif;
     font-weight: 300;
     font-size: 1rem;
