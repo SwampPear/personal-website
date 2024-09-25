@@ -736,6 +736,7 @@ Footer
     font-style: italic;
     font-size: 1.25rem;
     transition: color .075s ease-in-out;
+    text-decoration: none;
     animation: landing-quote-anim 2s ease-in-out forwards;
 }
 
