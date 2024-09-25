@@ -23,7 +23,7 @@ body {
       rgba(0,0,0, 0) 98%, rgba(0,0,0, 0) 0
     ) 100% 50% / 100% 100% repeat-x;
 
-    opacity: 0.1;
+    opacity: 0.075;
     position: fixed;
     top: 0;
     left: 0;
@@ -109,6 +109,21 @@ body {
 
 .landing__citation__opening {
     animation: landing-citation-anim 4s ease-in-out forwards;
+}
+
+.landing__message {
+    text-align: center;
+    vertical-align: middle;
+    color: var(--white);
+    font-family: "Cormorant Garamond", sans-serif;
+    font-weight: 300;
+    font-size: 2.25rem;
+    cursor: url('/svg/cursor.svg') auto;
+}
+
+.landing__message > a {
+    text-decoration: none;
+    color: var(--white);
 }
 
 .landing__quote {
@@ -706,4 +721,24 @@ Footer
 
 .footer__link:last-child {
     margin: 0;
+}
+
+/*
+404
+================================================================================
+*/
+.error__button {
+    opacity: 0;
+    margin: 1rem 0 0 0;
+    color: var(--white);
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 1.25rem;
+    transition: color .075s ease-in-out;
+    animation: landing-quote-anim 2s ease-in-out forwards;
+}
+
+.error__button:hover {
+    color: #678eb4;
 }
