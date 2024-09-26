@@ -1,6 +1,7 @@
 :root {
     --white: #eeece1;
     --off-white: #cac8bf;
+    --off-white-2: #adaca4;
     --black: #131417;
     --medium-gray: #6a6d75;
     --tech-gold: #b3a369;
@@ -284,7 +285,7 @@ body {
 
 .landing__scroll-indicator > line {
     fill: none;
-    stroke: var(--medium-gray);
+    stroke: var(--white);
     stroke-linecap: round;
     stroke-miterlimit: 10;
     stroke-width: 1px;
@@ -1084,6 +1085,15 @@ About
     margin: 0 0 .25rem 0;
     align-items: center;
     z-index: 998;
+    transition: .125s ease-in-out;
+}
+
+.project__title:hover {
+    color: var(--off-white-2);
+}
+
+.project__title:hover > svg {
+    fill: var(--off-white-2);
 }
 
 @media only screen and (min-width: 100px) and (max-width: 430px) {
@@ -1120,6 +1130,7 @@ About
     height: 1.25rem;
     margin: 0 0 0 .5rem;
     z-index: 998;
+    transition: .125s ease-in-out;
 }
 
 .project__description {
