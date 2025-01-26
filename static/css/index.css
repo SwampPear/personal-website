@@ -511,7 +511,6 @@ Content
 .content {
     display: flex;
     flex-direction: column;
-    height: 100vh;
     margin: 100vh 0 0 0;
     padding: 4rem 15rem;
     width: calc(100vw - 30rem);
@@ -620,6 +619,55 @@ Content
 
 .timeline__divider__short:first-child {
     margin: 0 .5rem 0 4rem;
+}
+
+.projects__container {
+    width: 100vw;
+    z-index: 999;
+}
+
+.projects__header {
+    align-items: center;
+    color: var(--black);
+    display: flex;
+    justify-content: center;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1.375rem;
+    width: 100vw;
+}
+
+.projects__grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 1.5rem 0 0 0;
+    padding: 0 15rem;
+    width: calc(100vw - 30rem);
+    z-index: 999;
+}
+
+.project {
+    height: fit-content;
+    text-decoration: none;
+    transition: .125s ease-in-out;
+    width: 100%;
+    z-index: 999;
+}
+
+.project:hover {
+    transform: scale(1.01);
+}
+
+.project__title {
+    color: var(--black-1);
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1.125rem;
+}
+
+.project__description {
+    color: var(--black-2);
+    font-family: 'Literata', sans-serif;
+    font-size: .9rem;
 }
 
 /*
