@@ -28,3 +28,10 @@ cd personal-website
 ```
 go run main.go
 ```
+
+# TODO
+edit colors on menu
+finish introduction
+add picture slider
+finish dynamic styling
+check on different browsers

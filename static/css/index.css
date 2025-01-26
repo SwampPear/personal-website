@@ -24,14 +24,14 @@ body {
 
 .landing__graphic {
     --mask: linear-gradient(to bottom, 
-      rgba(0,0,0, 1) 0,   rgba(0,0,0, 1) 50%, 
+      rgb(23, 21, 21) 0,   rgba(0,0,0, 1) 50%, 
       rgba(0,0,0, 0) 98%, rgba(0,0,0, 0) 0
     ) 100% 50% / 100% 100% repeat-x;
     height: 100vh;
     left: 0;
             mask: var(--mask);
     -webkit-mask: var(--mask); 
-    opacity: 0.075;
+    opacity: 0.1;
     position: fixed;
     top: 0;
     width: 100vw;
@@ -368,7 +368,7 @@ Brand
 }
 
 .nav__brand {
-    color: var(--black);
+    color: var(--black-2);
     font-family: "Cormorant Garamond", serif;
     font-weight: 300;
     font-style: italic;
@@ -400,14 +400,14 @@ Menu Button
 
 .nav__menu__button__icon > line,
 .nav__menu__button__icon > path {
-    stroke: var(--medium-gray);
+    stroke: var(--black-2);
     stroke-linecap: round;
     stroke-miterlimit: 10;
     stroke-width: 2.5px;
 }
 
 .nav__menu__link__icon > path {
-    fill: var(--medium-gray);
+    fill: var(--black-2);
     stroke-linecap: round;
     stroke-miterlimit: 10;
     stroke-width: 2.5px;
@@ -514,17 +514,74 @@ Content
     margin: 100vh 0 0 0;
     padding: 4rem 15rem;
     width: calc(100vw - 30rem);
-    z-index: 999;
+    z-index: 998;
+}
+
+@media screen and (max-width: 1024px) {
+    .content {
+        padding: 2rem;
+        width: calc(100vw - 4rem);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .content {
+        padding: 4rem;
+        width: calc(100vw - 8rem);
+    }
+}
+
+@media screen and (max-width: 465px) {
+    .content {
+        padding: 2rem;
+        width: calc(100vw - 4rem);
+    }
 }
 
 .image__container {
     margin: 0 0 1.5rem 0;
+    z-index: 998;
 }
 
 .image__image {
     height: 18rem;
     width: 18rem;
     z-index: 998;
+}
+
+@media screen and (max-width: 1024px) {
+    .image__container {
+        margin: 0 0 1rem 0;
+    }
+
+    .image__image {
+        height: 16rem;
+        width: 16rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .image__container {
+        display: flex;
+        justify-content: center;
+        margin: 0 0 1rem 0;
+    }
+
+    .image__image {
+        height: calc(100vw - 20rem);
+        width: calc(100vw - 20rem);
+    }
+}
+
+@media screen and (max-width: 465px) {
+    .image__container {
+        margin: 0 0 1rem 0;
+    }
+
+    .image__image {
+        height: calc(100vw - 4rem);
+        width: calc(100vw - 4rem);
+    }
 }
 
 .about__container {
@@ -536,11 +593,31 @@ Content
     width: 18rem !important;
 }
 
+@media screen and (max-width: 1024px) {
+    .timeline__container {
+        width: 16rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .timeline__container {
+        width: calc(100vw - 8rem) !important;
+    }
+
+    .about__container {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .timeline__container {
+        width: calc(100vw - 4rem) !important;
+    }
+}
+
 .introduction__container {
     flex-direction: column;
     margin: 0 0 0 4rem;
-    max-width: calc(100vw - 52rem);
-    width: 100%;
 }
 
 .introduction__p {
@@ -551,6 +628,32 @@ Content
     max-width: calc(100vw - 52rem);
     margin: 1rem 0;
     width: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+    .introduction__container {
+        margin: 0 0 0 2rem;
+    }
+  
+    .introduction__p {
+        max-width: calc(100vw - 26rem);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .introduction__container {
+        margin: 0;
+    }
+  
+    .introduction__p {
+        max-width: calc(100vw - 8rem);
+    }
+}
+
+@media screen and (max-width: 465px) {
+    .introduction__p {
+        max-width: calc(100vw - 4rem);
+    }
 }
 
 .tech {
@@ -580,6 +683,16 @@ Content
     align-items: center;
     display: flex;
     margin: .25rem 0;
+}
+
+@media screen and (max-width: 465px) {
+    .content__header {
+        margin: 1rem 0 0 0;
+    }
+
+    .timeline__row {
+        margin: .175rem 0;
+    }
 }
 
 .timeline__row:last-child {
@@ -623,7 +736,7 @@ Content
 
 .projects__container {
     width: 100vw;
-    z-index: 999;
+    z-index: 998;
 }
 
 .projects__header {
@@ -643,7 +756,29 @@ Content
     margin: 1.5rem 0 0 0;
     padding: 0 15rem;
     width: calc(100vw - 30rem);
-    z-index: 999;
+    z-index: 998;
+}
+
+@media screen and (max-width: 1024px) {
+    .projects__grid {
+        grid-template-columns: 1fr 1fr;
+        padding: 0 2rem;
+        width: calc(100vw - 4rem);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .projects__grid {
+        padding: 0 4rem;
+        width: calc(100vw - 8rem);
+    }
+}
+
+@media screen and (max-width: 465px) {
+    .projects__grid {
+        padding: 0 2rem;
+        width: calc(100vw - 4rem);
+    }
 }
 
 .project {
@@ -651,7 +786,7 @@ Content
     text-decoration: none;
     transition: .125s ease-in-out;
     width: 100%;
-    z-index: 999;
+    z-index: 998;
 }
 
 .project:hover {
@@ -659,9 +794,17 @@ Content
 }
 
 .project__title {
+    align-items: center;
     color: var(--black-1);
+    display: flex;
     font-family: 'Noto Sans', sans-serif;
     font-size: 1.125rem;
+}
+
+.project__title > svg {
+    height: 1.125rem;
+    margin: .1rem 0 0 .25rem;
+    width: 1.25rem;
 }
 
 .project__description {
@@ -1181,6 +1324,7 @@ Footer
 @media only screen and (min-width: 100px) and (max-width: 1400px) {
     .footer__link {
         font-size: .875rem;
+        margin: 0 1rem 0 0;
     }
 }
 
