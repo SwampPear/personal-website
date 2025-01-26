@@ -539,8 +539,9 @@ Content
 
 .introduction__container {
     flex-direction: column;
-    flex-grow: 1;
-    margin: 0 0 0 2rem;
+    margin: 0 0 0 4rem;
+    max-width: calc(100vw - 52rem);
+    width: 100%;
 }
 
 .introduction__p {
@@ -548,7 +549,8 @@ Content
     font-family: "Literata", sans-serif;
     font-weight: 400;
     font-size: 1.075rem;
-    max-width: 100%;
+    max-width: calc(100vw - 52rem);
+    margin: 1rem 0;
     width: 100%;
 }
 
@@ -572,6 +574,7 @@ Content
     font-family: "Noto Sans", sans-serif;
     font-weight: 500;
     font-size: 1.25rem;
+    margin: 2rem 0 0 0;
 }
 
 .timeline__row {
@@ -591,11 +594,15 @@ Content
     font-size: 1rem;
 }
 
-.timeline__divider {
+.timeline__divider,
+.timeline__divider__short {
     background-color: var(--black-3);
     border-radius: 0.75px;
     flex-grow: 1;
     height: 1.5px;
+}
+
+.timeline__divider {
     margin: 0 .5rem;
 }
 
@@ -605,6 +612,14 @@ Content
 
 .timeline__divider:last-child {
     margin: 0 0 0 .5rem;
+}
+
+.timline__divider__short {
+    margin: 0 .5rem 0 4rem;
+}
+
+.timeline__divider__short:first-child {
+    margin: 0 .5rem 0 4rem;
 }
 
 /*
