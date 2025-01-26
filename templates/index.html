@@ -11,9 +11,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&display=swap" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/css/index.css">
     </head>
     <body>
@@ -67,166 +66,83 @@
                 </svg>
             </div>
         </section>
-        <section class="about">
-            <div class="about__row">
-                <img class="about__image" src="/img/3.png"/>
-                <div class="about__about">
-                    <span class="about__greeting">salutations &#128075;</span>
-                    <p class="about__statement about__statement__first">
-                        &emsp;&ensp;I'm Michael, a 4th year at <span class="tech">Georgia Tech</span> studying Computer Science with a concentration 
-                        in Intelligence and Systems Architecture. From early on I've been drawn to technology, and I've harbored a lifelong passion 
-                        for tinkering. I would tinker&mdash;because I have an insatiable need to understand how things work. 
-                    </p>
-                    <p class="about__statement">
-                        I've built my own guitar, I fix my own car, and I've coded numerous personal apps that live quietly on my devices 
-                        (and a few that are out there in the world). My endeavors in my field have allowed me to experiment in diverse areas of 
-                        Computer Science from full-stack web programming and UI design to systems programming to graphics programming.
-                    </p>
-                    <p class="about__statement">
-                        When I'm not at work or study, I can be found exploring music, traveling to far reaching areas of the world, reading
-                        some classics, and watching Studio Ghibli films.
-                    </p>
-                </div>
+        <section class="content">
+            <div class="image__container">
+                <img class="image__image" src="img/1.png"/>
             </div>
-            <div class="about__row">
-                <div class="about__timeline">
-                    <ul>
-                        <li>
-                            <div class="fill"></div>
-                            <div class="date">2024</div>
-                        </li>
-                        <li>
-                            <div class="about__timeline__company">Delta</div>
-                            <div class="date">Data Analytics Co-op</div>
-                            <div class="fill"></div>
-                            <div class="date">2023</div>
-                        </li>
-                        <li>
-                            <div class="about__timeline__company">GACRC</div>
-                            <div class="date">SWE Intern</div>
-                            <div class="fill"></div>
-                            <div class="date">2022</div>
-                        </li>
-                        <li>
-                            <div class="fill"></div>
-                            <div class="date">2021</div>
-                        </li>
-                        <li>
-                            <div class="about__timeline__company">Black Dog Customs</div>
-                            <div class="date">Automotive Product Design</div>
-                            <div class="fill"></div>
-                            <div class="date">2020</div>
-                        </li>
-                        <li>
-                            <div class="date">Birth</div>
-                            <div class="fill"></div>
-                            <div class="date">2003</div>
-                        </li>
-                    </ul>
+            <div class="about__container">
+                <div class="timeline__container">
+                    <div class="timeline__position">
+                        <div class="content__header">Delta</div>
+                        <div class="timeline__row">
+                            <div class="timeline__divider"></div>
+                            <div class="timeline__cell">2025</div>
+                        </div>
+                        <div class="timeline__row">
+                            <div class="timeline__divider"></div>
+                            <div class="timeline__cell">2024</div>
+                        </div>
+                        <div class="timeline__row">
+                            <div class="timeline__cell">Data Analytics Co-Op</div>
+                            <div class="timeline__divider"></div>
+                            <div class="timeline__cell">2023</div>
+                        </div>
+                    </div>
+                    <div class="timeline__position">
+                        <div class="content__header">GACRC @ UGA</div>
+                        <div class="timeline__row">
+                            <div class="timeline__divider"></div>
+                            <div class="timeline__cell">2023</div>
+                        </div>
+                        <div class="timeline__row">
+                            <div class="timeline__cell">SWE Intern</div>
+                            <div class="timeline__divider"></div>
+                            <div class="timeline__cell">2022</div>
+                        </div>
+                    </div>
+                    <div class="timeline__position">
+                        <div class="content__header">Black Dog Customs</div>
+                        <div class="timeline__row">
+                            <div class="timeline__divider"></div>
+                            <div class="timeline__cell">2022</div>
+                        </div>
+                        <div class="timeline__row">
+                            <div class="timeline__divider"></div>
+                            <div class="timeline__cell">2021</div>
+                        </div>
+                        <div class="timeline__row">
+                            <div class="timeline__cell">Electronics Design</div>
+                            <div class="timeline__divider"></div>
+                            <div class="timeline__cell">2020</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="about__projects">
-                    <div class="project">
-                        <div class="project__title__row">
-                            <a href="https://github.com/SwampPear/blam" class="project__title">
-                                <div>Blam</div>
-                                {{template "partials/link_icon" .}}
-                            </a>
-                            <div class="project__title__type">
-                                project
-                            </div>
-                        </div>
-                        <div class="project__description">
-                            Explorations in creating my own programming language from all the components of programming languages I love (stay tuned for progress!)
-                        </div>
-                    </div>
-                    <div class="project">
-                        <div class="project__title__row">
-                            <a href="https://github.com/SwampPear/lexi" class="project__title">
-                                <div>Lexi</div>
-                                {{template "partials/link_icon" .}}
-                            </a>
-                            <div class="project__title__type">
-                                project
-                            </div>
-                        </div>
-                        <div class="project__description">
-                            CPP library for lexical tokenization using regular expressions
-                        </div>
-                    </div>
-                    <div class="project">
-                        <div class="project__title__row">
-                            <a href="https://github.com/SwampPear/djinn" class="project__title">
-                                <div>Djinn Code Generation CLI</div>
-                                {{template "partials/link_icon" .}}
-                            </a>
-                            <div class="project__title__type">
-                                project
-                            </div>
-                        </div>
-                        <div class="project__description">
-                            CLI implemented in pure Rust allowing for native code generation from natural language prompts
-                        </div>
-                    </div>
-                    <div class="project">
-                        <div class="project__title__row">
-                            <a href="https://github.com/SwampPear/personal-website" class="project__title">
-                                <div>Personal Website</div>
-                                {{template "partials/link_icon" .}}
-                            </a>
-                            <div class="project__title__type">
-                                project
-                            </div>
-                        </div>
-                        <div class="project__description">
-                            WebGL graphics using GLSL shaders for caustic ripple effects, creative CSS microinteractions, and all served with Go Fiber
-                        </div>
-                    </div>
-                    <div class="project">
-                        <div class="project__title__row">
-                            <a href="https://gacrc.uga.edu/" class="project__title">
-                                <div>GACRC Portal</div>
-                                {{template "partials/link_icon" .}}
-                            </a>
-                            <div class="project__title__type">
-                                project
-                            </div>
-                        </div>
-                        <div class="project__description">
-                            Portal for which researchers at the University of Georgia can manage their research groups and interact with UGA's HPC cluster, Sapelo2
-                        </div>
-                    </div>
-                    <div class="project">
-                        <div class="project__title__row">
-                            <a href="https://github.com/SwampPear/Koios" class="project__title">
-                                <div>Koios</div>
-                                {{template "partials/link_icon" .}}
-                            </a>
-                            <div class="project__title__type">
-                                project
-                            </div>
-                        </div>
-                        <div class="project__description">
-                            Library implemented for C++ and Python that allows for pretty printing from the terminal
-                        </div>
+                <div class="introduction__container">
+                    <div class="content__header">Salutations &#128075;</div>
+                    <div class="introduction__p">
+                        I'm Michael, a current Senior CS student @ <span class="tech">Georgia Tech</span>. I have an 
+                        immense passion for different branches of programming and utilizing technology in meaningful 
+                        ways. I'm a problem solver by nature and am principally interested in innovative application 
+                        development in using the technologies of tomorrow to solve the problems of today.
                     </div>
                 </div>
             </div>
-            <div class="footer">
-                <div class="footer__link__container">
-                    <span class="footer__link">	&#169; Michael Vaden 2024</span>
-                    <a class="footer__link" href="https://github.com/SwampPear">
-                        GitHub
-                        {{template "partials/link_icon" .}}
-                    </a>
-                    <a class="footer__link" href="https://www.linkedin.com/in/michael-vaden-10b892261/">
-                        LinkedIn
-                        {{template "partials/link_icon" .}}
-                    </a>
-                    <a class="footer__link" href="/resume.pdf">
-                        Resume
-                        {{template "partials/link_icon" .}}
-                    </a>
-                </div>
+        </section>
+        <section class="footer">
+            <div class="footer__link__container">
+                <span class="footer__link">	&#169; Michael Vaden 2025</span>
+                <a class="footer__link" href="https://github.com/SwampPear">
+                    GitHub
+                    {{template "partials/link_icon" .}}
+                </a>
+                <a class="footer__link" href="https://www.linkedin.com/in/michael-vaden-10b892261/">
+                    LinkedIn
+                    {{template "partials/link_icon" .}}
+                </a>
+                <a class="footer__link" href="/resume.pdf">
+                    Resume
+                    {{template "partials/link_icon" .}}
+                </a>
             </div>
         </section>
         <script src="/js/quotes.js"></script>
