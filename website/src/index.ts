@@ -20,7 +20,7 @@ uniform vec2 resolution;
 
 void main() {
     vec2 uv = v_tex_coords;
-    vec2 fragCoord = uv * resolution;
+    vec2 fragCoord = (v_tex_coords - 0.5) * resolution / min(resolution.x, resolution.y);
 
     float t = time * .5 + 24.0;
 
@@ -44,7 +44,6 @@ void main() {
     gl_FragColor = vec4(color, 1.0);
 }
 `
-
 
 const edgeDetectionShader = `
 precision mediump float;
@@ -123,46 +122,85 @@ const indexRoute = () => {
 
     // Compile shaders
     const vertexShader = compileShader(gl, vertexShaderSource, gl.VERTEX_SHADER);
-    const fragmentShader = compileShader(gl, proceduralShader, gl.FRAGMENT_SHADER);
+    const proceduralFragmentShader = compileShader(gl, proceduralShader, gl.FRAGMENT_SHADER);
+    const edgeFragmentShader = compileShader(gl, edgeDetectionShader, gl.FRAGMENT_SHADER);
 
-    const program = createProgram(gl, vertexShader, fragmentShader);
-    const positionLocation = gl.getAttribLocation(program, 'position');
+    const proceduralProgram = createProgram(gl, vertexShader, proceduralFragmentShader);
+    const edgeProgram = createProgram(gl, vertexShader, edgeFragmentShader);
 
-    // Fullscreen quad (NDC space)
+    // Fullscreen quad buffer
     const positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-        -1, -1, 1, -1,
-        -1, 1, 1, 1
+        -1, -1,
+         1, -1,
+        -1,  1,
+         1,  1
     ]), gl.STATIC_DRAW);
+
+    // Framebuffer & texture for first pass (procedural)
+    const framebuffer = gl.createFramebuffer();
+    const texture = gl.createTexture();
+
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
     const resizeCanvas = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         gl.viewport(0, 0, canvas.width, canvas.height);
+
+        // Resize texture
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, canvas.width, canvas.height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+
+        // Reattach framebuffer
+        gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
     };
+
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    const render = (time: number) => {
-        time *= 0.001;
+    const drawFullscreenQuad = (program: WebGLProgram) => {
+        const posLocation = gl.getAttribLocation(program, 'position');
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.enableVertexAttribArray(posLocation);
+        gl.vertexAttribPointer(posLocation, 2, gl.FLOAT, false, 0, 0);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    };
 
-        gl.clearColor(0.0, 0.0, 0.0, 0.0);
+    const render = (time: number) => {
+        time *= 0.0001;
+
+        // === First Pass: Draw procedural shader into framebuffer ===
+        gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
+        gl.viewport(0, 0, canvas.width, canvas.height);
         gl.clear(gl.COLOR_BUFFER_BIT);
 
-        gl.useProgram(program);
+        gl.useProgram(proceduralProgram);
+        gl.uniform1f(gl.getUniformLocation(proceduralProgram, 'time'), time);
+        gl.uniform2f(gl.getUniformLocation(proceduralProgram, 'resolution'), canvas.width, canvas.height);
+        gl.uniform1f(gl.getUniformLocation(proceduralProgram, 'scale'), 0.5); // Tweak scale here if needed
 
-        // Set uniforms
-        const timeLocation = gl.getUniformLocation(program, 'time');
-        const resolutionLocation = gl.getUniformLocation(program, 'resolution');
-        gl.uniform1f(timeLocation, time);
-        gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+        drawFullscreenQuad(proceduralProgram);
 
-        // Draw fullscreen quad
-        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-        gl.enableVertexAttribArray(positionLocation);
-        gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        // === Second Pass: Draw edge detection result to canvas ===
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+        gl.useProgram(edgeProgram);
+        gl.uniform1i(gl.getUniformLocation(edgeProgram, 'u_texture'), 0);
+        gl.uniform2f(gl.getUniformLocation(edgeProgram, 'resolution'), canvas.width, canvas.height);
+
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+
+        drawFullscreenQuad(edgeProgram);
 
         requestAnimationFrame(render);
     };

@@ -18,13 +18,23 @@ body {
 
 .welcome__graphic__container {
     background: var(--white);
-    border: 1.75px solid var(--black);
-    border-radius: .25rem;
-    height: 50vh;
+    border: 1px solid var(--black);
+    height: calc(50vh - 2rem);
+    overflow: hidden;
     width: calc(100vw - 4rem);
 }
 
 .welcome__graphic {
     height: 100%;
     width: calc(100vw - 4rem);
+}
+
+.welcome__greeting {
+    display: block;
+    font-family: 'Figtree', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 3.5rem;
+    margin: 2rem 0 0 0;
+    width: fit-content;
 }
