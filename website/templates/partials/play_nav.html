@@ -1,0 +1,15 @@
+{% load static %}
+
+<nav class="auth__nav__container p-row-v-start">
+    <div class="main__nav__brand">
+        <a class="auth__nav__link" href="/">
+            <img class="auth__nav__logo" src="{% static 'img/logo.svg' %}"></img>
+        </a>
+    </div>
+    <div class="main__nav__utils">
+        <button id="connectButton" class="p-button p-mg-r-sm" style="display: none;">
+            Connect
+        </button>
+        {% include 'partials/auth_button.html' %}
+    </div>
+</nav>

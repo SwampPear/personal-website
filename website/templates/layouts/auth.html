@@ -1,0 +1,10 @@
+{% extends 'layouts/main.html' %}
+{% block main_content %}
+{% include 'partials/auth_nav.html' %}
+<div class="p-page p-v-fl">
+    <div class="p-row-fl p-row-h-center p-row-v-center">
+        {% block auth_content %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

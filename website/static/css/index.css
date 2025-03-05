@@ -1,0 +1,30 @@
+:root {
+    --white: #fafafa;
+    --black: #151515;
+}
+  
+html,
+body {
+    background: var(--white);
+    margin: 0;
+    padding: 0;
+}
+
+.welcome__section {
+    height: 100vh;
+    padding: 2rem;
+    width: 100vw;
+}
+
+.welcome__graphic__container {
+    background: var(--white);
+    border: 1.75px solid var(--black);
+    border-radius: .25rem;
+    height: 50vh;
+    width: calc(100vw - 4rem);
+}
+
+.welcome__graphic {
+    height: 100%;
+    width: calc(100vw - 4rem);
+}

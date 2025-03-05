@@ -1,2 +1,6 @@
-notes.md
-ref/
+env/
+.env
+__pycache__/
+migrations/
+node_modules/
+package-lock.json

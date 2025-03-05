@@ -1,0 +1,14 @@
+{% load static %}
+<nav class="main__nav__container">
+    <div class="main__nav__brand">
+        <a class="main__nav__link" href="/">
+            <img class="main__nav__logo" src="{% static 'img/logo.svg' %}"/>
+            <div class="main__nav__brand__text">
+                PromptHackr
+            </div>
+        </a>
+    </div>
+    <div class="main__nav__utils">
+        {% include 'partials/auth_button.html' %}
+    </div>
+</nav>
