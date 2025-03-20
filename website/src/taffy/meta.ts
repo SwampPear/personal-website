@@ -1,13 +1,12 @@
-class Meta {
-    title: HTMLTitleElement
-
-    constructor() {
-        this.title = document.querySelector( 'title' ) as HTMLTitleElement
-    }
-
-    setTitle( text: string ) {
-        if ( this.title ) {
-            this.title.textContent = text
-        }
+/**
+ * Sets the title in head.
+ */
+const setTitle = ( newTitle: string ) => {
+    const title = document.querySelector( 'title' ) as HTMLTitleElement
+    
+    if ( title ) {
+        title.innerText = newTitle
+    } else {
+        throw new Error( 'No title element detected' )
     }
 }
