@@ -1,7 +1,7 @@
 /**
  * Sets the title in head.
  */
-export const setTitle = ( newTitle: string ) => {
+const setTitle = ( newTitle: string ) => {
     const title = document.querySelector( 'title' ) as HTMLTitleElement
     
     if ( title ) {
@@ -10,3 +10,5 @@ export const setTitle = ( newTitle: string ) => {
         console.error( 'No title element detected' )
     }
 }
+
+export { setTitle }

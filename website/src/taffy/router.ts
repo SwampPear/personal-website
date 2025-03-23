@@ -3,11 +3,13 @@
  * @param state - Current URL state
  * @param func - Script to execute
  * @param preLoad - Script to execute before route is switched
+ * @param title - Title to set the title element
  */
 export interface IRoute {
     state: string
     func: () => void
     preLoad?: () => void
+    title?: string
 }
 
 /**
@@ -108,11 +110,11 @@ class Loader {
         const links  = document.querySelectorAll( 'a' ) as NodeListOf<HTMLAnchorElement>
 
         links.forEach( link => {
-            if ( link.hasAttribute( 'data-href' )) {
+            if ( link.hasAttribute( 'taffy-href' )) {
                 link.addEventListener( 'click', ( event: MouseEvent ) => {
                     event.preventDefault()
 
-                    const href = link.getAttribute( 'data-href' ) as string
+                    const href = link.getAttribute( 'taffy-href' ) as string
 
                     this.navigate( href )
                 })

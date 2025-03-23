@@ -1,21 +1,9 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-    <head>
-        <title class="title">Michael Vaden</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'css/pocket.css' %}" />
-        <link rel="stylesheet" href="{% static 'css/index.css' %}" />
-        <script src="{% static 'js/bundle.js' %}"></script>
-        <!--
-        <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
-        -->
-    </head>
+    {% include 'partials/head.html' %}
     <body>
-        index
-        <a data-href="about" href="">about</a>
+        {% include 'partials/nav.html' %}
+        {% include 'partials/background.html' %}
     </body>
 </html>

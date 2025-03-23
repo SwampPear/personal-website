@@ -1,0 +1,17 @@
+:root {
+    --taffy-black-100: #0a0a0a; /* true black */
+    --taffy-black-200: #121212; /* deep neutral black */
+    --taffy-black-300: #1b1b1b; /* rich UI black (ideal for backgrounds) */
+    --taffy-black-400: #242424; /* standard dark UI element */
+    --taffy-black-500: #2e2e2e; /* subdued dark gray */
+    --taffy-black-600: #383838; /* accessible for light-on-dark text */
+    --taffy-black-700: #434343; /* low contrast edges & shadows */
+    --taffy-black-800: #4f4f4f; /* disabled UI, subtle outlines */
+    --taffy-black-900: #5c5c5c;  /* secondary text on dark bg */
+    --taffy-black-1000: #696969; /* placeholder text / muted icon */
+    --taffy-black-1100: #777777; /* disabled states / soft UI */
+    --taffy-black-1200: #858585; /* lowest contrast on dark mode */
+
+    --taffy-duration: .05s ease-in-out;
+  }
+  
