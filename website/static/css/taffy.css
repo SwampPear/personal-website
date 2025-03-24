@@ -13,5 +13,41 @@
     --taffy-black-1200: #858585; /* lowest contrast on dark mode */
 
     --taffy-duration: .05s ease-in-out;
-  }
+}
+
+/*
+Display
+================================================================================
+*/
+
+.taffy__hidden {
+    display: hidden;
+    opacity: 0;
+}
+
+.taffy__visible {
+    display: block;
+    opacity: 1;
+}
+
+/*
+Animations
+================================================================================
+*/
   
+@keyframes taffyAnimationFadeInFromTop {
+    from {
+        opacity: 0;
+      transform: translateY(-75%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+  
+.taffy__animation__fade-in-from-top {
+    animation: taffyAnimationFadeInFromTop 0.675s ease-in-out forwards;
+    opacity: 0;
+    position: relative;
+}

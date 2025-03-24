@@ -7,10 +7,6 @@ body {
     padding: 0;
 }
 
-* {
-    z-index: 999;
-}
-
 /*
 Nav
 ================================================================================
@@ -21,6 +17,13 @@ Nav
     display: flex;
     justify-content: space-between;
     width: 100%;
+    z-index: 999;
+}
+
+.nav__brand,
+.nav__brand__link,
+.nav__brand__link__no-hover {
+    z-index: 999;
 }
 
 .nav__brand {
@@ -71,7 +74,7 @@ Background
     position: fixed;
     top: 0;
     width: 100vw;
-    z-index: 998;
+    z-index: 990;
 }
 
 .background {

@@ -57,20 +57,42 @@ const renderBackground = () => {
 }
 
 const index = () => {
-    console.log('Initializing index page.')
+    console.log( 'Initializing index page.' )
 
+    // DOM
+    const nav = document.querySelector( '.nav' )
+
+    // nav visibility
+    if ( nav ) {
+        nav.classList.remove( 'taffy__hidden' )
+        nav.classList.add( 'taffy__animation__fade-in-from-top' )
+    }
+
+    // meta
     setTitle('Michael Vaden')
-
-    renderBackground()
 }
 
 const about = () => {
-    console.log('Initializing about page.')
-    
+    console.log( 'Initializing about page.' )
+
+    // DOM
+    const nav = document.querySelector( '.nav' )
+
+    // nav visibility
+    if ( nav ) {
+        nav.classList.remove( 'taffy__hidden' )
+        nav.classList.add( 'taffy__visible' )
+    }
+
+    // meta
     setTitle('About')
 }
 
 const main = () => {
+    // page independent functionality
+    renderBackground()
+    
+    // loader routers
     const routes = [
         { state: '', func: index },
         { state: 'about', func: about }
