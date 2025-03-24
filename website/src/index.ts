@@ -89,9 +89,6 @@ const about = () => {
 }
 
 const main = () => {
-    // page independent functionality
-    renderBackground()
-    
     // loader routers
     const routes = [
         { state: '', func: index },
@@ -99,6 +96,9 @@ const main = () => {
     ]
 
     new Loader({ routes, defaultFunc: () => {} })
+
+    // page independent functionality
+    renderBackground()
 }
 
 window.addEventListener('DOMContentLoaded', main)

@@ -34,11 +34,11 @@ Display
 Animations
 ================================================================================
 */
-  
+
 @keyframes taffyAnimationFadeInFromTop {
     from {
         opacity: 0;
-      transform: translateY(-75%);
+        transform: translateY(-75%);
     }
     to {
         opacity: 1;
@@ -48,6 +48,23 @@ Animations
   
 .taffy__animation__fade-in-from-top {
     animation: taffyAnimationFadeInFromTop 0.675s ease-in-out forwards;
+    opacity: 0;
+    position: relative;
+}
+
+@keyframes taffyAnimationFadeInFromBottom {
+    from {
+        opacity: 0;
+        transform: translateY(75%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+  
+.taffy__animation__fade-in-from-bottom {
+    animation: taffyAnimationFadeInFromBottom 0.675s ease-in-out forwards;
     opacity: 0;
     position: relative;
 }
