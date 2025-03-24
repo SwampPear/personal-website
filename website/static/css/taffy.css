@@ -38,7 +38,7 @@ Animations
 @keyframes taffyAnimationFadeInFromTop {
     from {
         opacity: 0;
-        transform: translateY(-75%);
+        transform: translateY(-1rem);
     }
     to {
         opacity: 1;
@@ -55,7 +55,7 @@ Animations
 @keyframes taffyAnimationFadeInFromBottom {
     from {
         opacity: 0;
-        transform: translateY(75%);
+        transform: translateY(1rem);
     }
     to {
         opacity: 1;

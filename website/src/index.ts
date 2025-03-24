@@ -61,6 +61,7 @@ const index = () => {
 
     // DOM
     const nav = document.querySelector( '.nav' )
+    const graphicContainer = document.querySelector( '.graphic__container' )
 
     // nav visibility
     if ( nav ) {
