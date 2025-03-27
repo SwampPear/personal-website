@@ -35,3 +35,11 @@ finish introduction
 add picture slider
 finish dynamic styling
 check on different browsers
+
+
+about section
+work section
+
+# About
+- name, cool graphics, short blurb
+- movies, and books I'm into right now

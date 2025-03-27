@@ -109,11 +109,11 @@ Graphic
 .graphic__wrapper {
     align-items: center;
     display: flex;
-    height: calc(100vh - 2rem);
+    height: calc(100vh - 1rem);
     justify-content: center;
     position: relative;
     width: calc(100vw - 4rem);
-    z-index: 999;
+    z-index: 998;
 }
 
 @keyframes graphicContainerFadeIn {
@@ -129,8 +129,28 @@ Graphic
 
 .graphic__container {
     animation: graphicContainerFadeIn 0.875s ease-in-out forwards;
-    background-color: rgb(85, 197, 197);
-    border-radius: 1rem;
+    background-color: rgb(58, 74, 74);
     height: 24rem;
     width: 16rem;
 }
+
+/*
+Pages
+================================================================================
+*/
+
+.about,
+.experience,
+.projects,
+.footer {
+    height: 100vh; 
+    width: calc(100vw - 4rem); 
+    z-index: 998; 
+    position: relative;
+}
+
+/*
+Footer
+================================================================================
+*/
+

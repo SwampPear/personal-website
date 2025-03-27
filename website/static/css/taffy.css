@@ -11,6 +11,10 @@
     --taffy-black-1000: #696969; /* placeholder text / muted icon */
     --taffy-black-1100: #777777; /* disabled states / soft UI */
     --taffy-black-1200: #858585; /* lowest contrast on dark mode */
+    --taffy-black-1300: #949494; /* extended: slightly lighter neutral gray */
+    --taffy-black-1400: #a3a3a3; /* extended: light UI element */
+    --taffy-black-1500: #b3b3b3; /* extended: nearing lighter backgrounds */
+    --taffy-black-1600: #c3c3c3; /* extended: even lighter accent shade */
 
     --taffy-duration: .05s ease-in-out;
 }
