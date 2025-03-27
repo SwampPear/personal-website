@@ -86,14 +86,47 @@ const about = () => {
     }
 
     // meta
-    setTitle('About')
+    setTitle( 'About' )
+}
+
+const aboutPreload = () => {
+    console.log( 'Running index preload.' )
+
+    // DOM
+    const indexPage = document.querySelector( '.index-page' )
+
+    // page visibility
+    if ( indexPage ) {
+        indexPage.classList.add( 'tf__animation__fade-out-to-bottom')
+        setTimeout(() => {
+            indexPage.classList.remove( 'tf__visible' )
+            indexPage.classList.add( 'tf__hidden' )
+        }, 675)
+    }
+}
+
+const shelf = () => {
+    console.log( 'Initializing shelf page.' )
+
+    // DOM
+    const nav = document.querySelector( '.nav' )
+
+    // nav visibility
+    if ( nav ) {
+        nav.classList.remove( 'tf__hidden' )
+        nav.classList.add( 'tf__visible' )
+    }
+
+    // meta
+    setTitle( 'Shelf' )
 }
 
 const main = () => {
     // loader routers
     const routes = [
         { state: '', func: index },
-        { state: 'about', func: about }
+        { state: 'about', func: about, preLoad: aboutPreload, preLoadDelay: 675 },
+        { state: 'shelf', func: shelf }
     ]
 
     new Loader({ routes, defaultFunc: () => {} })

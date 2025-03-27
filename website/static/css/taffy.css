@@ -72,3 +72,20 @@ Animations
     opacity: 0;
     position: relative;
 }
+
+@keyframes tfAnimationFadeOutToBottom {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+}
+  
+.tf__animation__fade-out-to-bottom {
+    animation: tfAnimationFadeOutToBottom 0.675s ease-in-out forwards;
+    opacity: 1;
+    position: relative;
+}
