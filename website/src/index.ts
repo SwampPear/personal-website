@@ -65,8 +65,8 @@ const index = () => {
 
     // nav visibility
     if ( nav ) {
-        nav.classList.remove( 'taffy__hidden' )
-        nav.classList.add( 'taffy__animation__fade-in-from-top' )
+        nav.classList.remove( 'tf__hidden' )
+        nav.classList.add( 'tf__animation__fade-in-from-top' )
     }
 
     // meta
@@ -81,8 +81,8 @@ const about = () => {
 
     // nav visibility
     if ( nav ) {
-        nav.classList.remove( 'taffy__hidden' )
-        nav.classList.add( 'taffy__visible' )
+        nav.classList.remove( 'tf__hidden' )
+        nav.classList.add( 'tf__visible' )
     }
 
     // meta

@@ -33,7 +33,7 @@ Nav
 }
 
 .nav__brand__link {
-    color: var(--tf-black-900);
+    color: var(--tf-black-1200);
     cursor: pointer;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.875rem;
@@ -51,12 +51,12 @@ Nav
 }
 
 .nav__brand__link:hover {
-    color: var(--tf-black-1200);
+    color: var(--tf-black-1500);
     text-decoration: none;
 }
 
 .nav__brand__link__no-hover:hover {
-    color: var(--tf-black-900);
+    color: var(--tf-black-1200);
 }
 
 .nav__brand__icon {
