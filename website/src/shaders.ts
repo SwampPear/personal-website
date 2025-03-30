@@ -22,7 +22,7 @@ void main() {
     vec2 p = mod(fragCoord.xy * TAU, TAU) - 250.0;
     vec2 i = vec2(p);
     float c = 1.0;
-    float inten = .005;
+    float inten = .0025;
 
     for (int n = 0; n < MAX_ITER; n++) {
         float timeShift = t * (1.0 - (3.5 / float(n + 1)));
@@ -36,7 +36,7 @@ void main() {
     c = 1.17 - pow(c, 1.4);
 
     vec3 bg = vec3(0.05, 0.05, 0.05);
-    vec3 fg = vec3(0.095, 0.095, 0.1375);
+    vec3 fg = vec3(0.095, 0.125, 0.225);
     vec3 color = mix(bg, fg, pow(abs(c), 2.0));
 
 
