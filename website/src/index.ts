@@ -64,9 +64,13 @@ const index = () => {
     const graphicContainer = document.querySelector( '.graphic__container' )
 
     // nav visibility
-    if ( nav ) {
+    if ( nav && graphicContainer ) {
         nav.classList.remove( 'tf__hidden' )
         nav.classList.add( 'tf__animation__fade-in-from-top' )
+
+	setTimeout(() => {
+		graphicContainer.classList.add( 'tf__animation__fade-in-from-bottom' )
+	}, 675)
     }
 
     // meta
