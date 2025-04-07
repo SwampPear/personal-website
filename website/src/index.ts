@@ -1,3 +1,6 @@
+import * as THREE from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { Loader } from './taffy/router'
 import { setTitle } from './taffy/meta'
 import { VERTEX_SHADER, FRAGMENT_SHADER } from './shaders'
@@ -56,21 +59,73 @@ const renderBackground = () => {
     requestAnimationFrame(render)
 }
 
+const renderRobot = ( container: HTMLDivElement ) => {
+    console.log( 'robot rendering' )
+
+    const scene = new THREE.Scene()
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000)
+    camera.position.set(0, 1, 3)
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    renderer.setClearColor(0x000000, 0) // color, alpha (0 = fully transparent)
+
+    container.appendChild(renderer.domElement)
+
+    // Light
+    const light = new THREE.DirectionalLight(0xffffff, 1)
+    light.position.set(5, 10, 7.5)
+    scene.add(light)
+
+    // Controls
+    //const controls = new OrbitControls(camera, renderer.domElement)
+
+    // Load GLTF
+    const loader = new GLTFLoader()
+    let mixer: any
+
+    loader.load('/static/glb/robot.glb', ( gltf ) => {
+    const model = gltf.scene
+    scene.add(model)
+
+    mixer = new THREE.AnimationMixer(model)
+    gltf.animations.forEach((clip) => {
+        mixer.clipAction(clip).play()
+    })
+    }, undefined, console.error)
+
+    // Animate
+    const clock = new THREE.Clock()
+
+    function animate() {
+        requestAnimationFrame(animate)
+
+        const delta = clock.getDelta()
+        if (mixer) mixer.update(delta)
+
+        //controls.update()
+        renderer.render(scene, camera)
+    }
+    animate()
+}
+
 const index = () => {
     console.log( 'Initializing index page.' )
 
     // DOM
     const nav = document.querySelector( '.nav' )
-    const graphicContainer = document.querySelector( '.graphic__container' )
+    const graphicContainer = document.querySelector( '.graphic__container' ) as HTMLDivElement
 
-    // nav visibility
+
+    // visiblity for nav and graphic
     if ( nav && graphicContainer ) {
+        renderRobot( graphicContainer )
         nav.classList.remove( 'tf__hidden' )
         nav.classList.add( 'tf__animation__fade-in-from-top' )
 
-	setTimeout(() => {
-		graphicContainer.classList.add( 'tf__animation__fade-in-from-bottom' )
-	}, 675)
+        setTimeout(() => {
+            graphicContainer.classList.add( 'tf__animation__fade-in-from-bottom' )
+        }, 675)
     }
 
     // meta
@@ -93,22 +148,6 @@ const about = () => {
     setTitle( 'About' )
 }
 
-const aboutPreload = () => {
-    console.log( 'Running index preload.' )
-
-    // DOM
-    const indexPage = document.querySelector( '.index-page' )
-
-    // page visibility
-    if ( indexPage ) {
-        indexPage.classList.add( 'tf__animation__fade-out-to-bottom')
-        setTimeout(() => {
-            indexPage.classList.remove( 'tf__visible' )
-            indexPage.classList.add( 'tf__hidden' )
-        }, 675)
-    }
-}
-
 const shelf = () => {
     console.log( 'Initializing shelf page.' )
 
@@ -129,11 +168,11 @@ const main = () => {
     // loader routers
     const routes = [
         { state: '', func: index },
-        { state: 'about', func: about, preLoad: aboutPreload, preLoadDelay: 675 },
+        { state: 'about', func: about },
         { state: 'shelf', func: shelf }
     ]
 
-    new Loader({ routes, defaultFunc: () => {} })
+    new Loader({ routes, defaultFunc: () => {}})
 
     // page independent functionality
     renderBackground()
