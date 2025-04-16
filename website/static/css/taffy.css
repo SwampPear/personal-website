@@ -1,45 +1,139 @@
 :root {
-    --tf-black-100: #0a0a0a; /* true black */
-    --tf-black-200: #121212; /* deep neutral black */
-    --tf-black-300: #1b1b1b; /* rich UI black (ideal for backgrounds) */
-    --tf-black-400: #242424; /* standard dark UI element */
-    --tf-black-500: #2e2e2e; /* subdued dark gray */
-    --tf-black-600: #383838; /* accessible for light-on-dark text */
-    --tf-black-700: #434343; /* low contrast edges & shadows */
-    --tf-black-800: #4f4f4f; /* disabled UI, subtle outlines */
-    --tf-black-900: #5c5c5c;  /* secondary text on dark bg */
-    --tf-black-1000: #696969; /* placeholder text / muted icon */
-    --tf-black-1100: #777777; /* disabled states / soft UI */
-    --tf-black-1200: #858585; /* lowest contrast on dark mode */
-    --tf-black-1300: #949494; /* extended: slightly lighter neutral gray */
-    --tf-black-1400: #a3a3a3; /* extended: light UI element */
-    --tf-black-1500: #b3b3b3; /* extended: nearing lighter backgrounds */
-    --tf-black-1600: #c3c3c3; /* extended: even lighter accent shade */
+    /* Colors */
+    --tf-black-200:     #121212;    /* deep black */
+    --tf-black-300:     #181818;    /* standard dark */
+    --tf-black-400:     #242424;    /* standard dark */
+    --tf-black-600:     #383838;    /* accessible for light-on-dark text */
+    --tf-black-800:     #4f4f4f;    /* disabled UI, subtle outlines */
+    --tf-black-1000:    #696969;    /* placeholder text / muted icon */
+    --tf-black-1200:    #858585;    /* lowest contrast on dark mode */
+    --tf-black-1400:    #a3a3a3;    /* extended: light UI element */
+    --tf-black-1600:    #c3c3c3;    /* extended: even lighter accent shade */
 
-    --tf-duration: .05s ease-in-out;
+    --tf-white-200:     #ffffff;    /* white */
+    --tf-white-400:     #ececec;    /* really light gray */
+    --tf-white-400:     #d3d3d3;    /* accent to white */
+    --tf-white-400:     #c9c9c9;    /* deeper accent to white */
+
+    /* Animations */
+    --tf-duration:      .05s;         /* animation duration */
+
+    /* Z-Index */
+    --tf-z-behind:      -1;
+    --tf-z-base:        999;
+    --tf-z-dropdown:    1000;
+    --tf-z-fixed:       1010;
+    --tf-z-modal-bg:    1020;
+    --tf-z-modal:       1030;
+    --tf-z-popover:     1040;
+    --tf-z-tooltip:     1050;
+
+    /* Styles */
+    --tf-box-shadow-dark: rgba(18, 18, 18, 0.2) 0px 2px 8px 0px;
 }
 
 /*
-Display
+Layout
 ================================================================================
 */
 
-.tf__hidden {
+.tf-row,
+.tf-col {
+    display: flex;
+}
+
+.tf-row {
+
+}
+
+.tf-col {
+    flex-direction: column;
+}
+
+.tf-align-center {
+    align-items: center;
+}
+
+.tf-justify-space-between {
+    justify-content: space-between;
+}
+/*
+Positioning
+================================================================================
+*/
+
+.tf-fixed {
+    position: fixed !important;
+}
+
+/*
+Layers
+================================================================================
+*/
+
+.tf-layer-behind {
+    z-index: var(--tf-z-behind) !important;
+}
+
+.tf-layer-base {
+    z-index: var(--tf-z-base) !important;
+}
+
+.tf-layer-fixed {
+    z-index: var(--tf-z-fixed) !important;
+}
+
+.tf-layer-modal-bg {
+    z-index: var(--tf-z-modal-bg) !important;
+}
+
+.tf-layer-modal {
+    z-index: var(--tf-z-modal) !important;
+}
+
+.tf-layer-inherit {
+    z-index: inherit !important;
+}
+
+/*
+Visibility
+================================================================================
+*/
+
+.tf-hidden {
     display: hidden;
     opacity: 0;
 }
 
-.tf__visible {
+.tf-visible {
     display: block;
     opacity: 1;
 }
+
+/*
+Grid
+================================================================================
+*/
+
+.tf-grid {
+
+}
+
+.tf-cell {
+
+}
+
+/*
+Typography
+================================================================================
+*/
 
 /*
 Animations
 ================================================================================
 */
 
-@keyframes tfAnimationFadeInFromTop {
+@keyframes tfFadeInFromTop {
     from {
         opacity: 0;
         transform: translateY(-1rem);
@@ -49,14 +143,8 @@ Animations
         transform: translateY(0);
     }
 }
-  
-.tf__animation__fade-in-from-top {
-    animation: tfAnimationFadeInFromTop 0.675s ease-in-out forwards;
-    opacity: 0;
-    position: relative;
-}
 
-@keyframes tfAnimationFadeInFromBottom {
+@keyframes tfFadeInFromBottom {
     from {
         opacity: 0;
         transform: translateY(1rem);
@@ -66,14 +154,8 @@ Animations
         transform: translateY(0);
     }
 }
-  
-.tf__animation__fade-in-from-bottom {
-    animation: tfAnimationFadeInFromBottom 0.675s ease-in-out forwards;
-    opacity: 0;
-    position: relative;
-}
 
-@keyframes tfAnimationFadeOutToBottom {
+@keyframes tfFadeOutToBottom {
     from {
         opacity: 1;
         transform: translateY(0);
@@ -83,9 +165,37 @@ Animations
         transform: translateY(1rem);
     }
 }
-  
-.tf__animation__fade-out-to-bottom {
-    animation: tfAnimationFadeOutToBottom 0.675s ease-in-out forwards;
-    opacity: 1;
+
+.tf-fade-in-from-top,
+.tf-fade-in-from-bottom {
+    opacity: 0;
     position: relative;
 }
+  
+.tf-fade-in-from-top {
+    animation: tfFadeInFromTop var(--tf-duration) ease-in-out forwards; 
+}
+  
+.tf-fade-in-from-bottom {
+    animation: tfFadeInFromBottom var(--tf-duration) ease-in-out forwards;
+}
+
+.tf-fade-out-to-bottom {
+    animation: tfFadeOutToBottom var(--tf-duration) ease-in-out forwards;
+}
+
+/*
+Styles
+================================================================================
+*/
+.tf-box-shadow {
+    box-shadow: var(--tf-box-shadow);
+}
+
+.tf-box-shadow-dark {
+    box-shadow: var(--tf-box-shadow-dark);
+}
+
+
+
+
