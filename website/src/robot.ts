@@ -49,11 +49,11 @@ const renderRobot = () => {
             scene.add( model )
     
             // face
-            faceMesh = scene.getObjectByName( 'Cylinder001_1' ) as any
+            faceMesh = scene.getObjectByName( 'Cylinder002_1' ) as any
             if ( !faceMesh ) return console.error( 'Face mesh not found.' )
 
             // head
-            headMesh = scene.getObjectByName('Cylinder001') as any
+            headMesh = scene.getObjectByName('Cylinder002') as any
             if ( !headMesh ) return console.error( 'Head mesh not found.' )
     
             // animated face texture

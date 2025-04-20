@@ -15,18 +15,18 @@
     --tf-white-400:     #d3d3d3;    /* accent to white */
     --tf-white-400:     #c9c9c9;    /* deeper accent to white */
 
+    --tf-pink-200:     #db95be;     /* pink */
+    --tf-pink-400:     #eec1db;     /* pink */
+
     /* Animations */
     --tf-duration:      .05s;         /* animation duration */
 
     /* Z-Index */
     --tf-z-behind:      -1;
     --tf-z-base:        999;
-    --tf-z-dropdown:    1000;
     --tf-z-fixed:       1010;
     --tf-z-modal-bg:    1020;
     --tf-z-modal:       1030;
-    --tf-z-popover:     1040;
-    --tf-z-tooltip:     1050;
 
     /* Styles */
     --tf-box-shadow-dark: rgba(18, 18, 18, 0.2) 0px 2px 8px 0px;
@@ -188,12 +188,64 @@ Animations
 Styles
 ================================================================================
 */
+
 .tf-box-shadow {
     box-shadow: var(--tf-box-shadow);
 }
 
 .tf-box-shadow-dark {
     box-shadow: var(--tf-box-shadow-dark);
+}
+
+/*
+Buttons
+================================================================================
+*/
+
+/*
+Button
+================================================================================
+*/
+
+.tf-button,
+.tf-button-pink,
+.tf-button-dark {
+    align-items: center;
+    border: none;
+    border-radius: .375rem;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    font-family: 'Moderustic', sans-serif;
+    font-size: .875rem;
+    font-weight: 500;
+    height: fit-content;
+    padding: .5rem .675rem;
+    width: fit-content;
+    text-decoration: none;
+    transition: var(--tf-duration) ease-in-out;
+}
+
+.tf-button:hover,
+.tf-button-pink:hover,
+.tf-button-dark:hover {
+    text-decoration: none;
+}
+
+.tf-button-pink {
+    background-color: var(--tf-pink-200);
+}
+
+.tf-button-pink:hover {
+    background-color: var(--tf-pink-400);
+}
+
+.tf-button-dark {
+    background-color: var(--tf-black-400);
+}
+
+.tf-button-dark:hover {
+    background-color: var(--tf-black-600);
 }
 
 

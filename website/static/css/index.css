@@ -66,19 +66,34 @@ Nav
 ================================================================================
 */
 
+.nav__background,
 .nav {
     height: 3rem;
     padding: 0rem 4rem;
     width: calc(100vw - 8rem);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     top: 0;
     left: 0;
     position: relative;
 }
 
+.nav__background {
+    --mask: linear-gradient(to bottom, 
+        rgba(0,0,0, 1) 0,   rgba(0,0,0, 1) 40%, 
+        rgba(0,0,0, 0) 95%, rgba(0,0,0, 0) 0
+    ) 100% 50% / 100% 100% repeat-x;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    -webkit-mask: var(--mask); 
+    mask: var(--mask);
+    z-index: 998;
+}
+
+.nav {
+    z-index: 999;
+}
+
 .nav__link {
-    color: var(--tf-black-800);
+    color: var(--tf-black-1000);
     cursor: url('/static/img/cursor.png') 16 16, auto;
     font-size: 0.75rem;
     font-weight: 400;
@@ -93,7 +108,7 @@ Nav
 
 .nav__link:hover {
     cursor: url('/static/img/cursor.png') 16 16, auto;
-    color: var(--tf-black-1000);
+    color: var(--tf-black-1200);
     text-decoration: none;
 }
 
@@ -116,6 +131,8 @@ Graphic
 .graphic__container {
     height: 100vh;
     width: 100vw;
+    position: absolute;
+    z-index: 998;
 }
 
 .graphic__wrapper {
@@ -145,8 +162,14 @@ About
 */
 
 .about {
+    align-items: center;
+    display: flex;
     height: 100vh;
     width: 100vw;
+    z-index: 997;
+    position: absolute;
+    top: 100vh;
+    left: 0;
 }
 
 .about__description__container {
@@ -154,6 +177,25 @@ About
     font-size: 1.175rem;
     padding: 0 0 0 4rem;
     width: calc(50% - 4rem);
+
+    --mask: radial-gradient(circle at center, 
+        rgba(0, 0, 0, 1) 40%, 
+        rgba(0, 0, 0, 0) 100%
+    ) 100% 50% / 100% 100% no-repeat;
+
+    filter: blur(10px) contrast(1.2);
+    -webkit-filter: blur(10px) contrast(1.2);
+
+    -webkit-mask-image: var(--mask);
+    mask-image: var(--mask);
+
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+
+    z-index: 998;
 }
 
 .text__h1 {

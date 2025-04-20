@@ -8,11 +8,19 @@
         <div class="index">
             {% include 'partials/graphic.html' %}
             {% include 'partials/about.html' %}
-            {% include 'partials/projects.html' %}
-            {% include 'partials/footer.html' %}
+            <div style="width: 100vw; height: 100vh;position: absolute; top: 200vh;"></div>
+            <div style="width: 100vw; height: 100vh; background-color: blue; position: absolute; top: 300vh;"></div>
+            <div style="width: 100vw; height: 100vh; background-color: blue; position: absolute; top: 400vh;"></div>
         </div>
         <div class="about-page">
-            <div style="width: 20rem; height: 20rems; background-color: red; z-index: 999; position: relative;"
+            <div style="width: 20rem; height: 20rems; background-color: red; z-index: 999; position: relative;"/>
         </div>
+        <div id="si" style="background: pink; padding: .5rem; position: fixed; left: 0; top: 0; z-index: 999">0px</div>
+        <script>
+            const si = document.querySelector( '#si' )
+            document.addEventListener( 'scroll', ( event ) => {
+                si.textContent = `${window.scrollY}px`
+            })
+        </script>
     </body>
 </html>
