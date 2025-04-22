@@ -1,9 +1,11 @@
 import { Loader } from '../../../taffy/src/taffy/router'
 import { setTitle } from '../../../taffy/src/taffy/meta'
-import { Grid } from '../../../taffy/src/taffy/grid'
 import { renderBackground } from './background'
 import { renderRobot } from './robot'
 
+const easeInOutCubic = ( x: number ): number => {
+    return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+}
 
 const index = () => {
     console.log( 'Initializing index page.' )
@@ -20,6 +22,18 @@ const index = () => {
 
     const aboutText = document.querySelector( '.about__description__container' ) as HTMLDivElement
     if ( !aboutText ) return console.error( 'Can\'t locate \'.about__description__container\'' )
+
+    const waterBackground = document.querySelector( '.background__water' ) as HTMLDivElement
+    if ( !waterBackground ) return console.error( 'Can\'t locate \'.background__water\'' )
+
+    const experienceCards = document.querySelectorAll( '.experience__card' )
+    if ( !experienceCards ) return console.error( 'Can\'t locate \'.background__water\'' )
+
+    const imageContainer = document.querySelector( '.about__images__container' ) as HTMLDivElement
+    if ( !imageContainer ) return console.error( 'Can\'t locate \'.about__images__container\'' )
+
+    const image = document.querySelector( '.about__image' ) as HTMLDivElement
+    if ( !image ) return console.error( 'Can\'t locate \'.about__image\'' )
 
     // meta
     setTitle( 'Michael Vaden' )
@@ -45,41 +59,119 @@ const index = () => {
     })*/
 
     // about
-    const aboutMinThreshold = window.innerHeight
-    const aboutMaxThreshold = window.innerHeight * 2
+    const aboutMin = window.innerHeight
+    const aboutMax = window.innerHeight * 3
 
-    const aboutTextMinThreshold = aboutMinThreshold
-    const aboutTextMaxThreshold = aboutMinThreshold + ( window.innerHeight / 4 )
-    const aboutTextMaxOpacityThreshold = aboutMinThreshold + ( window.innerHeight / 8 )
-    let aboutMaxTextBlur = 10
-    let aboutMaxTextContrast = 1.2
+    const aboutTextMin = aboutMin
+    const aboutTextMax = aboutMin + ( window.innerHeight / 2 )
+    let aboutBlurMax = 12
+
+    // water background
+    const waterBackgroundMin = window.innerHeight * 2
+    const waterBackgroundMax = window.innerHeight * 3
+
+    // image
+    const imageExpand1Min = window.innerHeight
+    const imageExpand1Max = imageExpand1Min + ( window.innerHeight / 2 )
+    const imageExpand2Max = imageExpand1Min * 2
 
     window.addEventListener( 'scroll', () => {
-        if ( window.scrollY > aboutMinThreshold && window.scrollY < aboutMaxThreshold ) {
+        if ( window.scrollY < imageExpand1Min ) {
+            image.style.height = '0px'
+            image.style.width = '0px'
+        } else
+        if ( window.scrollY > imageExpand1Min && window.scrollY < imageExpand1Max ) {
+            const imageSize = imageContainer.getBoundingClientRect().height
+
+            const w = easeInOutCubic(( window.scrollY - imageExpand1Min ) / ( imageExpand1Max - imageExpand1Min )) * imageSize
+            const h = easeInOutCubic(( window.scrollY - imageExpand1Min ) / ( imageExpand1Max - imageExpand1Min )) * 10
+
+            image.style.height = `${h}px`
+            image.style.width = `${w}px`
+        } else
+        if ( window.scrollY > imageExpand1Max && window.scrollY < imageExpand2Max ) {
+            const imageSize = imageContainer.getBoundingClientRect().height
+
+            const h = (easeInOutCubic(( window.scrollY - imageExpand1Max ) / ( imageExpand2Max - imageExpand1Max )) *  ( imageSize - 10 )) + 10
+
+            image.style.height = `${h}px`
+            image.style.width = `${imageSize}px`
+        } else {
+            const imageSize = imageContainer.getBoundingClientRect().height
+
+            image.style.height = `${imageSize}px`
+            image.style.width = `${imageSize}px`
+        }
+
+        if ( window.scrollY > aboutMin && window.scrollY < aboutMax ) {
+            about.style.position = 'fixed'
+            about.style.top = '0'
+        }
+
+        if ( window.scrollY > aboutMin && window.scrollY < aboutMax ) {
             about.style.position = 'fixed'
             about.style.top = '0'
         } else 
-        if ( window.scrollY < aboutMinThreshold ) {
+        if ( window.scrollY < aboutMin ) {
             about.style.position = 'absolute'
             about.style.top = '100vh'
         } else {
             about.style.position = 'absolute'
-            about.style.top = '200vh'
+            about.style.top = '300vh'
         }
 
-        if ( window.scrollY > aboutTextMinThreshold && window.scrollY < aboutTextMaxOpacityThreshold ) {
-            const opacity =  ( window.scrollY - aboutTextMinThreshold ) / ( aboutTextMaxOpacityThreshold - aboutTextMinThreshold )
+        if ( window.scrollY > aboutTextMin && window.scrollY < aboutTextMax ) {
+            const blur =  easeInOutCubic( 1 - ( window.scrollY - aboutTextMin ) / ( aboutTextMax - aboutTextMin )) * aboutBlurMax
+            const opacity =  easeInOutCubic(( window.scrollY - aboutTextMin ) / ( aboutTextMax - aboutTextMin ))
 
+            console.log(blur)
+
+            aboutText.style.filter = `blur(${blur}px)`
             aboutText.style.opacity = `${opacity}`
+        } else
+        if ( window.scrollY < aboutMin ) {
+            aboutText.style.filter = `blur(12px)`
+            aboutText.style.opacity = `0`
+        } else {
+            aboutText.style.filter = `blur(0px)`
+            aboutText.style.opacity = `1`
         }
 
-        if ( window.scrollY > aboutTextMinThreshold && window.scrollY < aboutTextMaxThreshold ) {
-            const blur =  aboutMaxTextBlur - ( window.scrollY - aboutTextMinThreshold ) / ( aboutTextMaxThreshold - aboutTextMinThreshold ) * aboutMaxTextBlur
-            const contrast =  aboutMaxTextContrast - ( window.scrollY - aboutTextMinThreshold ) / ( aboutTextMaxThreshold - aboutTextMinThreshold ) * aboutMaxTextContrast
+        if ( window.scrollY > aboutMin && window.scrollY < aboutMax ) {
+            about.style.position = 'fixed'
+            about.style.top = '0'
+        } else 
+        if ( window.scrollY < aboutMin ) {
+            about.style.position = 'absolute'
+            about.style.top = '100vh'
+        } else {
+            about.style.position = 'absolute'
+            about.style.top = '300vh'
+        }
 
-            aboutText.style.filter = `blur(${blur}px) contrast(${contrast})`
+        if ( window.scrollY > waterBackgroundMin && window.scrollY < waterBackgroundMax ) {
+            const opacity =  easeInOutCubic(( window.scrollY - waterBackgroundMin ) / ( waterBackgroundMax - waterBackgroundMin ))
+
+            waterBackground.style.opacity = `${opacity}`
+        } else
+        if ( window.scrollY < waterBackgroundMin ) {
+            waterBackground.style.opacity = `0`
+        } else {
+            waterBackground.style.opacity = `1`
         }
     })
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate')
+            // Optional: unobserve if you only want it to happen once
+            observer.unobserve(entry.target)
+          }
+        })
+    })
+      
+    experienceCards.forEach(el => observer.observe(el))
     
     // about image grid
     //const grid = new Grid({ containerSel: '.about__picture__wrapper' })
@@ -127,8 +219,9 @@ const main = () => {
 
     new Loader({ routes, defaultFunc: () => {}})
 
-    // page independent functionality
-    renderBackground()
+    // caustic ripple backgrounds
+    renderBackground( '.background__fire > canvas', 'vec3(0.275, 0.105, 0.105)')
+    renderBackground( '.background__water > canvas', 'vec3(0.105, 0.105, 0.275)' )
 }
 
 window.addEventListener('DOMContentLoaded', main)

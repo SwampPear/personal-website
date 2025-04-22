@@ -4,23 +4,21 @@
     {% include 'partials/head.html' %}
     <body>
         {% include 'partials/nav.html' %}
-        {% include 'partials/background.html' %}
+        <div class="background__fire">
+            <canvas></canvas>
+        </div>
+        <div class="background__water">
+            <canvas></canvas>
+        </div>
         <div class="index">
             {% include 'partials/graphic.html' %}
             {% include 'partials/about.html' %}
-            <div style="width: 100vw; height: 100vh;position: absolute; top: 200vh;"></div>
-            <div style="width: 100vw; height: 100vh; background-color: blue; position: absolute; top: 300vh;"></div>
-            <div style="width: 100vw; height: 100vh; background-color: blue; position: absolute; top: 400vh;"></div>
+            <div class="experience__projects__container">
+                {% include 'partials/experience.html' %}
+                {% include 'partials/projects.html' %}
+            </div>
         </div>
         <div class="about-page">
-            <div style="width: 20rem; height: 20rems; background-color: red; z-index: 999; position: relative;"/>
         </div>
-        <div id="si" style="background: pink; padding: .5rem; position: fixed; left: 0; top: 0; z-index: 999">0px</div>
-        <script>
-            const si = document.querySelector( '#si' )
-            document.addEventListener( 'scroll', ( event ) => {
-                si.textContent = `${window.scrollY}px`
-            })
-        </script>
     </body>
 </html>
