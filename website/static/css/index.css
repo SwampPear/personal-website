@@ -283,6 +283,21 @@ About
     color: var(--tf-black-1200) !important;
 }
 
+.text__p__link {
+    color: var(--tf-white-200) !important;
+    cursor: url('/static/img/cursor.png') 16 16, auto;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    transition: color var(--tf-duration);
+    text-decoration: none;
+}
+
+.text__p__link:hover {
+    color: var(--tf-white-400) !important;
+    cursor: url('/static/img/cursor.png') 16 16, auto;
+    text-decoration: none;
+}
+
 /*
 Experience
 ================================================================================
@@ -350,6 +365,54 @@ Footer
 ================================================================================
 */
 
-.footer {
+.footer__container {
+    color: white;
+    display: flex;
+    padding: 3rem 0;
+    width: 100vw;
+}
 
+.footer__links__container,
+.footer__toast__container {
+    display: flex;
+}
+
+.footer__links__container {
+    justify-content: right;
+    padding: 0 2rem 0 0;
+    width: 45%;
+}
+
+.footer__links {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer__link {
+    color: var(--tf-black-1200) !important;
+    cursor: url('/static/img/cursor.png') 16 16, auto;
+    display: block;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    transition: color var(--tf-duration);
+    text-decoration: none;
+}
+
+.footer__link:hover {
+    color: var(--tf-black-1400) !important;
+    cursor: url('/static/img/cursor.png') 16 16, auto;
+    text-decoration: none;
+}
+
+
+.footer__logo {
+    
+}
+
+.footer__toast__container {
+    color: var(--tf-black-1200) !important;
+    justify-content: left;
+    width: 55%;
+    font-size: 1rem;
+    line-height: 1.5rem;
 }
