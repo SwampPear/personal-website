@@ -1,2 +1,17 @@
-notes.md
+# environment
+env/
+.env
+
+# django
+__pycache__/
+migrations/
+
+# node
+node_modules/
+package-lock.json
+
+taffy/
+pocket/
+model/
+old/
 ref/

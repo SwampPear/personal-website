@@ -1,0 +1,253 @@
+:root {
+    /* Colors */
+    --tf-black-200:     #121212;    /* deep black */
+    --tf-black-300:     #181818;    /* standard dark */
+    --tf-black-400:     #242424;    /* standard dark */
+    --tf-black-600:     #383838;    /* accessible for light-on-dark text */
+    --tf-black-800:     #4f4f4f;    /* disabled UI, subtle outlines */
+    --tf-black-1000:    #696969;    /* placeholder text / muted icon */
+    --tf-black-1200:    #858585;    /* lowest contrast on dark mode */
+    --tf-black-1400:    #a3a3a3;    /* extended: light UI element */
+    --tf-black-1600:    #c3c3c3;    /* extended: even lighter accent shade */
+
+    --tf-white-200:     #ffffff;    /* white */
+    --tf-white-400:     #ececec;    /* really light gray */
+    --tf-white-400:     #d3d3d3;    /* accent to white */
+    --tf-white-400:     #c9c9c9;    /* deeper accent to white */
+
+    --tf-pink-200:     #db95be;     /* pink */
+    --tf-pink-400:     #eec1db;     /* pink */
+
+    /* Animations */
+    --tf-duration:      .05s;         /* animation duration */
+
+    /* Z-Index */
+    --tf-z-behind:      -1;
+    --tf-z-base:        999;
+    --tf-z-fixed:       1010;
+    --tf-z-modal-bg:    1020;
+    --tf-z-modal:       1030;
+
+    /* Styles */
+    --tf-box-shadow-dark: rgba(18, 18, 18, 0.2) 0px 2px 8px 0px;
+}
+
+/*
+Layout
+================================================================================
+*/
+
+.tf-row,
+.tf-col {
+    display: flex;
+}
+
+.tf-row {
+
+}
+
+.tf-col {
+    flex-direction: column;
+}
+
+.tf-align-center {
+    align-items: center;
+}
+
+.tf-justify-space-between {
+    justify-content: space-between;
+}
+/*
+Positioning
+================================================================================
+*/
+
+.tf-fixed {
+    position: fixed !important;
+}
+
+/*
+Layers
+================================================================================
+*/
+
+.tf-layer-behind {
+    z-index: var(--tf-z-behind) !important;
+}
+
+.tf-layer-base {
+    z-index: var(--tf-z-base) !important;
+}
+
+.tf-layer-fixed {
+    z-index: var(--tf-z-fixed) !important;
+}
+
+.tf-layer-modal-bg {
+    z-index: var(--tf-z-modal-bg) !important;
+}
+
+.tf-layer-modal {
+    z-index: var(--tf-z-modal) !important;
+}
+
+.tf-layer-inherit {
+    z-index: inherit !important;
+}
+
+/*
+Visibility
+================================================================================
+*/
+
+.tf-hidden {
+    display: hidden;
+    opacity: 0;
+}
+
+.tf-visible {
+    display: block;
+    opacity: 1;
+}
+
+/*
+Grid
+================================================================================
+*/
+
+.tf-grid {
+
+}
+
+.tf-cell {
+
+}
+
+/*
+Typography
+================================================================================
+*/
+
+/*
+Animations
+================================================================================
+*/
+
+@keyframes tfFadeInFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-1rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes tfFadeInFromBottom {
+    from {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes tfFadeOutToBottom {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(1rem);
+    }
+}
+
+.tf-fade-in-from-top,
+.tf-fade-in-from-bottom {
+    opacity: 0;
+    position: relative;
+}
+  
+.tf-fade-in-from-top {
+    animation: tfFadeInFromTop var(--tf-duration) ease-in-out forwards; 
+}
+  
+.tf-fade-in-from-bottom {
+    animation: tfFadeInFromBottom var(--tf-duration) ease-in-out forwards;
+}
+
+.tf-fade-out-to-bottom {
+    animation: tfFadeOutToBottom var(--tf-duration) ease-in-out forwards;
+}
+
+/*
+Styles
+================================================================================
+*/
+
+.tf-box-shadow {
+    box-shadow: var(--tf-box-shadow);
+}
+
+.tf-box-shadow-dark {
+    box-shadow: var(--tf-box-shadow-dark);
+}
+
+/*
+Buttons
+================================================================================
+*/
+
+/*
+Button
+================================================================================
+*/
+
+.tf-button,
+.tf-button-pink,
+.tf-button-dark {
+    align-items: center;
+    border: none;
+    border-radius: .375rem;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    font-family: 'Moderustic', sans-serif;
+    font-size: .875rem;
+    font-weight: 500;
+    height: fit-content;
+    padding: .5rem .675rem;
+    width: fit-content;
+    text-decoration: none;
+    transition: var(--tf-duration) ease-in-out;
+}
+
+.tf-button:hover,
+.tf-button-pink:hover,
+.tf-button-dark:hover {
+    text-decoration: none;
+}
+
+.tf-button-pink {
+    background-color: var(--tf-pink-200);
+}
+
+.tf-button-pink:hover {
+    background-color: var(--tf-pink-400);
+}
+
+.tf-button-dark {
+    background-color: var(--tf-black-400);
+}
+
+.tf-button-dark:hover {
+    background-color: var(--tf-black-600);
+}
+
+
+
+
