@@ -411,7 +411,7 @@ Footer
 
 .footer__toast__container {
     color: var(--tf-black-1200) !important;
-    justify-content: left;
+    justify-content: center;
     width: 55%;
     font-size: 1rem;
     line-height: 1.5rem;
