@@ -27,15 +27,15 @@ export default function AboutSection() {
       <div className='w-full flex md:justify-end'>
         <motion.div
           initial={{ width: 0, height: 0 }}
-          animate={{ width: ['0%', '100%', '100%'], height: ['0px', '0px', '420px'] }}
+          animate={{ width: ['0%', '100%', '100%'], height: ['0px', '0px', '500px'] }}
           transition={{ duration: 0.9, times: [0, 0.55, 1], ease: 'easeInOut' }}
           className='relative overflow-hidden rounded-2xl shadow-lg shadow-black/10 dark:shadow-white/5
                      bg-neutral-200/40 dark:bg-neutral-800/40 backdrop-blur-sm'
           style={{ maxWidth: 520 }}
         >
           <motion.img
-            src='/images/me.jpg'
-            alt='Portrait of Michael'
+            src='/images/me.png'
+            alt='picture of Michael'
             className='block w-full h-full object-cover'
             initial={{ scale: 1.02 }}
             animate={{ scale: 1 }}
