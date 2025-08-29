@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/Addons.js'
@@ -40,7 +42,7 @@ const renderRobot = (el: HTMLDivElement | null) => {
     let faceMesh: any // the head
     let headMesh: any
 
-    loader.load('/public/glb/robot.glb', gltf => {
+    loader.load('/glb/robot.glb', gltf => {
       const model = gltf.scene
       scene.add(model)
 
@@ -54,7 +56,7 @@ const renderRobot = (el: HTMLDivElement | null) => {
 
       // animated face texture
       const video = document.createElement('video')
-      video.src = '/static/textures/face.mp4'
+      video.src = '/textures/face.mp4'
       video.loop = true
       video.muted = true
       video.play()
