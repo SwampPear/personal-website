@@ -122,7 +122,7 @@ const Robot = () => {
   }, [])
 
   return (
-    <div className="fixed inset-0 w-screen h-screen">
+    <div className="z-999 inset-0 w-screen h-screen">
       <div ref={containerRef} className="w-full h-full" />
     </div>
   )

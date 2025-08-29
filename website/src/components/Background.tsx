@@ -159,14 +159,14 @@ const Background = () => {
 
   useEffect(() => {
     try {
-      renderBackground(canvasRef.current, 'vec3(0.25, 0.05, 0.05)')
+      renderBackground(canvasRef.current, 'vec3(0.341, 0.149, 0.043)')
     } catch (e) {
       console.error(e)
     }
   }, [])
 
   return (
-    <div className="fixed inset-0 w-screen h-screen bg-gray-900">
+    <div className="-z-1 fixed inset-0 w-screen h-screen bg-gray-900 opacity-50">
       <canvas
         ref={canvasRef}
         className="w-full h-full block"
