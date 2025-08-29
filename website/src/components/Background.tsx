@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useRef } from 'react'
 
 // Compiles GLSL shaders.
@@ -157,7 +159,7 @@ const Background = () => {
 
   useEffect(() => {
     try {
-      renderBackground(canvasRef.current, 'vec3(0.22, 0.75, 0.95)')
+      renderBackground(canvasRef.current, 'vec3(0.25, 0.05, 0.05)')
     } catch (e) {
       console.error(e)
     }
@@ -167,8 +169,9 @@ const Background = () => {
     <div className="fixed inset-0 w-screen h-screen bg-gray-900">
       <canvas
         ref={canvasRef}
-        className="w-full h-full"
+        className="w-full h-full block"
       />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black via-black/50 to-transparent" />
     </div>
   )
 }
