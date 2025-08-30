@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRef, useState } from 'react'
 
@@ -8,13 +9,31 @@ type ShelfItem = {
   title: string
   subtitle?: string
   href?: string
+  imageSrc: string
 }
 
 const SHELF: ShelfItem[] = [
-  { id: 's1', title: 'Raytracer', subtitle: 'GPU path tracing', href: '#' },
-  { id: 's2', title: 'Portfolio', subtitle: 'Next.js + Motion', href: '#' },
-  { id: 's3', title: 'Compiler (Blam)', subtitle: 'AST + IR experiments', href: '#' },
-  { id: 's4', title: 'ACE Ticketing', subtitle: 'NFC wallet card', href: '#' },
+  {
+    id: 's1',
+    title: 'Field Guide to North American Birds',
+    subtitle: 'Audubon Society',
+    href: '#',
+    imageSrc: '/images/field_guide_to_north_american_birds.png'
+  },
+  {
+    id: 's2',
+    title: 'Checkered Strat',
+    subtitle: 'Luthiery Project',
+    href: '#',
+    imageSrc: '/images/checkered_strat.png'
+  },
+  {
+    id: 's3',
+    title: 'Georgia Sunshine',
+    subtitle: 'Jerry Reed',
+    href: '#',
+    imageSrc: '/images/georgia_sunshine.png'
+  }
 ]
 
 export default function ShelfSection() {
@@ -97,10 +116,35 @@ function HoloCard({ item }: { item: ShelfItem }) {
       onTouchMove={onMove as any}
       onTouchEnd={onLeave}
     >
-      <div className="cardInner" style={{ backgroundImage: 'var(--front)' }} />
+      {/* Optional base texture (off by default): set --front to a URL if you want both */}
+      <div className="cardInner" /* style={{ backgroundImage: 'var(--front)' }} */ />
+
+      {/* holo layers */}
       <div className="glow" />
       <div className="sparkle" />
+
+      {/* Real image */}
+
+
+      {/* content */}
       <div className="content">
+        <div className="mediaWrap flex items-center justify-center h-full">
+          <Image
+            src={item.imageSrc}
+            alt={item.title}
+            width={1000}           // any reasonable intrinsic size
+            height={1000}          // (Next.js needs these)
+            className="object-contain rounded-md"
+            style={{
+              maxHeight: 256,      // ⬅️ cap height at 128px
+              height: 'auto',      // keep aspect ratio
+              width: 'auto',
+              maxWidth: '100%'     // don’t overflow horizontally
+            }}
+            sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+          />
+        </div>
+
         <div className="title">{item.title}</div>
         {item.subtitle && <div className="subtitle">{item.subtitle}</div>}
       </div>

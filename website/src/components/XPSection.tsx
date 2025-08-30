@@ -20,12 +20,20 @@ type Item = {
   href?: string
 }
 
+/*
+
+
+
+*/
+
+
 const DATA: Item[] = [
-  { id: 'exp-1', kind: 'experience', title: 'Data Co-Op, Tools & Tech', org: 'Delta', period: 'Sep 2023 – May 2025', tags: ['AWS', 'Lake Formation', 'Athena'], blurb: 'Architected AWS data pipelines and dashboards for multi-TB datasets.', href: '#' },
-  { id: 'exp-2', kind: 'experience', title: 'IFC Web Lead', org: 'Georgia Tech IFC', period: '2024 – 2025', tags: ['Next.js', 'Design', 'Perf'], blurb: 'Built modern council site with clean IA and micro-interactions.', href: '#' },
-  { id: 'proj-1', kind: 'project', title: 'Personal Site', org: 'Portfolio', period: '2025', tags: ['Next.js', 'Framer Motion', 'Tailwind'], blurb: 'Playful interactions, glassmorphism, and crisp typography.', href: '#' },
-  { id: 'proj-2', kind: 'project', title: 'Blam (Lang/Compiler)', org: 'Personal', period: '2025', tags: ['C++', 'LLVM', 'Parsers'], blurb: 'Custom tokenizer + AST + IR experiments focused on ergonomics.', href: '#' },
-  { id: 'proj-3', kind: 'project', title: 'THE ACE', org: 'Ticketing', period: '2024 – 2025', tags: ['NFC', 'Tokenomics', 'Mobile'], blurb: 'Wallet-friendly NFC card for fair ticketing & ID verification.', href: '#' }
+  { id: 'exp-1', kind: 'experience', title: 'Data Co-Op, Tools & Tech', org: 'Delta', period: 'Sep 2023 - May 2025', tags: ['AWS', 'Lake Formation', 'Analytics'], blurb: 'Architected AWS data pipelines and dashboards for multi-TB datasets.', href: '#' },
+  { id: 'exp-2', kind: 'experience', title: 'SWE Intern', org: 'University of Georgia', period: 'Jan 2022 - Dec 2022', tags: ['Django', 'Slurm', 'HPC'], blurb: 'Implemented platform for HPC resource provisioning and research group management.', href: '#' },
+  { id: 'exp-3', kind: 'experience', title: 'Electrical / Fabrication Specialist', org: 'Black Dog Customs', period: 'May 2019 - May 2021', tags: ['CAD', 'Electronics', 'Fabrication'], blurb: 'Developed manufacturing processes and products for various automotive applications.', href: '#' },
+  { id: 'exp-4', kind: 'experience', title: 'Web Lead', org: 'Georgia Tech IFC', period: 'Sep 2024 - Nov 2024', tags: ['Next.js', 'NGINX', 'UI'], blurb: 'Built modern council site with clean IA and interactibility.', href: '#' },
+  { id: 'proj-1', kind: 'project', title: 'Personal Site', org: 'Portfolio', period: 'May 2025', tags: ['Next.js', 'WebGL', 'Three.js'], blurb: 'Playful interactions, glassmorphism, crisp typography, and 3D modeling.', href: '#' },
+  { id: 'proj-2', kind: 'project', title: 'Blam (Lang/Compiler)', org: 'Personal', period: 'Aug 2025', tags: ['C++', 'LLVM', 'Parsers'], blurb: 'Custom tokenizer + AST + IR experiments focused on ergonomics.', href: '#' }
 ]
 
 type Filter = 'both' | 'experience' | 'projects'
