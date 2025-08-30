@@ -18,7 +18,7 @@ export default function AboutSection() {
         </h1>
         <p className='mt-4 text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed'>
           I build smooth, performant web experiences and playful interactive visuals.
-          I’m into TypeScript, Three.js, and systems work—always chasing that clean,
+          I'm into TypeScript, Three.js, and systems work—always chasing that clean,
           minimal feel with crisp micro-interactions.
         </p>
       </div>
