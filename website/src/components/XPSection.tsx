@@ -4,6 +4,7 @@ import { AnimatePresence, motion, type Variants } from 'framer-motion'
 import { Briefcase, FolderGit2 } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import LiquidWord from './LiquidWord'
+import SegmentedButton from './SegmentedButton'
 
 
 /* ---------- Data & variants ---------- */
@@ -51,16 +52,40 @@ export default function XPSection() {
   return (
     <section id='xp' className='min-h-screen w-full px-3 sm:px-4 lg:px-24 py-12'>
       {/* Header + Segmented filter */}
-      <div className='mx-auto max-w-6xl mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between'>
-        <LiquidWord word='Experience & Projects' className='max-w-3xl' />
+      <div className="mx-auto max-w-6xl mb-4 flex flex-col items-center">
+        {/* Centered smaller liquid word */}
+        <LiquidWord
+          word="Experience / Projects"
+          className="w-full max-w-md text-center"  // 👈 smaller max width
+        />
 
-        {/* Glassmorphic segmented control */}
-        <div className='rounded-xl bg-white/10 dark:bg-black/10 backdrop-blur-xl backdrop-saturate-150 shadow-lg shadow-black/5 border border-black/5 dark:border-white/5 p-1 inline-flex'>
-          <SegmentedButton active={filter === 'both'} onClick={() => setFilter('both')} label='Both' />
-          <SegmentedButton active={filter === 'experience'} onClick={() => setFilter('experience')} icon={<Briefcase className='h-4 w-4' />} label='Experience' />
-          <SegmentedButton active={filter === 'projects'} onClick={() => setFilter('projects')} icon={<FolderGit2 className='h-4 w-4' />} label='Projects' />
+        {/* Filter bar below, aligned right */}
+        <div className="mt-2 w-full flex justify-end">
+          <div className="rounded-xl bg-white/10 dark:bg-black/10 backdrop-blur-xl backdrop-saturate-150 
+                    shadow-lg shadow-black/5 border border-black/5 dark:border-white/5 p-1 inline-flex">
+            <SegmentedButton
+              active={filter === 'both'}
+              onClick={() => setFilter('both')}
+              label="Both"
+            />
+            <SegmentedButton
+              active={filter === 'experience'}
+              onClick={() => setFilter('experience')}
+              icon={<Briefcase className="h-4 w-4" />}
+              label="Experience"
+            />
+            <SegmentedButton
+              active={filter === 'projects'}
+              onClick={() => setFilter('projects')}
+              icon={<FolderGit2 className="h-4 w-4" />}
+              label="Projects"
+            />
+          </div>
         </div>
       </div>
+
+
+
 
       {/* Grid */}
       <motion.div
@@ -122,35 +147,4 @@ export default function XPSection() {
   )
 }
 
-/* ---------- SegmentedButton ---------- */
-function SegmentedButton({
-  active,
-  onClick,
-  label,
-  icon
-}: {
-  active: boolean
-  onClick: () => void
-  label: string
-  icon?: React.ReactNode
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={[
-        'relative rounded-md px-3 sm:px-4 py-2 text-sm font-medium transition',
-        'focus:outline-none focus-visible:ring-2 focus-visible:ring-black/20 dark:focus-visible:ring-white/20',
-        active
-          ? 'text-black dark:text-white bg-white/60 dark:bg-white/10 shadow-inner'
-          : 'text-neutral-800 dark:text-neutral-200 hover:bg-white/20 dark:hover:bg-white/5'
-      ].join(' ')}
-      aria-pressed={active}
-      type='button'
-    >
-      <span className='inline-flex items-center gap-2'>
-        {icon}
-        {label}
-      </span>
-    </button>
-  )
-}
+

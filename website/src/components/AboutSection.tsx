@@ -1,26 +1,71 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion, type Variants } from 'framer-motion';
+import LiquidWord from './LiquidWord';
 
+/* --- mini liquid word just for headings (no hover effects) --- */
+function LiquidWordHeading({
+  word = 'Salutations',
+  className = ''
+}: { word?: string; className?: string }) {
+  return (
+    <div className={['relative select-none', className].join(' ')}>
+      <motion.svg
+        viewBox="0 0 800 180"
+        className="w-full h-auto"
+        style={{ overflow: 'visible' }}
+        preserveAspectRatio="xMidYMid meet"
+        aria-label={word}
+      >
+        <defs>
+          {/* Expanded bounds so warping never clips */}
+          <filter id="liquid-filter-heading" filterUnits="userSpaceOnUse" x={-120} y={-120} width={1040} height={420}>
+            <motion.feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.006 0.008"
+              numOctaves={2}
+              seed={5}
+              result="noise"
+              animate={{ baseFrequency: ['0.006 0.008', '0.0075 0.010', '0.006 0.008'] }}
+              transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <feDisplacementMap in="SourceGraphic" in2="noise" xChannelSelector="R" yChannelSelector="G" scale={10} />
+          </filter>
+        </defs>
+
+        <motion.text
+          x="50%"
+          y="54%"
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fontFamily='-apple-system, BlinkMacSystemFont, "SF Pro Display", Inter, ui-sans-serif'
+          fontWeight={800}
+          letterSpacing="-0.02em"
+          fill="currentColor"                      /* follows Tailwind text color */
+          filter="url(#liquid-filter-heading)"
+          style={{ fontSize: 72 }}                 /* smaller for header */
+          className="text-black dark:text-white"
+        >
+          {word}
+        </motion.text>
+      </motion.svg>
+    </div>
+  )
+}
+
+/* --- your existing variants --- */
 const textParent: Variants = {
   hidden: { opacity: 0, y: 20 },
   show: {
     opacity: 1,
     y: 0,
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.05
-    }
+    transition: { staggerChildren: 0.12, delayChildren: 0.05 }
   }
 }
 
 const textChild: Variants = {
   hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] }
-  }
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } }
 }
 
 export default function AboutSection() {
@@ -34,13 +79,11 @@ export default function AboutSection() {
         whileInView='show'
         viewport={{ once: true, amount: 0.75, margin: '-10% 0px -10% 0px' }}
       >
-        <motion.h1
-          variants={textChild}
-          className='text-2xl sm:text-3xl font-semibold tracking-tight text-black dark:text-white'
-          style={{ fontFamily: '-apple-system, BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial' }}
-        >
-          Salutations 👋
-        </motion.h1>
+        {/* Liquid header + the wave emoji */}
+        <motion.div variants={textChild} className="flex items-baseline gap-2">
+          <LiquidWord word="Salutations" className="-ml-8 -mb-6" />
+        </motion.div>
+
         <motion.p variants={textChild} className='mt-4 text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed'>
           I'm Michael, a senior CS student at Georgia Tech with concentrations in Intelligence and Systems and
           Architecture. From early on I've been drawn to technology, and I've harbored a lifelong passion for tinkering.

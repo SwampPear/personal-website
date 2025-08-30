@@ -24,3 +24,7 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.liquid-word-font {
+  font-family: var(--font-liquid), -apple-system, BlinkMacSystemFont, "SF Pro Display", Inter, ui-sans-serif;
+}

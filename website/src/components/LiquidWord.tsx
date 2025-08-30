@@ -7,67 +7,63 @@ export default function LiquidWord({
   className = ''
 }: { word?: string; className?: string }) {
   return (
-    <div className={['relative select-none', className].join(' ')}>
+    <div
+      className={['relative select-none', className].join(' ')}
+      // Better font smoothing in browsers
+      style={{ WebkitFontSmoothing: 'antialiased', MozOsxFontSmoothing: 'grayscale' }}
+    >
       <motion.svg
-        viewBox="0 0 1200 300"
+        // Tighter viewBox than 1200x300; still roomy
+        viewBox="0 0 900 220"
         className="w-full h-auto"
-        initial="rest"
-        whileHover="hover"
+        style={{ overflow: 'visible' }}                  // allow overflow beyond viewBox
+        preserveAspectRatio="xMidYMid meet"
+        // Improve rendering quality
+        shapeRendering="geometricPrecision"
+        textRendering="optimizeLegibility"
+        colorInterpolationFilters="sRGB"
         aria-label={word}
       >
         <defs>
-          {/* pretty gradient fill */}
-          <linearGradient id="liquid-grad" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0%" stopColor="rgb(17 24 39)" />        {/* slate-900 */}
-            <stop offset="100%" stopColor="rgb(99 102 241)" />     {/* indigo-500 */}
-          </linearGradient>
-
-          {/* liquid filter: turbulence -> displacement */}
-          <filter id="liquid-filter">
+          {/* Use objectBoundingBox + percentages so the filter always extends far past the text bounds */}
+          <filter
+            id="liquid-filter"
+            filterUnits="objectBoundingBox"
+            x="-40%" y="-80%" width="180%" height="260%"  // huge padding => no clip
+            // Render the filter at higher internal resolution for smoother edges
+            filterRes="1200"
+          >
             <motion.feTurbulence
               type="fractalNoise"
-              baseFrequency="0.008 0.012"
+              baseFrequency="0.005 0.008"                // subtler wobble
               numOctaves={2}
               seed={7}
               result="noise"
-              variants={{
-                rest: { baseFrequency: '0.007 0.010' },
-                hover: { baseFrequency: '0.012 0.018' }
-              }}
-              animate={{
-                // gentle breathing loop even at rest
-                baseFrequency: ['0.007 0.010', '0.009 0.014', '0.007 0.010']
-              }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              animate={{ baseFrequency: ['0.02 0.008', '0.025 0.010', '0.02 0.008'] }}
+              transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
             />
-            <motion.feDisplacementMap
+            <feDisplacementMap
               in="SourceGraphic"
               in2="noise"
               xChannelSelector="R"
               yChannelSelector="G"
-              scale={18}
-              variants={{
-                rest: { scale: 14 },
-                hover: { scale: 26 }
-              }}
-              transition={{ type: 'spring', stiffness: 80, damping: 12 }}
+              scale={10}                                  // slightly lower scale reduces jaggies
             />
           </filter>
         </defs>
 
-        {/* the liquid word */}
         <motion.text
           x="50%"
           y="50%"
           textAnchor="middle"
           dominantBaseline="middle"
-          fontFamily='-apple-system, BlinkMacSystemFont, "SF Pro Display", Inter, ui-sans-serif'
           fontWeight={800}
           letterSpacing="-0.02em"
-          fill="url(#liquid-grad)"
+          fill="currentColor"
           filter="url(#liquid-filter)"
-          // responsive-ish sizing: tweak as needed
-          style={{ fontSize: 160 }}
+          // Make it smaller than before (was 120)
+          style={{ fontSize: 96 }}
+          className="liquid-word-font text-black dark:text-white"
         >
           {word}
         </motion.text>
