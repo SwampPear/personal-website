@@ -85,9 +85,14 @@ export default function AboutSection() {
         </motion.div>
 
         <motion.p variants={textChild} className='mt-4 text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed'>
-          I'm Michael, a senior CS student at Georgia Tech with concentrations in Intelligence and Systems and
-          Architecture. From early on I've been drawn to technology, and I've harbored a lifelong passion for tinkering.
-          I would tinker—because I have an insatiable need to understand how things work.
+          I'm Michael, a senior CS student at
+          <span
+            className="font-bold bg-gradient-to-r from-[#B3A369] to-[#C9A973] bg-clip-text text-transparent"
+          >
+            &nbsp;Georgia Tech&nbsp;
+          </span>
+          focusing in Intelligence and Systems and Architecture. From early on I've been drawn to technology, and I've
+          harbored a lifelong passion for tinkering. I would say the need to understand how things tick is central to my life.
         </motion.p>
         <motion.p variants={textChild} className='mt-4 text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed'>
           I've built my own guitar, I fix my own car, and I've coded numerous personal apps that live quietly on my
@@ -96,8 +101,8 @@ export default function AboutSection() {
           graphics programming.
         </motion.p>
         <motion.p variants={textChild} className='mt-4 text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed'>
-          When I'm not at work or study, I can be found exploring music, traveling to far reaching areas of the world,
-          reading some classics, and watching Studio Ghibli films.
+          When I'm not at work or study, I can be found exploring music, traveling the world, reading some classics, and
+          watching some of my favorites.
         </motion.p>
       </motion.div>
 

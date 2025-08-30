@@ -3,6 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --sparkles: url('https://assets.codepen.io/13471/sparkles.gif');
+  --holo: url('https://assets.codepen.io/13471/holo.png');
 }
 
 @theme inline {
@@ -16,6 +18,8 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --sparkles: url('https://assets.codepen.io/13471/sparkles.gif');
+    --holo: url('https://assets.codepen.io/13471/holo.png');
   }
 }
 
@@ -27,4 +31,243 @@ body {
 
 .liquid-word-font {
   font-family: var(--font-liquid), -apple-system, BlinkMacSystemFont, "SF Pro Display", Inter, ui-sans-serif;
+}
+
+.cards {
+  perspective: 2000px;
+  transform: translate3d(0, 0, 0.1px);
+}
+
+.card {
+  position: relative;
+  border-radius: 5% / 3.5%;
+  overflow: hidden;
+  touch-action: none;
+  transform-style: preserve-3d;
+  background-color: #040712;
+  width: 71.5vw;
+  height: 100vw;
+
+  /* Eevee theme defaults */
+  --color1: #efb2fb;
+  --color2: #acc6f8;
+  --front: url(https://air-nft.com/wp-content/uploads/2022/01/007-CrossFace-NFT-Toy-QR-Curve.png);
+}
+
+@media (min-width: 600px) {
+  .card {
+    width: clamp(12.9vw, 61vh, 18vw);
+    height: clamp(18vw, 85vh, 25.2vw);
+  }
+}
+
+.cardInner {
+  width: 100%;
+  height: 100%;
+  /* Removed box-shadows to eliminate border effects */
+  box-shadow: none;
+  transition: transform 0.45s ease;
+  /* no shadow transition */
+  background-size: cover;
+  background-repeat: no-repeat;
+  transform-origin: center;
+  /* Parallax with cursor */
+  background-position: var(--bg-x, 50%) var(--bg-y, 50%);
+  will-change: transform, background-position;
+}
+
+/* Removed: .card:hover .cardInner { box-shadow: ... } */
+
+/* holographic layers */
+.glow,
+.sparkle {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: color-dodge;
+  transition: all .33s ease;
+  z-index: 2;
+  content: '';
+}
+
+.glow {
+  z-index: 1;
+  background-image: linear-gradient(115deg,
+      transparent 0%,
+      var(--color1) 25%,
+      transparent 47%,
+      transparent 53%,
+      var(--color2) 75%,
+      transparent 100%);
+  background-size: 300% 300%;
+  background-position: var(--grad-x, 50%) var(--grad-y, 50%);
+  opacity: .5;
+  filter: brightness(.5) contrast(1);
+}
+
+.sparkle {
+  z-index: 2;
+  background-image:
+    var(--sparkles),
+    var(--holo),
+    linear-gradient(125deg,
+      #ff008450 15%, #fca40040 30%, #ffff0030 40%,
+      #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
+  background-size: 160%;
+  background-position: var(--sprk-x, 50%) var(--sprk-y, 50%);
+  background-blend-mode: overlay;
+  opacity: var(--sprk-o, .75);
+  filter: brightness(1) contrast(1);
+}
+
+/* Keep the glow intensification on hover; it's not a border */
+.card:hover .glow,
+.card.active .glow {
+  background-image: linear-gradient(110deg,
+      transparent 25%,
+      var(--color1) 48%,
+      var(--color2) 52%,
+      transparent 75%);
+  background-size: 250% 250%;
+  opacity: .88;
+  filter: brightness(.66) contrast(1.33);
+  transition: none;
+}
+
+/* Entrance animations (unchanged) */
+@keyframes holoCard {
+
+  0%,
+  100% {
+    transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+  }
+
+  5%,
+  8% {
+    transform: rotateZ(0) rotateX(6deg) rotateY(-20deg);
+  }
+
+  13%,
+  16% {
+    transform: rotateZ(0) rotateX(-9deg) rotateY(32deg);
+  }
+
+  35%,
+  38% {
+    transform: rotateZ(3deg) rotateX(12deg) rotateY(20deg);
+  }
+
+  55% {
+    transform: rotateZ(-3deg) rotateX(-12deg) rotateY(-27deg);
+  }
+}
+
+@keyframes holoGradient {
+
+  0%,
+  100% {
+    opacity: .5;
+    background-position: 50% 50%;
+    filter: brightness(.5) contrast(1);
+  }
+
+  5%,
+  9% {
+    background-position: 100% 100%;
+    opacity: 1;
+    filter: brightness(.75) contrast(1.25);
+  }
+
+  13%,
+  17% {
+    background-position: 0% 0%;
+    opacity: .88;
+  }
+
+  35%,
+  39% {
+    background-position: 100% 100%;
+    opacity: 1;
+    filter: brightness(.5) contrast(1);
+  }
+
+  55% {
+    background-position: 0% 0%;
+    opacity: 1;
+    filter: brightness(.75) contrast(1.25);
+  }
+}
+
+@keyframes holoSparkle {
+
+  0%,
+  100% {
+    opacity: .75;
+    background-position: 50% 50%;
+    filter: brightness(1.2) contrast(1.25);
+  }
+
+  5%,
+  8% {
+    opacity: 1;
+    background-position: 40% 40%;
+    filter: brightness(.8) contrast(1.2);
+  }
+
+  13%,
+  16% {
+    opacity: .5;
+    background-position: 50% 50%;
+    filter: brightness(1.2) contrast(.8);
+  }
+
+  35%,
+  38% {
+    opacity: 1;
+    background-position: 60% 60%;
+    filter: brightness(1) contrast(1);
+  }
+
+  55% {
+    opacity: .33;
+    background-position: 45% 45%;
+    filter: brightness(1.2) contrast(1.25);
+  }
+}
+
+.animated .cardInner {
+  animation: holoCard 12s ease 0s 1;
+}
+
+.animated .glow {
+  animation: holoGradient 12s ease 0s 1;
+}
+
+.animated .sparkle {
+  animation: holoSparkle 12s ease 0s 1;
+}
+
+.content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 16px 18px;
+  z-index: 3;
+  color: white;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+.title {
+  font-weight: 700;
+  font-size: clamp(16px, 1.4vw, 20px);
+  line-height: 1.15;
+}
+
+.subtitle {
+  font-size: 13px;
+  opacity: 0.9;
 }

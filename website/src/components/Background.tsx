@@ -154,12 +154,12 @@ const renderBackground = (el: HTMLCanvasElement | null, color: string) => {
   }
 }
 
-const Background = () => {
+const Background = ({ color }: { color: string }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   useEffect(() => {
     try {
-      renderBackground(canvasRef.current, 'vec3(0.341, 0.149, 0.043)')
+      renderBackground(canvasRef.current, color)
     } catch (e) {
       console.error(e)
     }

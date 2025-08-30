@@ -9,9 +9,9 @@ import { useMemo, useState } from 'react'
 type NavItem = { href: string; label: string }
 
 const NAV_ITEMS: NavItem[] = [
+  { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/projects', label: 'XP / Projects' },
-  { href: 'mailto:michaelvaden.mjv@gmail.com', label: 'Contact' },
   { href: '/shelf', label: 'Shelf' },
   { href: '/cv', label: 'CV' }
 ]

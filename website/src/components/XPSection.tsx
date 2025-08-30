@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, type Variants } from 'framer-motion'
 import { Briefcase, FolderGit2 } from 'lucide-react'
+import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import LiquidWord from './LiquidWord'
 import SegmentedButton from './SegmentedButton'
@@ -96,51 +97,82 @@ export default function XPSection() {
         viewport={{ once: true, amount: 0.5 }}
         layout
       >
-        <AnimatePresence initial={false} mode='popLayout'>
-          {items.map(item => (
-            <motion.article
-              key={item.id}
-              variants={itemVariants}
-              layout
-              exit={{ opacity: 0, y: 10, scale: 0.98, transition: { duration: 0.2 } }}
-              className='group relative rounded-2xl bg-white/10 dark:bg-black/10 backdrop-blur-xl backdrop-saturate-150 border border-black/5 dark:border-white/5 shadow-lg shadow-black/5 overflow-hidden'
-            >
-              <div className='pointer-events-none absolute inset-0 bg-gradient-to-br from-white/10 to-transparent dark:from-white/5' />
-              <div className='relative p-5 sm:p-6 flex flex-col gap-3'>
-                <div className='flex items-start justify-between gap-3'>
-                  <h3 className='text-lg font-semibold text-black dark:text-white leading-tight'>{item.title}</h3>
-                  <span className='rounded-md px-2 py-0.5 text-xs font-medium bg-black/5 dark:bg-white/10 text-neutral-800 dark:text-neutral-200'>
-                    {item.kind === 'experience' ? 'Experience' : 'Project'}
-                  </span>
-                </div>
+        <AnimatePresence initial={false} mode="popLayout">
+          {items.map((item) => {
+            const href = item.href ?? '#'
+            const external = href.startsWith('http')
 
-                {(item.org || item.period) && (
-                  <p className='text-sm text-neutral-600 dark:text-neutral-400'>
-                    {[item.org, item.period].filter(Boolean).join(' • ')}
-                  </p>
-                )}
+            return (
+              <Link
+                key={item.id}
+                href={href}
+                target={external ? '_blank' : undefined}
+                rel={external ? 'noreferrer noopener' : undefined}
+                aria-label={`${item.title} (${item.kind})`}
+                className="group block focus:outline-none"
+              >
+                <motion.div
+                  variants={itemVariants}
+                  layout
+                  exit={{ opacity: 0, y: 10, scale: 0.98, transition: { duration: 0.2 } }}
+                  whileHover={{ y: -2, scale: 1.005 }}     // 👈 smaller lift & scale
+                  whileTap={{ scale: 0.997 }}              // 👈 gentler press-in
+                  transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                  className="relative rounded-2xl bg-white/10 dark:bg-black/10 backdrop-blur-xl backdrop-saturate-150
+                     border border-black/5 dark:border-white/5 shadow-lg shadow-black/5 overflow-hidden
+                     cursor-pointer ring-0 focus-visible:ring-2 focus-visible:ring-black/20 dark:focus-visible:ring-white/20"
+                >
+                  {/* very soft sheen */}
+                  <motion.div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/2 rotate-12
+                       bg-gradient-to-r from-white/5 to-transparent dark:from-white/5"
+                    initial={{ x: '-120%' }}
+                    whileHover={{ x: '140%' }}
+                    transition={{ duration: 1.4, ease: 'easeOut' }} // 👈 slower & smoother
+                  />
 
-                <p className='text-neutral-800 dark:text-neutral-200'>{item.blurb}</p>
-
-                {item.tags?.length ? (
-                  <div className='mt-1 flex flex-wrap gap-2'>
-                    {item.tags.map(t => (
-                      <span key={t} className='rounded-full border border-black/10 dark:border-white/10 bg-white/30 dark:bg-white/5 px-2 py-1 text-xs text-neutral-800 dark:text-neutral-200'>
-                        {t}
+                  <div className="relative p-5 sm:p-6 flex flex-col gap-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="text-lg font-semibold text-black dark:text-white leading-tight">
+                        {item.title}
+                      </h3>
+                      <span className="rounded-md px-2 py-0.5 text-xs font-medium bg-black/5 dark:bg-white/10 text-neutral-800 dark:text-neutral-200">
+                        {item.kind === 'experience' ? 'Experience' : 'Project'}
                       </span>
-                    ))}
-                  </div>
-                ) : null}
+                    </div>
 
-                {item.href ? (
-                  <a href={item.href} className='mt-3 inline-flex items-center text-sm font-medium text-neutral-900 dark:text-neutral-100 hover:underline'>
-                    View details →
-                  </a>
-                ) : null}
-              </div>
-              <div className='absolute inset-0 transition-transform duration-300 group-hover:-translate-y-0.5' />
-            </motion.article>
-          ))}
+                    {(item.org || item.period) && (
+                      <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                        {[item.org, item.period].filter(Boolean).join(' • ')}
+                      </p>
+                    )}
+
+                    <p className="text-neutral-800 dark:text-neutral-200">{item.blurb}</p>
+
+                    {item.tags?.length ? (
+                      <div className="mt-1 flex flex-wrap gap-2">
+                        {item.tags.map((t) => (
+                          <span
+                            key={t}
+                            className="rounded-full border border-black/10 dark:border-white/10 bg-white/30 dark:bg-white/5
+                               px-2 py-1 text-xs text-neutral-800 dark:text-neutral-200"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+
+                  {/* subtle shadow change on hover */}
+                  <div className="absolute inset-0 transition-[box-shadow,border-color] duration-300
+                          group-hover:shadow-lg group-hover:shadow-black/5
+                          group-hover:border-black/10 dark:group-hover:border-white/10" />
+                </motion.div>
+              </Link>
+            )
+          })}
         </AnimatePresence>
       </motion.div>
     </section>
