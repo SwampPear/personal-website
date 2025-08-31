@@ -81,7 +81,7 @@ export default function AboutSection() {
       >
         {/* Liquid header + the wave emoji */}
         <motion.div variants={textChild} className="flex items-baseline gap-2">
-          <LiquidWord word="Salutations" className="-ml-8 -mb-6" />
+          <LiquidWord word="Salutations" className="-ml-23 lg:-ml-8 -mb-6" />
         </motion.div>
 
         <motion.p variants={textChild} className='mt-4 text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed'>
@@ -95,10 +95,9 @@ export default function AboutSection() {
           harbored a lifelong passion for tinkering. I would say the need to understand how things tick is central to my life.
         </motion.p>
         <motion.p variants={textChild} className='mt-4 text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed'>
-          I've built my own guitar, I fix my own car, and I've coded numerous personal apps that live quietly on my
-          devices (and a few that are out there in the world). My endeavors in my field have allowed me to experiment
-          in diverse areas of Computer Science from full-stack web programming and UI design to systems programming to
-          graphics programming.
+          Over the years I've had the opportunity to explore many corners of computer science, from web and graphics programming,
+          to systems and compiler programming, to CAD and electrical work, to big data architecting and analytics. I see each
+          project I approach as a platform for learning and connecting the dots across disciplines, and I truly love what I do ❤️.
         </motion.p>
         <motion.p variants={textChild} className='mt-4 text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed'>
           When I'm not at work or study, I can be found exploring music, traveling the world, reading some classics, and

@@ -9,33 +9,28 @@ export default function LiquidWord({
   return (
     <div
       className={['relative select-none', className].join(' ')}
-      // Better font smoothing in browsers
       style={{ WebkitFontSmoothing: 'antialiased', MozOsxFontSmoothing: 'grayscale' }}
     >
       <motion.svg
-        // Tighter viewBox than 1200x300; still roomy
         viewBox="0 0 900 220"
         className="w-full h-auto"
-        style={{ overflow: 'visible' }}                  // allow overflow beyond viewBox
+        style={{ overflow: 'visible' }}
         preserveAspectRatio="xMidYMid meet"
-        // Improve rendering quality
         shapeRendering="geometricPrecision"
         textRendering="optimizeLegibility"
         colorInterpolationFilters="sRGB"
         aria-label={word}
       >
         <defs>
-          {/* Use objectBoundingBox + percentages so the filter always extends far past the text bounds */}
           <filter
             id="liquid-filter"
             filterUnits="objectBoundingBox"
-            x="-40%" y="-80%" width="180%" height="260%"  // huge padding => no clip
-            // Render the filter at higher internal resolution for smoother edges
+            x="-40%" y="-80%" width="180%" height="260%"
             filterRes="1200"
           >
             <motion.feTurbulence
               type="fractalNoise"
-              baseFrequency="0.005 0.008"                // subtler wobble
+              baseFrequency="0.005 0.008"
               numOctaves={2}
               seed={7}
               result="noise"
@@ -47,7 +42,7 @@ export default function LiquidWord({
               in2="noise"
               xChannelSelector="R"
               yChannelSelector="G"
-              scale={10}                                  // slightly lower scale reduces jaggies
+              scale={10}
             />
           </filter>
         </defs>
@@ -61,9 +56,10 @@ export default function LiquidWord({
           letterSpacing="-0.02em"
           fill="currentColor"
           filter="url(#liquid-filter)"
-          // Make it smaller than before (was 120)
-          style={{ fontSize: 96 }}
-          className="liquid-word-font text-black dark:text-white"
+          className="
+            liquid-word-font text-black dark:text-white
+            text-[48px] sm:text-[72px] md:text-[96px]
+          "
         >
           {word}
         </motion.text>

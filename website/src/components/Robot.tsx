@@ -1,18 +1,16 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/Addons.js'
 
-// Renders the robot model
-const renderRobot = (el: HTMLDivElement | null) => {
+/* ------------ Three.js setup ------------ */
+const renderRobot = (el: HTMLDivElement | null, onLoaded: () => void) => {
   try {
-    // canvas context
     if (!el) throw new Error('Canvas element not found.')
 
-    // three.js setup
     const scene = new THREE.Scene()
-
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
     camera.position.set(0, 0.75, 1.25)
 
@@ -27,78 +25,75 @@ const renderRobot = (el: HTMLDivElement | null) => {
     light.position.set(5, 10, 7.5)
     scene.add(light)
 
-    // mouse tracking
     const mouse = new THREE.Vector2()
     const raycaster = new THREE.Raycaster()
-
     window.addEventListener('mousemove', e => {
       mouse.x = (e.clientX / window.innerWidth) * 2 - 1
       mouse.y = -(e.clientY / window.innerHeight) * 2 + 1
     })
 
-    // load gltf
     const loader = new GLTFLoader()
-    let mixer: any
-    let faceMesh: any // the head
-    let headMesh: any
+    let mixer: THREE.AnimationMixer | null = null
+    let faceMesh: THREE.Object3D | null | undefined = null
+    let headMesh: THREE.Object3D | null | undefined = null
 
-    loader.load('/glb/robot.glb', gltf => {
-      const model = gltf.scene
-      scene.add(model)
+    loader.load(
+      '/glb/robot.glb',
+      gltf => {
+        const model = gltf.scene
+        scene.add(model)
 
-      // face
-      faceMesh = scene.getObjectByName('Cylinder002_1') as any
-      if (!faceMesh) return console.error('Face mesh not found.')
+        faceMesh = scene.getObjectByName('Cylinder002_1')
+        headMesh = scene.getObjectByName('Cylinder002')
 
-      // head
-      headMesh = scene.getObjectByName('Cylinder002') as any
-      if (!headMesh) return console.error('Head mesh not found.')
+        const video = document.createElement('video')
+        video.src = '/textures/face.mp4'
+        video.loop = true
+        video.muted = true
+        video.play()
 
-      // animated face texture
-      const video = document.createElement('video')
-      video.src = '/textures/face.mp4'
-      video.loop = true
-      video.muted = true
-      video.play()
+        const videoTexture = new THREE.VideoTexture(video)
+        videoTexture.minFilter = THREE.LinearFilter
+        videoTexture.magFilter = THREE.LinearFilter
+        videoTexture.format = THREE.RGBAFormat
 
-      const videoTexture = new THREE.VideoTexture(video)
-      videoTexture.minFilter = THREE.LinearFilter
-      videoTexture.magFilter = THREE.LinearFilter
-      videoTexture.format = THREE.RGBAFormat
+        if (faceMesh && 'material' in faceMesh) {
+          ; (faceMesh as any).material = new THREE.MeshBasicMaterial({
+            map: videoTexture,
+            transparent: true
+          })
+        }
 
-      faceMesh.material = new THREE.MeshBasicMaterial({ map: videoTexture, transparent: true })
+        mixer = new THREE.AnimationMixer(model)
+        gltf.animations.forEach(clip => {
+          mixer!.clipAction(clip).play()
+        })
 
-      mixer = new THREE.AnimationMixer(model)
-      gltf.animations.forEach(clip => {
-        mixer.clipAction(clip).play()
-      })
-    }, undefined, console.error)
+        // ✅ Notify parent that the model is ready
+        onLoaded()
+      },
+      undefined,
+      console.error
+    )
 
-    // animate
     const clock = new THREE.Clock()
     const lookTarget = new THREE.Vector3()
 
     const animate = () => {
       requestAnimationFrame(animate)
-
       const delta = clock.getDelta()
       if (mixer) mixer.update(delta)
 
       if (faceMesh && headMesh) {
-        // cast ray from camera to mouse
         raycaster.setFromCamera(mouse, camera)
-
-        // intersect with an invisible plane in front of the robot
         const planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), -0.75)
         raycaster.ray.intersectPlane(planeZ, lookTarget)
 
-        // face rotation
         const currentFaceRotation = faceMesh.quaternion.clone()
         faceMesh.lookAt(lookTarget)
         faceMesh.quaternion.slerp(currentFaceRotation, 0.9)
 
-        // head rotation
-        const currentHeadRotation = faceMesh.quaternion.clone()
+        const currentHeadRotation = headMesh.quaternion.clone()
         headMesh.lookAt(lookTarget)
         headMesh.quaternion.slerp(currentHeadRotation, 0.9)
       }
@@ -112,19 +107,26 @@ const renderRobot = (el: HTMLDivElement | null) => {
   }
 }
 
+/* ------------ React component ------------ */
 const Robot = () => {
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     if (containerRef.current) {
-      renderRobot(containerRef.current)
+      renderRobot(containerRef.current, () => setLoaded(true))
     }
   }, [])
 
   return (
-    <div className="z-999 inset-0 w-screen h-screen">
+    <motion.div
+      className="z-50 inset-0 w-screen h-screen flex items-center justify-center"
+      initial={{ opacity: 0, y: 40 }}
+      animate={loaded ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 1, ease: 'easeOut' }}
+    >
       <div ref={containerRef} className="w-full h-full" />
-    </div>
+    </motion.div>
   )
 }
 
