@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { useRef, useState } from 'react'
 
 type ShelfItem = {
-  id: string
   title: string
   subtitle?: string
   href?: string
@@ -14,25 +13,112 @@ type ShelfItem = {
 
 const SHELF: ShelfItem[] = [
   {
-    id: 's1',
-    title: 'Field Guide to North American Birds',
-    subtitle: 'Audubon Society',
+    title: 'Allan\'s Wing Pizza',
+    subtitle: 'Rocky Mountain Pizza Company, Atlanta',
     href: '#',
-    imageSrc: '/images/field_guide_to_north_american_birds.png'
+    imageSrc: '/images/allans_wing.png'
   },
   {
-    id: 's2',
+    title: 'Attic Sessions',
+    subtitle: 'Arcy Drive',
+    href: '#',
+    imageSrc: '/images/attic_sessions.jpeg'
+  },
+  {
+    title: 'Being So normal',
+    subtitle: 'Peach Pit',
+    href: '#',
+    imageSrc: '/images/being_so_normal.jpeg'
+  },
+  {
+    title: 'Bifana',
+    subtitle: 'O Trevo, Lisbon',
+    href: '#',
+    imageSrc: '/images/bifana.png'
+  },
+  {
+    title: 'Breezin\'',
+    subtitle: 'Wes Montgomery',
+    href: '#',
+    imageSrc: '/images/breezin.jpg'
+  },
+  {
     title: 'Checkered Strat',
     subtitle: 'Luthiery Project',
     href: '#',
     imageSrc: '/images/checkered_strat.png'
   },
   {
-    id: 's3',
+    title: 'Field Guide to North American Birds',
+    subtitle: 'Audubon Society',
+    href: '#',
+    imageSrc: '/images/field_guide_to_north_american_birds.png'
+  },
+  {
     title: 'Georgia Sunshine',
     subtitle: 'Jerry Reed',
     href: '#',
     imageSrc: '/images/georgia_sunshine.png'
+  },
+  {
+    title: 'The Hairy Lemon',
+    subtitle: 'The Hairy Lemon, Dublin',
+    href: '#',
+    imageSrc: '/images/hairy_lemon.jpg'
+  },
+  {
+    title: 'Infinite Jest',
+    subtitle: 'David Foster Wallace',
+    href: '#',
+    imageSrc: '/images/infinite_jest.jpg'
+  },
+  {
+    title: 'Last Chance To See',
+    subtitle: 'Douglas Adams',
+    href: '#',
+    imageSrc: '/images/last_chance_to_see.jpg'
+  },
+  {
+    title: 'Mario',
+    subtitle: 'Franco Luambo',
+    href: '#',
+    imageSrc: '/images/mario.png'
+  },
+  {
+    title: 'Mother Earth\'s Plantasia',
+    subtitle: 'Mort Garson',
+    href: '#',
+    imageSrc: '/images/mother_earths_plantasia.png'
+  },
+  {
+    title: 'Oracolo',
+    subtitle: 'Skinshape',
+    href: '#',
+    imageSrc: '/images/oracolo.jpg'
+  },
+  {
+    title: 'Porco Rosso',
+    subtitle: 'Studio Ghibli',
+    href: '#',
+    imageSrc: '/images/porco_rosso.png'
+  },
+  {
+    title: 'The Autobiography of Benjamin Franklin',
+    subtitle: 'Benjamin Franklin',
+    href: '#',
+    imageSrc: '/images/the_autobiography_of_benjamin_franklin.jpg'
+  },
+  {
+    title: 'The Feynman Lectures On Physics',
+    subtitle: 'Richard Feynman',
+    href: '#',
+    imageSrc: '/images/the_feynman_lectures.jpg'
+  },
+  {
+    title: 'Who Is The Government',
+    subtitle: 'Michael Lewis',
+    href: '#',
+    imageSrc: '/images/who_is_the_government.jpg'
   }
 ]
 
@@ -40,8 +126,8 @@ export default function ShelfSection() {
   return (
     <section id="shelf" className="w-full px-3 sm:px-4 lg:px-24 py-12">
       <div className="mt-8 cards mx-auto max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center sm:place-items-stretch">
-        {SHELF.map((item) => (
-          <HoloCard key={item.id} item={item} />
+        {SHELF.map((item, key) => (
+          <HoloCard key={key} item={item} />
         ))}
       </div>
     </section>
@@ -136,7 +222,7 @@ function HoloCard({ item }: { item: ShelfItem }) {
             height={1000}          // (Next.js needs these)
             className="object-contain rounded-md"
             style={{
-              maxHeight: 256,      // ⬅️ cap height at 128px
+              maxHeight: 200,      // ⬅️ cap height at 128px
               height: 'auto',      // keep aspect ratio
               width: 'auto',
               maxWidth: '100%'     // don’t overflow horizontally
