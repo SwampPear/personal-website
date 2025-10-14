@@ -49,9 +49,7 @@ export default function Footer() {
           </FooterCol>
 
           <FooterCol title="Work">
-            <FooterLink href="#xp">Experience</FooterLink>
-            <FooterLink href="/#contact">Contact</FooterLink>
-            <FooterLink href="/cv">CV</FooterLink>
+            <FooterLink href="/michael_vaden_resume.pdf">CV</FooterLink>
           </FooterCol>
 
           {/* Tiny note / CTA */}
