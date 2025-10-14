@@ -70,7 +70,7 @@ const textChild: Variants = {
 
 export default function AboutSection() {
   return (
-    <section className='min-h-screen w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-3 sm:px-4 lg:px-24 py-12'>
+    <section id="about" className='min-h-screen w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-3 sm:px-4 lg:px-24 py-12'>
       {/* Left: animated text (wider container) */}
       <motion.div
         className='max-w-2xl'

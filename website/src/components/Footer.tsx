@@ -4,6 +4,7 @@ import { motion, type Variants } from 'framer-motion'
 import { Github, Linkedin, Mail } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 const container: Variants = {
   hidden: { opacity: 0, y: 12 },
@@ -43,8 +44,8 @@ export default function Footer() {
 
           {/* Nav columns */}
           <FooterCol title="Site">
-            <FooterLink href="/about">About</FooterLink>
-            <FooterLink href="/xp">XP / Projects</FooterLink>
+            <FooterLink href="#about">About</FooterLink>
+            <FooterLink href="#xp">XP / Projects</FooterLink>
             <FooterLink href="/shelf">Shelf</FooterLink>
           </FooterCol>
 
@@ -92,10 +93,35 @@ function FooterCol({ title, children }: { title: string; children: React.ReactNo
 }
 
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+  const pathname = usePathname()
+
+  const onClick: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
+    // In-page only: '#section'
+    if (href.startsWith('#')) {
+      e.preventDefault()
+      const id = href.slice(1)
+      const el = document.getElementById(id)
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      return
+    }
+
+    // Same-path hash: '/current#section'
+    const [path, hash] = href.split('#')
+    if (hash && path === pathname) {
+      e.preventDefault()
+      const el = document.getElementById(hash)
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      return
+    }
+
+    // Different page: let Next.js handle navigation
+  }
+
   return (
     <li>
       <Link
         href={href}
+        onClick={onClick}
         className="text-sm text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors"
       >
         {children}
