@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/Addons.js'
 
-/* ------------ Three.js setup ------------ */
 const renderRobot = (el: HTMLDivElement | null, onLoaded: () => void) => {
   try {
     if (!el) throw new Error('Canvas element not found.')
@@ -107,7 +106,6 @@ const renderRobot = (el: HTMLDivElement | null, onLoaded: () => void) => {
   }
 }
 
-/* ------------ React component ------------ */
 const Robot = () => {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const [loaded, setLoaded] = useState(false)

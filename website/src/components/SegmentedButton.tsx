@@ -1,14 +1,11 @@
-const SegmentedButton = ({
-  active,
-  onClick,
-  label,
-  icon
-}: {
+interface ISegmentedButtonProps {
   active: boolean
   onClick: () => void
   label: string
   icon?: React.ReactNode
-}) => {
+}
+
+const SegmentedButton = ({ active, onClick, label, icon }: ISegmentedButtonProps ) => {
   return (
     <button
       onClick={onClick}
