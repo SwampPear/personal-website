@@ -11,7 +11,7 @@ type NavItem = { href: string; label: string }
 const NAV_ITEMS: NavItem[] = [
   { href: '/', label: 'Home' },
   { href: '/shelf', label: 'Shelf' },
-  { href: '/cv', label: 'CV' }
+  { href: '/michael_vaden_resume.pdf', label: 'CV' }
 ]
 
 function NavLink({ href, label }: NavItem) {
