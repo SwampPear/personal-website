@@ -1,4 +1,3 @@
-// app/layout.tsx
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import localFont from 'next/font/local'
@@ -14,7 +13,6 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 })
 
-// Put the file at app/fonts/LiquidSans-Bold.woff2  (recommended)
 const liquidFont = localFont({
   src: [
     { path: '../../public/fonts/SharpGroteskMedium25.woff2', weight: '700', style: 'normal' },
@@ -28,9 +26,7 @@ export const metadata: Metadata = {
   description: 'Michael Vaden\'s personal portfolio for software development and AI engineering.',
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"

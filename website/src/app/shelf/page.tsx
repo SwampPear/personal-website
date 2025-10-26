@@ -3,7 +3,7 @@ import Footer from '@/components/Footer'
 import Nav from '@/components/Nav'
 import ShelfSection from '@/components/ShelfSection'
 
-const Home = () => {
+const Page = () => {
   return (
     <>
       <Nav />
@@ -14,4 +14,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Page

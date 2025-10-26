@@ -5,7 +5,7 @@ import Nav from '@/components/Nav'
 import Robot from '@/components/Robot'
 import XPSection from '@/components/XPSection'
 
-export default function Home() {
+const Page = () => {
   return (
     <>
       <Nav />
@@ -17,3 +17,5 @@ export default function Home() {
     </>
   )
 }
+
+export default Page
