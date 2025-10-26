@@ -2,13 +2,11 @@
 
 import { useEffect, useRef } from 'react'
 
-// Compiles GLSL shaders.
-const compileShader = (gl: any, src: any, type: any) => {
+const compileShader = ( gl: any, src: any, type: any ) => {
   const shader = gl.createShader(type)
   gl.shaderSource(shader, src)
   gl.compileShader(shader)
 
-  // shader compilation failed
   if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
     console.error('Shader compilation failed: ', gl.getShaderInfoLog(shader))
 
@@ -20,8 +18,7 @@ const compileShader = (gl: any, src: any, type: any) => {
   return shader
 }
 
-// Formats both shaders.
-const formatShaders = (color: string) => {
+const formatShaders = ( color: string ) => {
   const VERTEX_SHADER = `
       attribute vec2 position;
       varying vec2 v_tex_coords;
@@ -70,9 +67,7 @@ const formatShaders = (color: string) => {
   return [VERTEX_SHADER, FRAGMENT_SHADER]
 }
 
-
-// Creates the shader program from vertex and fragment shaders.
-const createProgram = (gl: any, color: string) => {
+const createShaderProgram = ( gl: any, color: string ) => {
   const [vertexShaderSrc, fragmentShaderSrc] = formatShaders(color)
   const vertexShader = compileShader(gl, vertexShaderSrc, gl.VERTEX_SHADER)
   const fragmentShader = compileShader(gl, fragmentShaderSrc, gl.FRAGMENT_SHADER)
@@ -82,7 +77,6 @@ const createProgram = (gl: any, color: string) => {
   gl.attachShader(program, fragmentShader)
   gl.linkProgram(program)
 
-  // program linking failed
   if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
     console.error('Program linking failed: ', gl.getProgramInfoLog(program))
 
@@ -94,7 +88,6 @@ const createProgram = (gl: any, color: string) => {
   return program
 }
 
-// Renders caustic ripple background.
 const renderBackground = (el: HTMLCanvasElement | null, color: string) => {
   try {
     // canvas and gl context
@@ -103,7 +96,7 @@ const renderBackground = (el: HTMLCanvasElement | null, color: string) => {
     if (!gl) throw new Error('WebGL not supported.')
 
     // compile program
-    const program = createProgram(gl, color)
+    const program = createShaderProgram(gl, color)
 
     // position buffer
     const positionBuffer = gl.createBuffer()
@@ -154,7 +147,11 @@ const renderBackground = (el: HTMLCanvasElement | null, color: string) => {
   }
 }
 
-const Background = ({ color }: { color: string }) => {
+interface IBackgroundProps {
+  color: string
+}
+
+const Background = ({ color }: IBackgroundProps ) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   useEffect(() => {
