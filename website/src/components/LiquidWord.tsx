@@ -2,7 +2,12 @@
 
 import { motion } from 'framer-motion';
 
-export default function LiquidWord({ word = 'Synthesis', className = '' }: { word?: string; className?: string }) {
+interface ILiquidWordProps {
+  word?: string
+  className?: string
+}
+
+const LiquidWord = ({ word = 'Synthesis', className = '' }: ILiquidWordProps ) => {
   return (
     <div
       className={['relative select-none', className].join(' ')}
@@ -64,3 +69,5 @@ export default function LiquidWord({ word = 'Synthesis', className = '' }: { wor
     </div>
   )
 }
+
+export default LiquidWord
