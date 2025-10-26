@@ -14,9 +14,10 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/michael_vaden_resume.pdf', label: 'CV' }
 ]
 
-function NavLink({ href, label }: NavItem) {
+const NavLink = ({ href, label }: NavItem) => {
   const pathname = usePathname()
   const active = pathname === href
+
   return (
     <Link
       href={href}
@@ -28,7 +29,7 @@ function NavLink({ href, label }: NavItem) {
   )
 }
 
-export default function Navbar() {
+const Nav = () => {
   const [open, setOpen] = useState(false)
   const prefersReducedMotion = useReducedMotion()
   const pathname = usePathname()
@@ -47,7 +48,7 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      key={pathname}               // replay on route change (optional—remove if not desired)
+      key={pathname} // replay on route change
       initial={initial}
       animate={enter}
       className="fixed top-0 z-50 h-14 w-full bg-transparent
@@ -62,7 +63,7 @@ export default function Navbar() {
           <Image src="/images/pear_white.svg" alt="Logo" width={16} height={16} priority className="invert dark:invert-0" />
         </Link>
 
-        {/* Desktop */}
+        {/* desktop */}
         <motion.ul
           className="hidden sm:flex items-center gap-4"
           initial="hidden"
@@ -86,7 +87,7 @@ export default function Navbar() {
           ))}
         </motion.ul>
 
-        {/* Mobile toggle */}
+        {/* mobile */}
         <button
           aria-label="Toggle menu"
           aria-expanded={open}
@@ -110,7 +111,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* mobile menu */}
       <AnimatePresence>
         {open && (
           <>
@@ -150,3 +151,5 @@ export default function Navbar() {
     </motion.nav>
   )
 }
+
+export default Nav
