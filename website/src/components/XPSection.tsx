@@ -35,13 +35,11 @@ const itemVariants: Variants = {
   show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } }
 }
 
-/* ---------- Section ---------- */
-export default function XPSection() {
+const XPSection = () => {
   const items = DATA
 
   return (
     <section id='xp' className='min-h-screen w-full px-3 sm:px-4 lg:px-24 py-12'>
-      {/* Header */}
       <div className="mx-auto max-w-6xl mb-4 flex flex-col items-center">
         <LiquidWord
           word="Experience / Projects"
@@ -49,7 +47,6 @@ export default function XPSection() {
         />
       </div>
 
-      {/* Grid */}
       <motion.div
         className='mx-auto max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6'
         variants={containerVariants}
@@ -139,3 +136,5 @@ export default function XPSection() {
     </section>
   )
 }
+
+export default XPSection
