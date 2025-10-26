@@ -2,10 +2,7 @@
 
 import { motion } from 'framer-motion';
 
-export default function LiquidWord({
-  word = 'Synthesis',
-  className = ''
-}: { word?: string; className?: string }) {
+export default function LiquidWord({ word = 'Synthesis', className = '' }: { word?: string; className?: string }) {
   return (
     <div
       className={['relative select-none', className].join(' ')}
