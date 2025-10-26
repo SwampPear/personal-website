@@ -23,7 +23,7 @@ git clone https://github.com/SwampPear/personal-website.git
 cd website
 ```
 
-3. Run the project (make sure Go is installed)
+3. Run the project
 
 ```
 npm run dev
