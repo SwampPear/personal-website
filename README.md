@@ -20,11 +20,11 @@ git clone https://github.com/SwampPear/personal-website.git
 2. Navigate to the project directory
 
 ```
-cd personal-website
+cd website
 ```
 
 3. Run the project (make sure Go is installed)
 
 ```
-go run main.go
+npm run dev
 ```
