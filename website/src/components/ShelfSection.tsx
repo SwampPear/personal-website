@@ -122,19 +122,11 @@ const SHELF: ShelfItem[] = [
   }
 ]
 
-export default function ShelfSection() {
-  return (
-    <section id="shelf" className="w-full px-3 sm:px-4 lg:px-24 py-12">
-      <div className="mt-8 cards mx-auto max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center sm:place-items-stretch">
-        {SHELF.map((item, key) => (
-          <HoloCard key={key} item={item} />
-        ))}
-      </div>
-    </section>
-  )
+interface IHoloCardProps {
+  item: ShelfItem
 }
 
-function HoloCard({ item }: { item: ShelfItem }) {
+const HoloCard = ({ item }: IHoloCardProps ) => {
   const ref = useRef<HTMLDivElement>(null)
   const [animated, setAnimated] = useState(true)
 
@@ -239,3 +231,17 @@ function HoloCard({ item }: { item: ShelfItem }) {
 
   return item.href ? <Link href={item.href} className="block">{inner}</Link> : <div className="block">{inner}</div>
 }
+
+const ShelfSection = () => {
+  return (
+    <section id="shelf" className="w-full px-3 sm:px-4 lg:px-24 py-12">
+      <div className="mt-8 cards mx-auto max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center sm:place-items-stretch">
+        {SHELF.map((item, key) => (
+          <HoloCard key={key} item={item} />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+export default ShelfSection
