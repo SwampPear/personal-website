@@ -33,11 +33,11 @@ const GTGold = () => {
   )
 }
 
-interface BlurbPProps {
+interface IBlurbPProps {
   children: React.ReactNode
 }
 
-const BlurbP = ({ children }: BlurbPProps ) => {
+const BlurbP = ({ children }: IBlurbPProps ) => {
   return (
     <motion.p variants={textChild} className='mt-4 text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed'>
       {children}
