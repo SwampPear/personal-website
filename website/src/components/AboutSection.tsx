@@ -49,18 +49,18 @@ const Blurb = () => {
   return (
     <>
       <BlurbP>
-        I'm Michael, a senior CS student at <GTGold /> focusing in Intelligence and Systems and Architecture. From early 
-        on I've been drawn to technology, and I've harbored a lifelong passion for tinkering. I would say the need to 
+        I&apos;m Michael, a senior CS student at <GTGold /> focusing in Intelligence and Systems and Architecture. From early 
+        on I&apos;ve been drawn to technology, and I&apos;ve harbored a lifelong passion for tinkering. I would say the need to 
         understand how things tick is central to my life.
       </BlurbP>
       <BlurbP>
-        Over the years I've had the opportunity to explore many corners of computer science, from web and graphics 
+        Over the years I&apos;ve had the opportunity to explore many corners of computer science, from web and graphics 
         programming, to systems and compiler programming, to CAD and electrical work, to big data architecting and 
         analytics. I see each project I approach as a platform for learning and connecting the dots across disciplines, 
         and I love what I do ❤️.
       </BlurbP>
       <BlurbP>
-        When I'm not at work or study, I can be found exploring music, traveling the world, reading some classics, and
+        When I&apos;m not at work or study, I can be found exploring music, traveling the world, reading some classics, and
         watching some of my favorites.
       </BlurbP>
     </>
