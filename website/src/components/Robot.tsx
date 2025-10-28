@@ -46,12 +46,18 @@ const renderRobot = (el: HTMLDivElement | null, onLoaded: () => void) => {
         headMesh = scene.getObjectByName('Cylinder002')
 
         const video = document.createElement('video')
-        video.src = '/textures/face.mp4'
+        video.src = '/textures/face_safari.mp4'
         video.loop = true
         video.muted = true
-        video.play()
+        video.playsInline = true
+        video.crossOrigin = 'anonymous'
+
+        video.addEventListener('loadeddata', () => {
+          video.play().catch(() => {})
+        })        
 
         const videoTexture = new THREE.VideoTexture(video)
+        videoTexture.colorSpace = THREE.SRGBColorSpace
         videoTexture.minFilter = THREE.LinearFilter
         videoTexture.magFilter = THREE.LinearFilter
         videoTexture.format = THREE.RGBAFormat
@@ -68,7 +74,6 @@ const renderRobot = (el: HTMLDivElement | null, onLoaded: () => void) => {
           mixer!.clipAction(clip).play()
         })
 
-        // ✅ Notify parent that the model is ready
         onLoaded()
       },
       undefined,
