@@ -17,6 +17,18 @@ const renderRobot = (el: HTMLDivElement | null, onLoaded: () => void) => {
     renderer.setSize(window.innerWidth, window.innerHeight)
     el.appendChild(renderer.domElement)
 
+    const handleResize = () => {
+      const width = window.innerWidth
+      const height = window.innerHeight
+      camera.aspect = width / height
+      camera.updateProjectionMatrix()
+      renderer.setSize(width, height)
+      renderer.setPixelRatio(window.devicePixelRatio)
+      camera.position.set(0, 0.75, 1.25)
+    }
+
+    window.addEventListener('resize', handleResize)
+
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.4)
     scene.add(ambientLight)
 
@@ -111,6 +123,12 @@ const renderRobot = (el: HTMLDivElement | null, onLoaded: () => void) => {
     }
 
     animate()
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      renderer.dispose()
+      el.removeChild(renderer.domElement)
+    }
   } catch (err) {
     console.error(err)
   }
@@ -121,8 +139,14 @@ const Robot = () => {
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
+    let cleanup: (() => void) | undefined
+  
     if (containerRef.current) {
-      renderRobot(containerRef.current, () => setLoaded(true))
+      cleanup = renderRobot(containerRef.current, () => setLoaded(true))
+    }
+  
+    return () => {
+      if (cleanup) cleanup()
     }
   }, [])
 
