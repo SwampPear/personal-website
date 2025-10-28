@@ -36,6 +36,8 @@ const renderRobot = (el: HTMLDivElement | null, onLoaded: () => void) => {
     let faceMesh: THREE.Object3D | null | undefined = null
     let headMesh: THREE.Object3D | null | undefined = null
 
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+
     loader.load(
       '/glb/robot.glb',
       gltf => {
@@ -45,29 +47,32 @@ const renderRobot = (el: HTMLDivElement | null, onLoaded: () => void) => {
         faceMesh = scene.getObjectByName('Cylinder002_1')
         headMesh = scene.getObjectByName('Cylinder002')
 
-        const video = document.createElement('video')
-        video.src = '/textures/face_safari.mp4'
-        video.loop = true
-        video.muted = true
-        video.playsInline = true
-        video.crossOrigin = 'anonymous'
+        if (!isSafari) {
+          const video = document.createElement('video')
+          video.src = '/textures/face_safari.mp4'
+          video.loop = true
+          video.muted = true
+          video.playsInline = true
+          video.crossOrigin = 'anonymous'
 
-        video.addEventListener('loadeddata', () => {
-          video.play().catch(() => {})
-        })        
+          video.addEventListener('loadeddata', () => {
+            video.play().catch(() => {})
+          })        
 
-        const videoTexture = new THREE.VideoTexture(video)
-        videoTexture.colorSpace = THREE.SRGBColorSpace
-        videoTexture.minFilter = THREE.LinearFilter
-        videoTexture.magFilter = THREE.LinearFilter
-        videoTexture.format = THREE.RGBAFormat
+          const videoTexture = new THREE.VideoTexture(video)
+          videoTexture.colorSpace = THREE.SRGBColorSpace
+          videoTexture.minFilter = THREE.LinearFilter
+          videoTexture.magFilter = THREE.LinearFilter
+          videoTexture.format = THREE.RGBAFormat
 
-        if (faceMesh && 'material' in faceMesh) {
-          ; (faceMesh as any).material = new THREE.MeshBasicMaterial({
-            map: videoTexture,
-            transparent: true
-          })
+          if (faceMesh && 'material' in faceMesh) {
+            ; (faceMesh as any).material = new THREE.MeshBasicMaterial({
+              map: videoTexture,
+              transparent: true
+            })
+          }
         }
+
 
         mixer = new THREE.AnimationMixer(model)
         gltf.animations.forEach(clip => {
