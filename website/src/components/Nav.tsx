@@ -52,7 +52,7 @@ const setScrollLockState = ( state: ScrollLockState ) => {
   b.style.overflow = state.overflow
   b.style.position = state.position
 
-  b.style.top      = !state.top ? '' : `${y}px`
+  b.style.top      = state.top ? `${y}px` : ''
   b.style.left     = state.left
   b.style.right    = state.right
   b.style.width    = state.width
