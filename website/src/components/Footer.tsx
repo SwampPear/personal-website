@@ -32,13 +32,16 @@ interface IFooterLink {
 
 const FooterLink = ({ href, children }: IFooterLink ) => {
   const pathname = usePathname()
+  const isHashOnly = href.startsWith('#')
+  const isHome = pathname === '/'
+  const effectiveHref = isHashOnly && !isHome ? `/${href}` : href
 
   const onClick: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
     // index hash
-    if (href.startsWith('#')) {
+    if (effectiveHref.startsWith('#')) {
       e.preventDefault()
 
-      const id = href.slice(1)
+      const id = effectiveHref.slice(1)
       const el = document.getElementById(id)
 
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -47,7 +50,7 @@ const FooterLink = ({ href, children }: IFooterLink ) => {
     }
 
     // same path hash
-    const [path, hash] = href.split('#')
+    const [path, hash] = effectiveHref.split('#')
     if (hash && path === pathname) {
       e.preventDefault()
 
@@ -62,7 +65,7 @@ const FooterLink = ({ href, children }: IFooterLink ) => {
   return (
     <li>
       <Link
-        href={href}
+        href={effectiveHref}
         onClick={onClick}
         className="text-sm text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors"
       >
@@ -96,6 +99,9 @@ const Social = ({ href, label, children }: ISocialProps ) => {
 }
 
 const Footer = () => {
+  const pathname = usePathname()
+  const backToTopHref = pathname === '/' ? '#top' : '/#top'
+
   return (
     <footer className="w-full mt-16">
       <motion.div
@@ -154,7 +160,7 @@ const Footer = () => {
             &copy; {new Date().getFullYear()} Michael Vaden. All rights reserved.
           </p>
           <div className="flex items-center gap-4 text-xs text-neutral-700 dark:text-neutral-300">
-            <a href="#top" className="hover:underline">Back to top</a>
+            <Link href={backToTopHref} className="hover:underline">Back to top</Link>
           </div>
         </div>
       </motion.div>
