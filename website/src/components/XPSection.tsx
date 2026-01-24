@@ -21,9 +21,58 @@ const DATA: Item[] = [
   { id: 'exp-2', kind: 'experience', title: 'SWE Intern', org: 'University of Georgia', period: 'Jan 2022 - Dec 2022', tags: ['Django', 'Slurm', 'HPC'], blurb: 'Implemented platform for HPC resource provisioning and research group management.', href: 'https://gacrc.uga.edu/' },
   { id: 'exp-3', kind: 'experience', title: 'Electrical / Fabrication Specialist', org: 'Black Dog Customs', period: 'May 2019 - May 2021', tags: ['CAD', 'Electronics', 'Fabrication'], blurb: 'Developed manufacturing processes and products for various automotive applications.', href: 'www.blackdogcustoms.com' },
   { id: 'exp-4', kind: 'experience', title: 'Web Lead', org: 'Georgia Tech IFC', period: 'Sep 2024 - Nov 2024', tags: ['Next.js', 'NGINX', 'UI'], blurb: 'Built modern council site with clean IA and interactibility.', href: 'https://www.gatechifc.org/' },
-  { id: 'proj-1', kind: 'project', title: 'Personal Site', org: 'Portfolio', period: 'May 2025', tags: ['Next.js', 'WebGL', 'Three.js'], blurb: 'Playful interactions, glassmorphism, crisp typography, and 3D modeling.', href: 'https://github.com/SwampPear/personal-website' },
-  { id: 'proj-2', kind: 'project', title: 'Blam (Lang/Compiler)', org: 'Personal', period: 'Aug 2025', tags: ['C++', 'LLVM', 'Parsers'], blurb: 'Custom tokenizer + AST + IR experiments focused on ergonomics.', href: 'https://github.com/SwampPear/blam' }
+  {
+    id: 'proj-1',
+    kind: 'project',
+    title: 'Polygnome',
+    org: 'Personal',
+    period: '2024 – Present',
+    tags: ['Electron', 'Next.js', 'Go', 'Fiber', 'AI Systems'],
+    blurb: 'Desktop app for composing and executing structured AI tasks via composable thought chains, built with an Electron + Next.js frontend and Go Fiber service API.',
+    href: 'https://github.com/SwampPear/polygnome',
+  },
+  {
+    id: 'proj-2',
+    kind: 'project',
+    title: 'Blam (Language & Compiler)',
+    org: 'Personal',
+    period: 'Aug 2025',
+    tags: ['C++', 'LLVM', 'Compilers', 'EBNF'],
+    blurb: 'Experimental programming language with a formal EBNF grammar and LLVM-based compiler in C++, roadmap includes richer type system and native toolchain.',
+    href: 'https://github.com/SwampPear/blam',
+  },
+  {
+    id: 'proj-3',
+    kind: 'project',
+    title: 'Personal Website',
+    org: 'Portfolio',
+    period: 'May 2025',
+    tags: ['Next.js', 'Tailwind', 'Three.js', 'WebGL'],
+    blurb: 'Modern responsive portfolio site built with Next.js and Tailwind, featuring custom 3D models, Three.js animations, and a Perlin-noise WebGL background.',
+    href: 'https://github.com/SwampPear/personal-website',
+  },
+  {
+    id: 'proj-4',
+    kind: 'project',
+    title: 'Djinn Code Generation CLI',
+    org: 'Personal',
+    period: '2024',
+    tags: ['Rust', 'CLI', 'Codegen', 'NLP'],
+    blurb: 'Rust-based CLI for automated code generation, featuring a flexible templating API and an orchestration layer that compiles actions from natural language output.',
+    href: 'https://github.com/SwampPear/djinn',
+  },
+  {
+    id: 'proj-5',
+    kind: 'project',
+    title: 'Graph of Experts Model',
+    org: 'Research',
+    period: '2024 - Present',
+    tags: ['ML Research', 'Mixture of Experts', 'Graphs'],
+    blurb: 'Ongoing research into modular mixture-of-experts architectures with expert traversal modeled as a trainable graph, alongside a working paper formalizing objectives.',
+    href: 'https://github.com/SwampPear/goe',
+  },
 ]
+
 
 const containerVariants: Variants = {
   hidden: {},
@@ -48,7 +97,7 @@ const XPSection = () => {
       </div>
 
       <motion.div
-        className='mx-auto max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6'
+        className='mx-auto max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 items-stretch'
         variants={containerVariants}
         initial='hidden'
         whileInView='show'
@@ -67,7 +116,7 @@ const XPSection = () => {
                 target={external ? '_blank' : undefined}
                 rel={external ? 'noreferrer noopener' : undefined}
                 aria-label={`${item.title} (${item.kind})`}
-                className="group block focus:outline-none"
+                className="group block h-full focus:outline-none"
               >
                 <motion.div
                   variants={itemVariants}
@@ -76,7 +125,7 @@ const XPSection = () => {
                   whileHover={{ y: -2, scale: 1.005 }}
                   whileTap={{ scale: 0.997 }}
                   transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-                  className="relative rounded-2xl bg-white/10 dark:bg-black/10 backdrop-blur-xl backdrop-saturate-150
+                  className="relative h-full flex flex-col rounded-2xl bg-white/10 dark:bg-black/10 backdrop-blur-xl backdrop-saturate-150
                      border border-black/5 dark:border-white/5 shadow-lg shadow-black/5 overflow-hidden
                      cursor-pointer ring-0 focus-visible:ring-2 focus-visible:ring-black/20 dark:focus-visible:ring-white/20"
                 >
@@ -90,7 +139,7 @@ const XPSection = () => {
                     transition={{ duration: 1.4, ease: 'easeOut' }}
                   />
 
-                  <div className="relative p-5 sm:p-6 flex flex-col gap-3">
+                  <div className="relative p-5 sm:p-6 flex flex-col gap-3 h-full">
                     <div className="flex items-start justify-between gap-3">
                       <h3 className="text-lg font-semibold text-black dark:text-white leading-tight">
                         {item.title}
@@ -109,7 +158,7 @@ const XPSection = () => {
                     <p className="text-neutral-800 dark:text-neutral-200">{item.blurb}</p>
 
                     {item.tags?.length ? (
-                      <div className="mt-1 flex flex-wrap gap-2">
+                      <div className="mt-auto flex flex-wrap gap-2 pt-2">
                         {item.tags.map((t) => (
                           <span
                             key={t}
