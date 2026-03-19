@@ -39,7 +39,7 @@ body {
 }
 
 .liquid-word-font {
-  font-family: var(--font-liquid), -apple-system, BlinkMacSystemFont, "SF Pro Display", Inter, ui-sans-serif;
+  font-family: var(--font-liquid), -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Inter, ui-sans-serif, sans-serif;
 }
 
 .cards {

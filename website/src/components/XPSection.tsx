@@ -144,7 +144,7 @@ const XPSection = () => {
                       <h3 className="text-lg font-semibold text-black dark:text-white leading-tight">
                         {item.title}
                       </h3>
-                      <span className="rounded-md px-2 py-0.5 text-xs font-medium bg-black/5 dark:bg:white/10 text-neutral-800 dark:text-neutral-200">
+                      <span className="rounded-md px-2 py-0.5 text-xs font-medium bg-black/5 dark:bg-white/10 text-neutral-800 dark:text-neutral-200">
                         {item.kind === 'experience' ? 'Experience' : 'Project'}
                       </span>
                     </div>
@@ -162,7 +162,7 @@ const XPSection = () => {
                         {item.tags.map((t) => (
                           <span
                             key={t}
-                            className="rounded-full border border-black/10 dark:border-white/10 bg:white/30 dark:bg-white/5
+                            className="rounded-full border border-black/10 dark:border-white/10 bg-white/30 dark:bg-white/5
                                px-2 py-1 text-xs text-neutral-800 dark:text-neutral-200"
                           >
                             {t}
