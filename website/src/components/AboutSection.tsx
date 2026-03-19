@@ -49,7 +49,7 @@ const Blurb = () => {
   return (
     <>
       <BlurbP>
-        I&apos;m Michael, a senior CS student at <GTGold /> focusing in Intelligence and Systems and Architecture. From early 
+        I&apos;m Michael, I'm studying CS at <GTGold /> focusing in Intelligence and Systems and Architecture. From early 
         on I&apos;ve been drawn to technology, and I&apos;ve harbored a lifelong passion for tinkering. I would say the need to 
         understand how things tick is central to my life.
       </BlurbP>
