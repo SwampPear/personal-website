@@ -471,16 +471,17 @@ function stepParticle(
     p.heading   += p.turnAmp  * Math.sin(p.turnPhase) * scale
     p.turnPhase += p.turnFreq * scale
 
-    // mouse attraction
+    // cursor gravity — gentle pull from any distance, fades with distance like gravity
     if (mx >= 0) {
       const dx = mx - p.x, dy = my - p.y
       const dist = Math.sqrt(dx * dx + dy * dy)
-      if (dist < 0.20) {
+      if (dist > 0.001) {
         const target = Math.atan2(dy, dx)
         let diff = target - p.heading
         while (diff >  Math.PI) diff -= Math.PI * 2
         while (diff < -Math.PI) diff += Math.PI * 2
-        p.heading += diff * Math.min(0.06, 2.5 / (dist * 800 + 1)) * scale
+        // falloff: ~0.18 when very close, ~0.05 at mid-range, ~0.02 at far edge
+        p.heading += diff * (0.022 / (dist + 0.12)) * scale
       }
     }
 
@@ -611,7 +612,7 @@ export default function AsciiBackground() {
     const explosions: Explosion[] = Array.from({ length: MAX_EXPLOSIONS }, () => ({ x: 0, y: 0, age: -1 }))
 
     const mouse   = { x: -1, y: -1 }
-    const onMove  = (e: MouseEvent) => { mouse.x = e.clientX / W; mouse.y = 1 - e.clientY / H }
+    const onMove  = (e: MouseEvent) => { mouse.x = e.clientX / lW; mouse.y = 1 - e.clientY / lH }
     const onLeave = () => { mouse.x = -1; mouse.y = -1 }
     const onScroll = () => { scrollRef.current = window.scrollY }
     window.addEventListener('mousemove',  onMove)
