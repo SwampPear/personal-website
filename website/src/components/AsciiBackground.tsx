@@ -142,15 +142,15 @@ const CW = 9                      // font atlas cell width  (px)
 const CH = 16                     // font atlas cell height (px)
 
 /* ─────────────────────────────────────────────────────────────────────────
-   Koi + annihilation constants
+   Particle + annihilation constants
 ───────────────────────────────────────────────────────────────────────── */
-const N_KOI              = 6
+const N_PARTICLES              = 6
 const MAX_EXPLOSIONS     = 4
 const ATTRACT_RADIUS     = 0.22   // UV — magnetic pull starts here
 const ANNIHILATE_RADIUS  = 0.012  // UV — collision trigger (must be visually overlapping)
 const EXPLOSION_DURATION = 1.6   // seconds
-const RESPAWN_DELAY      = 2.6   // seconds before dead koi respawn
-const FADE_IN_DURATION   = 1.5   // seconds for respawned koi to fade in
+const RESPAWN_DELAY      = 2.6   // seconds before dead particle respawn
+const FADE_IN_DURATION   = 1.5   // seconds for respawned particle to fade in
 
 /* ─────────────────────────────────────────────────────────────────────────
    Shared full-screen quad vertex shader
@@ -168,7 +168,7 @@ const VERT = `
    Pass 1 — accumulation (RGB output for colorful explosions)
      • animated Perlin noise base layer
      • decay previous frame trail (preserves explosion afterglow color)
-     • koi gaussian glow
+     • particle gaussian glow
      • annihilation explosions: expanding rings + spokes + rainbow ASCII
 ───────────────────────────────────────────────────────────────────────── */
 const makeAccumFrag = (n: number, maxExp: number) => `
@@ -177,8 +177,8 @@ const makeAccumFrag = (n: number, maxExp: number) => `
   uniform   sampler2D uPrev;
   uniform   float     uDecay;
   uniform   vec2      uRes;
-  uniform   vec2      uKoi[${n}];
-  uniform   float     uKoiAlpha[${n}];
+  uniform   vec2      uParticle[${n}];
+  uniform   float     uParticleAlpha[${n}];
   uniform   float     uSigma;
   uniform   float     uTime;
   uniform   vec3      uExplosions[${maxExp}];
@@ -224,12 +224,12 @@ const makeAccumFrag = (n: number, maxExp: number) => `
     vec2  np       = vUV * vec2(ar * 2.5, 2.5) + vec2(uTime * 0.06, uTime * 0.04);
     float noiseVal = fbm(np) * 0.72;
 
-    // koi gaussian glow (scaled by per-koi alpha for fade-in)
+    // particle gaussian glow (scaled by per-particle alpha for fade-in)
     float g = 0.0;
     for (int i = 0; i < ${n}; i++) {
-      vec2 d  = vUV - uKoi[i];
+      vec2 d  = vUV - uParticle[i];
       d.x    *= ar;
-      g       = max(g, exp(-dot(d, d) / (uSigma * uSigma)) * uKoiAlpha[i]);
+      g       = max(g, exp(-dot(d, d) / (uSigma * uSigma)) * uParticleAlpha[i]);
     }
 
     // merge prev (keeps explosion color on decay) with new grayscale floor
@@ -396,9 +396,9 @@ function makeFBO(gl: GL, w: number, h: number) {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   Koi particles
+   Particle particles
 ───────────────────────────────────────────────────────────────────────── */
-interface Koi {
+interface Particle {
   x: number; y: number
   heading:     number
   speed:       number
@@ -417,7 +417,7 @@ interface Explosion {
   age: number   // 0→1 while active; <0 = inactive slot
 }
 
-function spawnKoi(): Koi[] {
+function spawnParticle(): Particle[] {
   return [
     { x: 0.20, y: 0.30, heading:  0.40, speed: 0.00088, baseSpeed: 0.00088, turnPhase: 0.0, turnFreq: 0.016, turnAmp: 0.042, dead: false, respawnTimer: 0, alpha: 1.0 },
     { x: 0.70, y: 0.60, heading:  2.10, speed: 0.00078, baseSpeed: 0.00078, turnPhase: 1.2, turnFreq: 0.011, turnAmp: 0.055, dead: false, respawnTimer: 0, alpha: 1.0 },
@@ -428,7 +428,7 @@ function spawnKoi(): Koi[] {
   ]
 }
 
-function randomKoi(): Koi {
+function randomParticle(): Particle {
   const s = 0.00073 + Math.random() * 0.00022
   return {
     x:           0.15 + Math.random() * 0.70,
@@ -445,26 +445,26 @@ function randomKoi(): Koi {
   }
 }
 
-function stepKoi(
-  koi: Koi[],
+function stepParticle(
+  particle: Particle[],
   mx: number, my: number,
   scale: number,
   dt: number,
   explosions: Explosion[],
 ) {
   // Reset speeds so attraction boosts don't compound across frames; advance fade-in
-  for (const p of koi) {
+  for (const p of particle) {
     if (!p.dead) {
       p.speed = p.baseSpeed
       p.alpha = Math.min(1.0, p.alpha + dt / FADE_IN_DURATION)
     }
   }
 
-  // ── move each live koi, tick respawn for dead ──────────────────────
-  for (const p of koi) {
+  // ── move each live particle, tick respawn for dead ──────────────────────
+  for (const p of particle) {
     if (p.dead) {
       p.respawnTimer -= dt
-      if (p.respawnTimer <= 0) Object.assign(p, randomKoi())
+      if (p.respawnTimer <= 0) Object.assign(p, randomParticle())
       continue
     }
 
@@ -496,29 +496,29 @@ function stepKoi(
   }
 
   // ── pairwise: magnetic attraction + annihilation ───────────────────
-  for (let i = 0; i < koi.length; i++) {
-    if (koi[i].dead) continue
-    for (let j = i + 1; j < koi.length; j++) {
-      if (koi[j].dead) continue
+  for (let i = 0; i < particle.length; i++) {
+    if (particle[i].dead) continue
+    for (let j = i + 1; j < particle.length; j++) {
+      if (particle[j].dead) continue
 
-      const dx   = koi[j].x - koi[i].x
-      const dy   = koi[j].y - koi[i].y
+      const dx   = particle[j].x - particle[i].x
+      const dy   = particle[j].y - particle[i].y
       const dist = Math.sqrt(dx * dx + dy * dy)
 
       if (dist < ANNIHILATE_RADIUS) {
         // ── annihilation ──
-        const ex = (koi[i].x + koi[j].x) * 0.5
-        const ey = (koi[i].y + koi[j].y) * 0.5
+        const ex = (particle[i].x + particle[j].x) * 0.5
+        const ey = (particle[i].y + particle[j].y) * 0.5
 
         // claim a free explosion slot
         const slot = explosions.findIndex(e => e.age < 0)
         if (slot >= 0) explosions[slot] = { x: ex, y: ey, age: 0 }
 
-        koi[i].dead = true; koi[i].respawnTimer = RESPAWN_DELAY
-        koi[i].x = -2;      koi[i].y = -2        // move off-screen
-        koi[j].dead = true; koi[j].respawnTimer = RESPAWN_DELAY
-        koi[j].x = -2;      koi[j].y = -2
-        break  // koi[i] is gone — skip remaining j pairs
+        particle[i].dead = true; particle[i].respawnTimer = RESPAWN_DELAY
+        particle[i].x = -2;      particle[i].y = -2        // move off-screen
+        particle[j].dead = true; particle[j].respawnTimer = RESPAWN_DELAY
+        particle[j].x = -2;      particle[j].y = -2
+        break  // particle[i] is gone — skip remaining j pairs
 
       } else if (dist < ATTRACT_RADIUS) {
         // ── spiral pull ──
@@ -527,27 +527,27 @@ function stepKoi(
 
         // Orbital offset: large tangential kick when far (wide spiral),
         // fades to 0 when very close so they actually collide.
-        // The +π/2 makes both koi orbit CCW around the midpoint.
+        // The +π/2 makes both particle orbit CCW around the midpoint.
         const orbitalOffset = (Math.PI * 0.72) * Math.pow(1.0 - strength, 0.7)
 
         const aij = Math.atan2(dy, dx)
 
         // steer i → j + tangential kick
-        let di = (aij + orbitalOffset) - koi[i].heading
+        let di = (aij + orbitalOffset) - particle[i].heading
         while (di >  Math.PI) di -= Math.PI * 2
         while (di < -Math.PI) di += Math.PI * 2
-        koi[i].heading += di * 0.30 * strength * scale
+        particle[i].heading += di * 0.30 * strength * scale
 
         // steer j → i + tangential kick (same rotational direction)
-        let dj = (aij + Math.PI + orbitalOffset) - koi[j].heading
+        let dj = (aij + Math.PI + orbitalOffset) - particle[j].heading
         while (dj >  Math.PI) dj -= Math.PI * 2
         while (dj < -Math.PI) dj += Math.PI * 2
-        koi[j].heading += dj * 0.30 * strength * scale
+        particle[j].heading += dj * 0.30 * strength * scale
 
         // wild speed boost — they race toward the spiral
-        const boost = koi[i].baseSpeed * (1.0 + strength * 6.0)
-        koi[i].speed = Math.max(koi[i].speed, boost)
-        koi[j].speed = Math.max(koi[j].speed, boost)
+        const boost = particle[i].baseSpeed * (1.0 + strength * 6.0)
+        particle[i].speed = Math.max(particle[i].speed, boost)
+        particle[j].speed = Math.max(particle[j].speed, boost)
       }
     }
   }
@@ -575,7 +575,7 @@ export default function AsciiBackground() {
     // Cap at 2× — beyond that the extra pixels aren't visible but are expensive
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
 
-    const accumProg = program(gl, VERT, makeAccumFrag(N_KOI, MAX_EXPLOSIONS))
+    const accumProg = program(gl, VERT, makeAccumFrag(N_PARTICLES, MAX_EXPLOSIONS))
     const asciiProg = program(gl, VERT, ASCII_FRAG)
     const buf       = quadBuf(gl)
     const fontTex   = makeFontTex(gl, dpr)
@@ -604,9 +604,9 @@ export default function AsciiBackground() {
     window.addEventListener('resize', resize)
     resize()
 
-    const koi          = spawnKoi()
-    const koiBuf       = new Float32Array(N_KOI * 2)
-    const koiAlphaBuf  = new Float32Array(N_KOI)
+    const particle          = spawnParticle()
+    const particleBuf       = new Float32Array(N_PARTICLES * 2)
+    const particleAlphaBuf  = new Float32Array(N_PARTICLES)
     const explosionBuf = new Float32Array(MAX_EXPLOSIONS * 3)
     const explosions: Explosion[] = Array.from({ length: MAX_EXPLOSIONS }, () => ({ x: 0, y: 0, age: -1 }))
 
@@ -632,8 +632,8 @@ export default function AsciiBackground() {
       prev:       u(gl, accumProg, 'uPrev'),
       decay:      u(gl, accumProg, 'uDecay'),
       res:        u(gl, accumProg, 'uRes'),
-      koi:        u(gl, accumProg, 'uKoi'),
-      koiAlpha:   u(gl, accumProg, 'uKoiAlpha'),
+      particle:        u(gl, accumProg, 'uParticle'),
+      particleAlpha:   u(gl, accumProg, 'uParticleAlpha'),
       sigma:      u(gl, accumProg, 'uSigma'),
       time:       u(gl, accumProg, 'uTime'),
       explosions: u(gl, accumProg, 'uExplosions'),
@@ -662,12 +662,12 @@ export default function AsciiBackground() {
       }
 
       const scale = dt * 60
-      stepKoi(koi, mouse.x, mouse.y, scale, dt, explosions)
+      stepParticle(particle, mouse.x, mouse.y, scale, dt, explosions)
 
-      for (let i = 0; i < N_KOI; i++) {
-        koiBuf[i * 2]     = koi[i].x
-        koiBuf[i * 2 + 1] = koi[i].y
-        koiAlphaBuf[i]    = koi[i].alpha
+      for (let i = 0; i < N_PARTICLES; i++) {
+        particleBuf[i * 2]     = particle[i].x
+        particleBuf[i * 2 + 1] = particle[i].y
+        particleAlphaBuf[i]    = particle[i].alpha
       }
       for (let i = 0; i < MAX_EXPLOSIONS; i++) {
         explosionBuf[i * 3]     = explosions[i].x
@@ -688,8 +688,8 @@ export default function AsciiBackground() {
       gl.uniform1f(aU.decay!,       decay)
       gl.uniform2f(aU.res!,         W, H)
       gl.uniform1f(aU.sigma!,       0.022)
-      gl.uniform2fv(aU.koi!,        koiBuf)
-      gl.uniform1fv(aU.koiAlpha!,   koiAlphaBuf)
+      gl.uniform2fv(aU.particle!,        particleBuf)
+      gl.uniform1fv(aU.particleAlpha!,   particleAlphaBuf)
       gl.uniform1f(aU.time!,        ts / 1000)
       gl.uniform3fv(aU.explosions!, explosionBuf)
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
