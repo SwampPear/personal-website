@@ -27,9 +27,21 @@ const MONO = `'SF Mono', ui-monospace, 'Cascadia Mono', 'Consolas', 'Menlo', mon
    Hero — two lines drawn on the 2D canvas, centered in the first viewport.
    rowFraction: position as a fraction of total cell rows (0 = top, 1 = bottom).
 ───────────────────────────────────────────────────────────────────────── */
-const HERO_LINES: { text: string; rowFraction: number; color: string }[] = [
-  { text: 'MICHAEL VADEN', rowFraction: 0.45, color: '#ffffff' },
-]
+const HERO_TEXT      = 'MICHAEL VADEN'
+const HERO_COLOR     = '#ffffff'
+const HERO_FINAL_COL = 4   // cells from left edge at rest
+const HERO_FINAL_ROW = 3   // rows from top at rest
+
+interface HeroState {
+  phase:   'scramble' | 'move-left' | 'move-up' | 'done'
+  col:     number   // current fractional column
+  row:     number   // current fractional row
+  fromCol: number   // phase start column
+  fromRow: number   // phase start row
+  toCol:   number   // phase target column
+  toRow:   number   // phase target row
+  t:       number   // phase progress [0..1]
+}
 
 interface ScrambleItem {
   chars: { timer: number }[]  // timer > 0 = still scrambling this position
@@ -50,7 +62,7 @@ function tickScrambles(scrambles: Map<string, ScrambleItem>, dt: number) {
 /**
  * draw2D — renders everything on the 2D overlay canvas each frame.
  *   • clears the whole canvas (transparent = WebGL shows through)
- *   • draws hero lines (centered, fade out with scroll)
+ *   • draws hero name at its animated position
  *   • draws nav links (top-right, always visible)
  */
 function draw2D(
@@ -58,41 +70,38 @@ function draw2D(
   logicalW: number,
   logicalH: number,
   dpr: number,
-  heroOpacity: number,
   scrambles: Map<string, ScrambleItem>,
+  hero: HeroState | null,
 ) {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
   ctx.clearRect(0, 0, logicalW, logicalH)
-  ctx.font          = `${CH - 2}px ${MONO}`
-  ctx.textBaseline  = 'top'
+  ctx.font         = `${CH - 2}px ${MONO}`
+  ctx.textBaseline = 'top'
 
   const cols = Math.floor(logicalW / CW)
-  const rows = Math.floor(logicalH / CH)
 
-  // ── Hero lines ─────────────────────────────────────────────────────────
-  if (heroOpacity > 0.005) {
-    ctx.globalAlpha = heroOpacity
+  // ── Hero name (animated) ───────────────────────────────────────────────
+  if (hero) {
+    const col0 = Math.round(hero.col)
+    const row  = Math.round(hero.row)
+    const y    = row * CH
+    const sc   = scrambles.get('hero')
 
-    HERO_LINES.forEach(({ text, rowFraction, color }, li) => {
-      const row  = Math.round(rows * rowFraction)
-      const col0 = Math.floor((cols - text.length) / 2)
-      const y    = row * CH
-      const sc   = scrambles.get(`hero-${li}`)
+    // One solid rect for the full name — no inter-cell gaps, fully occludes WebGL
+    ctx.fillStyle = NAV_BG
+    ctx.fillRect(col0 * CW, y, HERO_TEXT.length * CW, CH)
 
-      for (let c = 0; c < text.length; c++) {
-        const x = (col0 + c) * CW
-        ctx.fillStyle = NAV_BG
-        ctx.fillRect(x, y, CW, CH)
-        ctx.fillStyle = color
-        const scrambling = sc && !sc.done && sc.chars[c].timer > 0
-        ctx.fillText(
-          scrambling ? SCRAMBLE_SRC[Math.floor(Math.random() * SCRAMBLE_SRC.length)] : text[c],
-          x, y + 1,
-        )
-      }
-    })
-
-    ctx.globalAlpha = 1
+    ctx.fillStyle = HERO_COLOR
+    for (let c = 0; c < HERO_TEXT.length; c++) {
+      const x = (col0 + c) * CW
+      const scrambling = sc && !sc.done && sc.chars[c].timer > 0
+      ctx.fillText(
+        scrambling
+          ? SCRAMBLE_SRC[Math.floor(Math.random() * SCRAMBLE_SRC.length)]
+          : HERO_TEXT[c],
+        x, y + 1,
+      )
+    }
   }
 
   // ── Nav links ─────────────────────────────────────────────────────────
@@ -104,11 +113,13 @@ function draw2D(
     const col0 = rightCell - label.length
     const sc   = scrambles.get(href)
 
+    // One solid rect per nav item — fully occludes WebGL behind the label
+    ctx.fillStyle = NAV_BG
+    ctx.fillRect(col0 * CW, y_nav, label.length * CW, CH)
+
+    ctx.fillStyle = '#ffffff'
     for (let c = 0; c < label.length; c++) {
       const x = (col0 + c) * CW
-      ctx.fillStyle = NAV_BG
-      ctx.fillRect(x, y_nav, CW, CH)
-      ctx.fillStyle = '#ffffff'
       const scrambling = sc && !sc.done && sc.chars[c].timer > 0
       ctx.fillText(
         scrambling ? SCRAMBLE_SRC[Math.floor(Math.random() * SCRAMBLE_SRC.length)] : label[c],
@@ -561,6 +572,7 @@ export default function AsciiBackground() {
   const canvas2dRef = useRef<HTMLCanvasElement>(null)
   const scrambleRef = useRef<Map<string, ScrambleItem>>(new Map())
   const scrollRef   = useRef(0)
+  const heroRef     = useRef<HeroState | null>(null)
   const pathname    = usePathname()
 
   useEffect(() => {
@@ -618,15 +630,24 @@ export default function AsciiBackground() {
     window.addEventListener('mouseleave', onLeave)
     window.addEventListener('scroll',     onScroll, { passive: true })
 
-    // Hero scramble: each line decodes in after a short delay, staggered
+    // Hero: place centered, scramble in, then animate to top-left corner
     const heroInit = setTimeout(() => {
-      HERO_LINES.forEach(({ text }, li) => {
-        scrambleRef.current.set(`hero-${li}`, {
-          chars: text.split('').map((_, i) => ({ timer: li * 0.55 + i * 0.04 })),
-          done:  false,
-        })
+      const cols     = Math.floor(lW / CW)
+      const rows     = Math.floor(lH / CH)
+      const startCol = Math.floor((cols - HERO_TEXT.length) / 2)
+      const startRow = Math.floor(rows * 0.45)
+      heroRef.current = {
+        phase:   'scramble',
+        col:     startCol, row:     startRow,
+        fromCol: startCol, fromRow: startRow,
+        toCol:   startCol, toRow:   startRow,
+        t: 0,
+      }
+      scrambleRef.current.set('hero', {
+        chars: HERO_TEXT.split('').map((_, i) => ({ timer: 0.5 + i * 0.08 })),
+        done:  false,
       })
-    }, 350)
+    }, 200)
 
     const aU = {
       prev:       u(gl, accumProg, 'uPrev'),
@@ -712,10 +733,43 @@ export default function AsciiBackground() {
 
       const tmp = prev; prev = cur; cur = tmp
 
-      // ── 2D canvas: tick scrambles + draw hero + nav ──────────────────
+      // ── 2D canvas: tick scrambles, advance hero, draw ────────────────
       tickScrambles(scrambleRef.current, dt)
-      const heroOpacity = Math.max(0, 1 - scrollRef.current / (lH * 0.35))
-      draw2D(ctx, lW, lH, dpr, heroOpacity, scrambleRef.current)
+
+      // hero animation state machine
+      const h = heroRef.current
+      if (h && h.phase !== 'done') {
+        if (h.phase === 'scramble') {
+          // wait for all chars to resolve, then slide left
+          if (scrambleRef.current.get('hero')?.done) {
+            h.phase = 'move-left'
+            h.fromCol = h.col; h.fromRow = h.row
+            h.toCol   = HERO_FINAL_COL; h.toRow = h.row
+            h.t = 0
+          }
+        } else if (h.phase === 'move-left') {
+          h.t = Math.min(1, h.t + dt / 1.2)
+          const ease = 1 - Math.pow(1 - h.t, 3)   // cubic ease-out
+          h.col = h.fromCol + (h.toCol - h.fromCol) * ease
+          if (h.t >= 1) {
+            h.phase = 'move-up'
+            h.fromCol = h.col; h.fromRow = h.row
+            h.toCol   = h.col; h.toRow   = HERO_FINAL_ROW
+            h.t = 0
+          }
+        } else if (h.phase === 'move-up') {
+          h.t = Math.min(1, h.t + dt / 0.8)
+          const ease = 1 - Math.pow(1 - h.t, 3)
+          h.row = h.fromRow + (h.toRow - h.fromRow) * ease
+          if (h.t >= 1) {
+            h.phase = 'done'
+            h.col   = HERO_FINAL_COL
+            h.row   = HERO_FINAL_ROW
+          }
+        }
+      }
+
+      draw2D(ctx, lW, lH, dpr, scrambleRef.current, heroRef.current)
     }
 
     raf = requestAnimationFrame(render)
