@@ -16,10 +16,21 @@ const NAV_ITEMS = [
 const NAV_ROW       = 1   // which cell row the nav sits on
 const NAV_R_MARGIN  = 2   // cells from the right edge
 const NAV_GAP       = 3   // empty cells between items
-// Shader bg: vec3(0.04) = rgb(10.2, 10.2, 10.2) ≈ #0a0a0a
+// Shader bg: vec3(0.04) ≈ #0a0a0a
 const NAV_BG       = '#0a0a0a'
-// chars used during the hover scramble — drawn from the same ASCII density set
+// chars used during scramble — same ASCII density set
 const SCRAMBLE_SRC = '.,:;|!+*#@%'
+// Modern monospace stack — no Courier New
+const MONO = `'SF Mono', ui-monospace, 'Cascadia Mono', 'Consolas', 'Menlo', monospace`
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Hero — two lines drawn on the 2D canvas, centered in the first viewport.
+   rowFraction: position as a fraction of total cell rows (0 = top, 1 = bottom).
+───────────────────────────────────────────────────────────────────────── */
+const HERO_LINES: { text: string; rowFraction: number; color: string }[] = [
+  { text: 'MICHAEL VADEN',      rowFraction: 0.42, color: '#ffffff' },
+  { text: 'software / ai / cs', rowFraction: 0.50, color: '#4a4a4a' },
+]
 
 interface ScrambleItem {
   chars: { timer: number }[]  // timer > 0 = still scrambling this position
@@ -37,42 +48,76 @@ function tickScrambles(scrambles: Map<string, ScrambleItem>, dt: number) {
   }
 }
 
-/** Draw nav text directly into a 2D canvas using the same cell metrics. */
-function drawNav(
+/**
+ * draw2D — renders everything on the 2D overlay canvas each frame.
+ *   • clears the whole canvas (transparent = WebGL shows through)
+ *   • draws hero lines (centered, fade out with scroll)
+ *   • draws nav links (top-right, always visible)
+ */
+function draw2D(
   ctx: CanvasRenderingContext2D,
-  logicalW: number,   // window.innerWidth — CSS pixels
+  logicalW: number,
+  logicalH: number,
   dpr: number,
+  heroOpacity: number,
   scrambles: Map<string, ScrambleItem>,
 ) {
-  // Scale the context so all draw ops use CSS pixel coords;
-  // the canvas buffer is already sized at physical pixels.
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-  ctx.clearRect(0, 0, logicalW, NAV_ROW * CH + CH + 2)
-  ctx.font = `${CH - 2}px 'Courier New', Courier, monospace`
-  ctx.textBaseline = 'top'
+  ctx.clearRect(0, 0, logicalW, logicalH)
+  ctx.font          = `${CH - 2}px ${MONO}`
+  ctx.textBaseline  = 'top'
 
-  const totalCols = Math.floor(logicalW / CW)
-  const y = NAV_ROW * CH
+  const cols = Math.floor(logicalW / CW)
+  const rows = Math.floor(logicalH / CH)
 
-  let rightCell = totalCols - NAV_R_MARGIN
+  // ── Hero lines ─────────────────────────────────────────────────────────
+  if (heroOpacity > 0.005) {
+    ctx.globalAlpha = heroOpacity
+
+    HERO_LINES.forEach(({ text, rowFraction, color }, li) => {
+      const row  = Math.round(rows * rowFraction)
+      const col0 = Math.floor((cols - text.length) / 2)
+      const y    = row * CH
+      const sc   = scrambles.get(`hero-${li}`)
+
+      for (let c = 0; c < text.length; c++) {
+        const x = (col0 + c) * CW
+        ctx.fillStyle = NAV_BG
+        ctx.fillRect(x, y, CW, CH)
+        ctx.fillStyle = color
+        const scrambling = sc && !sc.done && sc.chars[c].timer > 0
+        ctx.fillText(
+          scrambling ? SCRAMBLE_SRC[Math.floor(Math.random() * SCRAMBLE_SRC.length)] : text[c],
+          x, y + 1,
+        )
+      }
+    })
+
+    ctx.globalAlpha = 1
+  }
+
+  // ── Nav links ─────────────────────────────────────────────────────────
+  const y_nav    = NAV_ROW * CH
+  let   rightCell = cols - NAV_R_MARGIN
+
   for (let i = NAV_ITEMS.length - 1; i >= 0; i--) {
     const { href, label } = NAV_ITEMS[i]
-    const startCell = rightCell - label.length
-    const sc = scrambles.get(href)
+    const col0 = rightCell - label.length
+    const sc   = scrambles.get(href)
 
     for (let c = 0; c < label.length; c++) {
-      const x = (startCell + c) * CW
+      const x = (col0 + c) * CW
       ctx.fillStyle = NAV_BG
-      ctx.fillRect(x, y, CW, CH)
+      ctx.fillRect(x, y_nav, CW, CH)
       ctx.fillStyle = '#ffffff'
       const scrambling = sc && !sc.done && sc.chars[c].timer > 0
-      const char = scrambling
-        ? SCRAMBLE_SRC[Math.floor(Math.random() * SCRAMBLE_SRC.length)]
-        : label[c]
-      ctx.fillText(char, x, y + 1)
+      ctx.fillText(
+        scrambling ? SCRAMBLE_SRC[Math.floor(Math.random() * SCRAMBLE_SRC.length)] : label[c],
+        x, y_nav + 1,
+      )
     }
 
-    rightCell = startCell - NAV_GAP
+    rightCell = col0 - NAV_GAP
   }
 }
 
@@ -322,7 +367,7 @@ function makeFontTex(gl: GL, dpr: number): WebGLTexture {
   const ctx = c.getContext('2d')!
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, c.width, c.height)
   ctx.fillStyle = '#fff'
-  ctx.font = `${sCH - Math.round(2 * dpr)}px 'Courier New', Courier, monospace`
+  ctx.font = `${sCH - Math.round(2 * dpr)}px ${MONO}`
   ctx.textBaseline = 'top'
   for (let i = 0; i < CHAR_COUNT; i++) ctx.fillText(CHARS[i], i * sCW, Math.round(dpr))
   const tex = gl.createTexture()!
@@ -515,6 +560,7 @@ export default function AsciiBackground() {
   const canvasRef   = useRef<HTMLCanvasElement>(null)
   const canvas2dRef = useRef<HTMLCanvasElement>(null)
   const scrambleRef = useRef<Map<string, ScrambleItem>>(new Map())
+  const scrollRef   = useRef(0)
   const pathname    = usePathname()
 
   useEffect(() => {
@@ -536,12 +582,13 @@ export default function AsciiBackground() {
 
     let prev: ReturnType<typeof makeFBO> | null = null
     let cur:  ReturnType<typeof makeFBO> | null = null
-    let W = 0, H = 0, lW = 0   // W/H = physical pixels, lW = logical CSS width
+    let W = 0, H = 0, lW = 0, lH = 0   // W/H = physical, lW/lH = logical CSS
 
     const resize = () => {
       lW = window.innerWidth
-      W  = Math.round(lW              * dpr)
-      H  = Math.round(window.innerHeight * dpr)
+      lH = window.innerHeight
+      W  = Math.round(lW * dpr)
+      H  = Math.round(lH * dpr)
       canvas.width  = W; canvas.height  = H
       canvas2d.width = W; canvas2d.height = H
       if (prev) { gl.deleteFramebuffer(prev.fbo); gl.deleteTexture(prev.tex) }
@@ -566,8 +613,20 @@ export default function AsciiBackground() {
     const mouse   = { x: -1, y: -1 }
     const onMove  = (e: MouseEvent) => { mouse.x = e.clientX / W; mouse.y = 1 - e.clientY / H }
     const onLeave = () => { mouse.x = -1; mouse.y = -1 }
+    const onScroll = () => { scrollRef.current = window.scrollY }
     window.addEventListener('mousemove',  onMove)
     window.addEventListener('mouseleave', onLeave)
+    window.addEventListener('scroll',     onScroll, { passive: true })
+
+    // Hero scramble: each line decodes in after a short delay, staggered
+    const heroInit = setTimeout(() => {
+      HERO_LINES.forEach(({ text }, li) => {
+        scrambleRef.current.set(`hero-${li}`, {
+          chars: text.split('').map((_, i) => ({ timer: li * 0.55 + i * 0.04 })),
+          done:  false,
+        })
+      })
+    }, 350)
 
     const aU = {
       prev:       u(gl, accumProg, 'uPrev'),
@@ -653,18 +712,21 @@ export default function AsciiBackground() {
 
       const tmp = prev; prev = cur; cur = tmp
 
-      // ── 2D canvas: tick scrambles + draw nav letters ─────────────────
+      // ── 2D canvas: tick scrambles + draw hero + nav ──────────────────
       tickScrambles(scrambleRef.current, dt)
-      drawNav(ctx, lW, dpr, scrambleRef.current)
+      const heroOpacity = Math.max(0, 1 - scrollRef.current / (lH * 0.35))
+      draw2D(ctx, lW, lH, dpr, heroOpacity, scrambleRef.current)
     }
 
     raf = requestAnimationFrame(render)
 
     return () => {
       cancelAnimationFrame(raf)
+      clearTimeout(heroInit)
       window.removeEventListener('resize',     resize)
       window.removeEventListener('mousemove',  onMove)
       window.removeEventListener('mouseleave', onLeave)
+      window.removeEventListener('scroll',     onScroll)
       if (prev) { gl.deleteFramebuffer(prev.fbo); gl.deleteTexture(prev.tex) }
       if (cur)  { gl.deleteFramebuffer(cur.fbo);  gl.deleteTexture(cur.tex)  }
     }
