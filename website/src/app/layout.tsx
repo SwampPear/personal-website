@@ -30,7 +30,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${liquidFont.variable}`}
+      className={`dark ${geistSans.variable} ${geistMono.variable} ${liquidFont.variable}`}
       suppressHydrationWarning
     >
       <body className="antialiased">{children}</body>

@@ -7,72 +7,43 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 
-type NavItem = { 
-  href: string; 
-  label: string 
+type NavItem = {
+  href: string
+  label: string
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { href: '/', label: 'Home' },
-  { href: '/shelf', label: 'Shelf' },
-  { href: '/michael_vaden_resume.pdf', label: 'CV' }
+  { href: '/', label: 'home' },
+  { href: '/shelf', label: 'shelf' },
+  { href: '/michael_vaden_resume.pdf', label: 'cv' },
 ]
 
-// Navbar glass (WITH blur)
-const NAV_GLASS =
-  'bg-white/60 dark:bg-neutral-900/60 supports-[backdrop-filter]:bg-white/10 dark:supports-[backdrop-filter]:bg-neutral-900/10 ' +
-  'backdrop-blur-md backdrop-saturate-150 backdrop-brightness-110 backdrop-hue-rotate-15 shadow-lg shadow-black/10'
-
-// Navbar tint (NO blur) — used when menu is open
-const NAV_TINT_NO_BLUR =
-  'bg-white/60 dark:bg-neutral-900/60 supports-[backdrop-filter]:bg-white/10 dark:supports-[backdrop-filter]:bg-neutral-900/10 ' +
-  'shadow-lg shadow-black/10' // no backdrop-blur classes here
-
-// Panel tint (no blur; overlay handles page fade)
-const PANEL_TINT =
-  'bg-white/60 dark:bg-neutral-900/60 supports-[backdrop-filter]:bg-white/10 dark:supports-[backdrop-filter]:bg-neutral-900/10 ' +
-  'shadow-lg shadow-black/10'
-
-// scroll lock (preserves scroll position)
+// scroll lock helpers
 let _locked = false
-
-interface ScrollLockState {
-  position: string
-  top?: string
-  left: string
-  right: string
-  width: string
-  overflow: string
-}
-
-const setScrollLockState = ( state: ScrollLockState ) => {
-  const y = window.scrollY
-  const b = document.body
-
-  b.style.overflow = state.overflow
-  b.style.position = state.position
-
-  b.style.top      = state.top ? `${y}px` : ''
-  b.style.left     = state.left
-  b.style.right    = state.right
-  b.style.width    = state.width
-}
 
 const lockScroll = () => {
   if (typeof window === 'undefined' || _locked) return
   _locked = true
-
-  setScrollLockState({  overflow: 'hidden', position: 'fixed', left: '0', right: '0', width: '100%' })
+  const y = window.scrollY
+  document.body.style.overflow = 'hidden'
+  document.body.style.position = 'fixed'
+  document.body.style.top = `-${y}px`
+  document.body.style.left = '0'
+  document.body.style.right = '0'
+  document.body.style.width = '100%'
 }
 
 const unlockScroll = () => {
   if (typeof window === 'undefined' || !_locked) return
   _locked = false
-
-  setScrollLockState({  overflow: '', position: '', top: '', left: '', right: '', width: '' })
-
-  const y = window.scrollY
-  window.scrollTo(0, y ? y : 0)
+  const top = Math.abs(parseInt(document.body.style.top || '0', 10))
+  document.body.style.overflow = ''
+  document.body.style.position = ''
+  document.body.style.top = ''
+  document.body.style.left = ''
+  document.body.style.right = ''
+  document.body.style.width = ''
+  window.scrollTo(0, top)
 }
 
 const NavLink = ({ href, label }: NavItem) => {
@@ -82,8 +53,14 @@ const NavLink = ({ href, label }: NavItem) => {
   return (
     <Link
       href={href}
-      className="px-2 py-1 text-sm transition-colors text-neutral-700 hover:text-black dark:text-neutral-300 dark:hover:text-white"
       aria-current={active ? 'page' : undefined}
+      className={[
+        'text-[12px] tracking-widest uppercase transition-colors duration-200',
+        active
+          ? 'text-neutral-200'
+          : 'text-neutral-500 hover:text-neutral-200',
+      ].join(' ')}
+      style={{ fontFamily: "'Courier New', Courier, monospace", background: '#0c0c0c', padding: '2px 4px', margin: '-2px -4px' }}
     >
       {label}
     </Link>
@@ -103,119 +80,121 @@ const Nav = () => {
   }, [open])
 
   const initial = useMemo<TargetAndTransition>(
-    () => (prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -16 }),
+    () => (prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -10 }),
     [prefersReducedMotion]
   )
   const enter = useMemo<TargetAndTransition>(
     () =>
       prefersReducedMotion
         ? { opacity: 1, transition: { duration: 0.2 } }
-        : { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 260, damping: 30 } },
+        : { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 30 } },
     [prefersReducedMotion]
   )
 
   return (
     <>
-      {/* Fixed navbar; blur removed when `open` */}
       <motion.nav
         key={pathname}
         initial={initial}
         animate={enter}
-        className={`fixed top-0 z-[10000] h-14 w-full ${open ? NAV_TINT_NO_BLUR : NAV_GLASS} isolate`}
-        style={{
-          fontFamily:
-            '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
-        }}
+        className="fixed top-0 z-[10000] h-10 w-full"
       >
-        <div className="mx-auto h-full px-3 sm:px-4 lg:px-24 flex items-center justify-between">
-          <Link href="/" className="font-semibold tracking-tight text-black dark:text-white">
-            <Image src="/images/pear_white.svg" alt="Logo" width={16} height={16} priority className="invert dark:invert-0" />
+        <div className="mx-auto h-full px-5 sm:px-8 lg:px-14 flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" aria-label="Home" className="opacity-50 hover:opacity-90 transition-opacity" style={{ background: '#0c0c0c', padding: '3px', margin: '-3px' }}>
+            <Image
+              src="/images/pear_white.svg"
+              alt="Logo"
+              width={13}
+              height={13}
+              priority
+            />
           </Link>
 
-          {/* desktop */}
-          <motion.ul
-            className="hidden sm:flex items-center gap-4"
-            initial="hidden"
-            animate="show"
-            variants={{
-              hidden: { transition: { staggerChildren: 0.02, staggerDirection: -1 } },
-              show: { transition: { staggerChildren: 0.05 } }
-            }}
-          >
+          {/* Desktop links */}
+          <ul className="hidden sm:flex items-center gap-7">
             {NAV_ITEMS.map(item => (
-              <motion.li
-                key={item.href}
-                variants={
-                  prefersReducedMotion
-                    ? { hidden: { opacity: 0 }, show: { opacity: 1 } }
-                    : { hidden: { opacity: 0, y: -6 }, show: { opacity: 1, y: 0 } }
-                }
-              >
+              <li key={item.href}>
                 <NavLink {...item} />
-              </motion.li>
+              </li>
             ))}
-          </motion.ul>
+          </ul>
 
-          {/* mobile */}
+          {/* Mobile hamburger */}
           <button
             aria-label="Toggle menu"
             aria-expanded={open}
-            className="sm:hidden inline-flex items-center justify-center rounded-md p-2 text-neutral-800 dark:text-neutral-200 hover:bg-black/5 dark:hover:bg-white/5 transition"
+            className="sm:hidden inline-flex items-center justify-center p-1.5 text-neutral-500 hover:text-neutral-200 transition-colors"
             onClick={() => setOpen(v => !v)}
           >
-            <motion.svg width="24" height="24" viewBox="0 0 24 24" fill="none" initial={false} animate={open ? 'open' : 'closed'}>
-              <motion.path d="M4 7h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"
-                variants={{ closed: { d: 'M4 7h16', opacity: 1 }, open: { d: 'M6 6l12 12', opacity: 1 } }}
-                transition={{ duration: 0.2 }}
+            <motion.svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              initial={false}
+              animate={open ? 'open' : 'closed'}
+            >
+              <motion.path
+                d="M4 7h16"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                variants={{
+                  closed: { d: 'M4 7h16', opacity: 1 },
+                  open: { d: 'M6 6l12 12', opacity: 1 },
+                }}
+                transition={{ duration: 0.18 }}
               />
-              <motion.path d="M4 12h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"
+              <motion.path
+                d="M4 12h16"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
                 variants={{ closed: { opacity: 1 }, open: { opacity: 0 } }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.18 }}
               />
-              <motion.path d="M4 17h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"
-                variants={{ closed: { d: 'M4 17h16', opacity: 1 }, open: { d: 'M6 18L18 6', opacity: 1 } }}
-                transition={{ duration: 0.2 }}
+              <motion.path
+                d="M4 17h16"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                variants={{
+                  closed: { d: 'M4 17h16', opacity: 1 },
+                  open: { d: 'M6 18L18 6', opacity: 1 },
+                }}
+                transition={{ duration: 0.18 }}
               />
             </motion.svg>
           </button>
         </div>
 
-        {/* mobile dropdown (panel only; the overlay is the separate PageFade portal) */}
+        {/* Mobile dropdown */}
         <AnimatePresence>
           {open && (
             <motion.div
-              className="sm:hidden fixed inset-x-0 top-14 z-[10001]"
-              initial={{ y: -16, opacity: 0 }}
+              className="sm:hidden fixed inset-x-0 top-10 z-[10001]"
+              initial={{ y: -10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -16, opacity: 0 }}
+              exit={{ y: -10, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 500, damping: 40 }}
             >
-              <motion.div className={`${PANEL_TINT} rounded-none border-b border-black/10 dark:border-white/10`}>
-                <motion.ul
-                  className="flex flex-col py-2"
-                  initial="hidden" animate="show" exit="hidden"
-                  variants={{
-                    hidden: { transition: { staggerChildren: 0.03, staggerDirection: -1 } },
-                    show: { transition: { staggerChildren: 0.05 } }
-                  }}
-                >
+              <div className="bg-neutral-900/95 border-b border-white/5">
+                <ul className="flex flex-col py-3 px-5 gap-4">
                   {NAV_ITEMS.map(item => (
-                    <motion.li
-                      key={item.href}
-                      className="px-4"
-                      variants={{ hidden: { opacity: 0, y: -6 }, show: { opacity: 1, y: 0 } }}
-                    >
+                    <li key={item.href}>
                       <Link
                         href={item.href}
-                        className="block w-full px-4 py-3 text-base text-neutral-100 hover:bg-white/5 rounded-xl"
+                        className="block text-[12px] tracking-widest uppercase text-neutral-400 hover:text-neutral-100 transition-colors"
+                        style={{ fontFamily: "'Courier New', Courier, monospace" }}
                         onClick={() => setOpen(false)}
                       >
                         {item.label}
                       </Link>
-                    </motion.li>
+                    </li>
                   ))}
-                </motion.ul>
-              </motion.div>
+                </ul>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
