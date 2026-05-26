@@ -28,8 +28,7 @@ const MONO = `'SF Mono', ui-monospace, 'Cascadia Mono', 'Consolas', 'Menlo', mon
    rowFraction: position as a fraction of total cell rows (0 = top, 1 = bottom).
 ───────────────────────────────────────────────────────────────────────── */
 const HERO_LINES: { text: string; rowFraction: number; color: string }[] = [
-  { text: 'MICHAEL VADEN',      rowFraction: 0.42, color: '#ffffff' },
-  { text: 'software / ai / cs', rowFraction: 0.50, color: '#4a4a4a' },
+  { text: 'MICHAEL VADEN', rowFraction: 0.45, color: '#ffffff' },
 ]
 
 interface ScrambleItem {
