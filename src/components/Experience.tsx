@@ -67,7 +67,7 @@ export default function Experience() {
     <div className="mt-14">
       <div className="font-serif text-[13px] tracking-[0.08em]">
         Over the years I&apos;ve had the chance to work on some cool &thinsp;
-        <a href="https://github.com/SwampPear" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">things</a>.
+        <a href="https://github.com/SwampPear?tab=repositories" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">things</a>.
         I learn best through self-play and side projects, but I&apos;ve also had the opportunity to 
         work with some great teams at some great organizations. Here's some highlights:
       </div>

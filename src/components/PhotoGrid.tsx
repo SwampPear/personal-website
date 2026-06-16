@@ -11,21 +11,21 @@ type Photo = { src: string; title: string; caption: string; aspect: number }
 const PHOTOS: Photo[] = [
   { src: '/images/me.png', title: 'Fuji Heiwa Park', caption: 'Shizuoka', aspect: 1.002 },
   { src: '/images/checkered_strat.png', title: 'Maple-Walnut Checkered Strat', caption: 'Luthiery Project', aspect: 0.549 },
+  { src: '/images/sea_window.jpg', title: 'Castillo San Felipe del Morro', caption: 'Puerto Rico', aspect: 0.75 },
   { src: '/images/porco_rosso.png', title: 'Porco Rosso', caption: 'Studio Ghibli', aspect: 0.667 },
   { src: '/images/breezin.jpg', title: 'Breezin\'', caption: 'George Benson', aspect: 1.0 },
+  { src: '/images/miradouro_buskers.jpeg', title: 'Miradouro de Santa Luzia', caption: 'Lisbon', aspect: 0.75 },
   { src: '/images/georgia_sunshine.png', title: 'Georgia Sunshine', caption: 'Jerry Reed', aspect: 0.964 },
   { src: '/images/mother_earths_plantasia.png', title: 'Mother Earth\'s Plantasia', caption: 'Mort Garson', aspect: 1.0 },
   { src: '/images/last_chance_to_see.jpg', title: 'Last Chance to See', caption: 'Douglas Adams', aspect: 0.639 },
+  { src: '/images/telephone_box.jpg', title: 'A Real Life Phone Box', caption: 'Scotland', aspect: 0.75 },
   { src: '/images/allans_wing.png', title: "Allan's Wing Pizza", caption: 'Rocky Mountain Pizza, Atlanta', aspect: 1.480 },
   { src: '/images/being_so_normal.jpeg', title: 'Being So Normal', caption: 'Peach Pit', aspect: 1.0 },
   { src: '/images/bifana.png', title: 'Bifana', caption: 'O Trevo, Lisbon', aspect: 1.059 },
+  { src: '/images/autumn_avenue.jpg', title: 'A Rainy Day in Central Park', caption: 'New York', aspect: 0.75 },
   { src: '/images/field_guide_to_north_american_birds.png', title: 'Field Guide to North American Birds', caption: 'Audubon Society', aspect: 0.530 },
-  { src: '/images/hairy_lemon.jpg', title: 'The Hairy Lemon', caption: 'The Hairy Lemon, Dublin', aspect: 0.750 },
+  { src: '/images/hairy_lemon.jpg', title: 'The Hairy Lemon', caption: 'Dublin', aspect: 0.750 },
   { src: '/images/the_autobiography_of_benjamin_franklin.jpg', title: 'The Autobiography of Benjamin Franklin', caption: 'Benjamin Franklin', aspect: 0.667 },
-  { src: '/images/sea_window.jpg', title: 'Window to the Sea', caption: 'Atlantic coast', aspect: 0.75 },
-  { src: '/images/miradouro_buskers.jpeg', title: 'Buskers at the Miradouro', caption: 'Lisbon', aspect: 0.75 },
-  { src: '/images/telephone_box.jpg', title: 'Red Telephone Box', caption: 'Scotland', aspect: 0.75 },
-  { src: '/images/autumn_avenue.jpg', title: 'Autumn Avenue', caption: 'Central Park, New York', aspect: 0.75 },
 ]
 
 const COLS = 5
