@@ -57,6 +57,14 @@ body {
   html { scroll-behavior: auto; }
 }
 
+/* Top/bottom fade — only on lg, where the content column scrolls internally. */
+@media (min-width: 1024px) {
+  .scroll-fade {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 2.5rem, black calc(100% - 2.5rem), transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, black 2.5rem, black calc(100% - 2.5rem), transparent 100%);
+  }
+}
+
 /* ── Glassism ───────────────────────────────────────────────────────────── */
 .glass {
   background: rgba(255, 255, 255, 0.025);

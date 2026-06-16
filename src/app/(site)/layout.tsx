@@ -4,7 +4,7 @@ export default function SiteLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <main className="relative z-10 flex h-screen flex-col p-4">
+    <main className="relative z-10 flex min-h-screen flex-col p-4 lg:h-screen">
       <Nav />
       {children}
     </main>

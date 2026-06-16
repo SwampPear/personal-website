@@ -15,27 +15,27 @@ function About() {
   )
 }
 
+function MadeWithLove({ className = '' }: { className?: string }) {
+  return (
+    <p className={`font-serif text-[11px] tracking-[0.08em] text-[var(--muted)] ${className}`}>
+      This site made with ❤️.
+    </p>
+  )
+}
+
 export default function Home({ posts }: { posts: PostListItem[] }) {
   return (
-    <div className="flex min-h-0 flex-1 justify-between gap-8">
-      <div
-        className="max-w-2xl flex-1 overflow-y-auto py-10"
-        style={{
-          maskImage:
-            'linear-gradient(to bottom, transparent 0, black 2.5rem, black calc(100% - 2.5rem), transparent 100%)',
-          WebkitMaskImage:
-            'linear-gradient(to bottom, transparent 0, black 2.5rem, black calc(100% - 2.5rem), transparent 100%)',
-        }}
-      >
+    <div className="flex min-h-0 flex-1 flex-col gap-8 lg:flex-row lg:justify-between">
+      <div className="scroll-fade max-w-2xl py-10 lg:flex-1 lg:overflow-y-auto">
         <About />
         <PhotoGrid />
         <Experience />
-        <p className="mt-24 font-serif text-[11px] tracking-[0.08em] text-[var(--muted)]">
-          This site made with ❤️.
-        </p>
+        {/* On mobile this moves under Posts (see below). */}
+        <MadeWithLove className="mt-24 hidden lg:block" />
       </div>
-      <div className="mt-10 w-md shrink-0">
+      <div className="w-full lg:mt-10 lg:w-auto lg:shrink-0">
         <Posts posts={posts} />
+        <MadeWithLove className="mt-10 lg:hidden" />
       </div>
     </div>
   )

@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // `aspect` is the image's native width / height. Baked in so the hover-resize
 // always grows the cell to the image's true shape — no async measurement, no
@@ -26,9 +26,6 @@ const PHOTOS: Photo[] = [
   { src: '/images/the_autobiography_of_benjamin_franklin.jpg', title: 'The Autobiography of Benjamin Franklin', caption: 'Benjamin Franklin', aspect: 0.667 },
 ]
 
-const COLS = 5
-const ROWS = Math.ceil(PHOTOS.length / COLS)
-
 // Fraction of the dominant axis the hovered cell should occupy. The other axis
 // is derived from the image's aspect ratio so the grown cell matches the image
 // exactly — no cropping, no letterboxing.
@@ -41,28 +38,44 @@ const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)'
 const toFr = (frac: number, count: number) => (frac * (count - 1)) / (1 - frac)
 
 // Column / row fr for the hovered cell so its shape equals the image aspect.
-// Base cells are square (container aspect = COLS/ROWS), so aspect >= 1 grows
+// Base cells are square (container aspect = cols/rows), so aspect >= 1 grows
 // width-first and aspect < 1 grows height-first.
-function cellFrs(aspect: number): [number, number] {
+function cellFrs(aspect: number, cols: number, rows: number): [number, number] {
   let colFrac: number
   let rowFrac: number
   if (aspect >= 1) {
     colFrac = TARGET
-    rowFrac = (TARGET * COLS) / (ROWS * aspect)
+    rowFrac = (TARGET * cols) / (rows * aspect)
   } else {
     rowFrac = TARGET
-    colFrac = (TARGET * aspect * ROWS) / COLS
+    colFrac = (TARGET * aspect * rows) / cols
   }
-  return [Math.max(toFr(colFrac, COLS), 1), Math.max(toFr(rowFrac, ROWS), 1)]
+  return [Math.max(toFr(colFrac, cols), 1), Math.max(toFr(rowFrac, rows), 1)]
+}
+
+// Fewer columns on narrow screens. The hover-grow can't trigger on touch, so
+// smaller screens simply render a static gallery at this column count.
+function useColumns() {
+  const [cols, setCols] = useState(5)
+  useEffect(() => {
+    const compute = () =>
+      setCols(window.innerWidth < 640 ? 2 : window.innerWidth < 1024 ? 3 : 5)
+    compute()
+    window.addEventListener('resize', compute)
+    return () => window.removeEventListener('resize', compute)
+  }, [])
+  return cols
 }
 
 export default function PhotoGrid() {
+  const cols = useColumns()
+  const rows = Math.ceil(PHOTOS.length / cols)
   const [hovered, setHovered] = useState<number | null>(null)
 
-  const hoverCol = hovered === null ? null : hovered % COLS
-  const hoverRow = hovered === null ? null : Math.floor(hovered / COLS)
+  const hoverCol = hovered === null ? null : hovered % cols
+  const hoverRow = hovered === null ? null : Math.floor(hovered / cols)
   const [colFr, rowFr] =
-    hovered === null ? [1, 1] : cellFrs(PHOTOS[hovered].aspect)
+    hovered === null ? [1, 1] : cellFrs(PHOTOS[hovered].aspect, cols, rows)
 
   const tracks = (active: number | null, fr: number, count: number) =>
     Array.from({ length: count }, (_, i) => (i === active ? `${fr}fr` : '1fr')).join(' ')
@@ -72,10 +85,10 @@ export default function PhotoGrid() {
       <div
         style={{
           display: 'grid',
-          aspectRatio: `${COLS} / ${ROWS}`,
+          aspectRatio: `${cols} / ${rows}`,
           gap: '6px',
-          gridTemplateColumns: tracks(hoverCol, colFr, COLS),
-          gridTemplateRows: tracks(hoverRow, rowFr, ROWS),
+          gridTemplateColumns: tracks(hoverCol, colFr, cols),
+          gridTemplateRows: tracks(hoverRow, rowFr, rows),
           transition: `grid-template-columns 600ms ${EASE}, grid-template-rows 600ms ${EASE}`,
         }}
         onMouseLeave={() => setHovered(null)}
@@ -90,7 +103,7 @@ export default function PhotoGrid() {
               src={photo.src}
               alt={photo.title}
               fill
-              sizes="(max-width: 640px) 60vw, 360px"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 360px"
               className={`object-cover transition-opacity duration-300 ease-out ${
                 hovered === null || hovered === i ? 'opacity-100' : 'opacity-60'
               }`}
