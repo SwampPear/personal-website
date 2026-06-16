@@ -5,24 +5,6 @@ import { Sun } from 'lucide-react'
 import Tooltip from './Tooltip'
 
 /**
- * Sun altitude (radians) above the horizon for a given instant and location.
- * Standard low-precision algorithm (after SunCalc). > 0 means the sun is up.
- */
-function sunAltitude(date: Date, lat: number, lon: number): number {
-  const rad = Math.PI / 180
-  const days = date.valueOf() / 86400000 - 0.5 + 2440588 - 2451545 // days since J2000
-  const e = rad * 23.4397 // obliquity of the ecliptic
-  const M = rad * (357.5291 + 0.98560028 * days) // solar mean anomaly
-  const C = rad * (1.9148 * Math.sin(M) + 0.02 * Math.sin(2 * M) + 0.0003 * Math.sin(3 * M))
-  const L = M + C + rad * 102.9372 + Math.PI // ecliptic longitude
-  const dec = Math.asin(Math.sin(e) * Math.sin(L)) // declination
-  const ra = Math.atan2(Math.sin(L) * Math.cos(e), Math.cos(L)) // right ascension
-  const H = rad * (280.16 + 360.9856235 * days) - rad * -lon - ra // hour angle
-  const phi = rad * lat
-  return Math.asin(Math.sin(phi) * Math.sin(dec) + Math.cos(phi) * Math.cos(dec) * Math.cos(H))
-}
-
-/**
  * Draws the moon with its terminator positioned for the current illumination,
  * so the rendered crescent/gibbous matches the real phase.
  */
@@ -68,20 +50,8 @@ function MoonPhase({ size, date }: { size: number; date: Date }) {
 
 export default function Moon({ size = 18 }: { size?: number }) {
   const [now, setNow] = useState<Date | null>(null)
-  const [coords, setCoords] = useState<{ lat: number; lon: number } | null>(null)
 
-  // Ask for location once; sunrise/sunset depend on it. Falls back to a
-  // local-clock heuristic if the user declines or it's unavailable.
-  useEffect(() => {
-    if (typeof navigator === 'undefined' || !navigator.geolocation) return
-    navigator.geolocation.getCurrentPosition(
-      (pos) => setCoords({ lat: pos.coords.latitude, lon: pos.coords.longitude }),
-      () => {},
-      { timeout: 8000, maximumAge: 3600000 },
-    )
-  }, [])
-
-  // Tick every minute so the icon flips around sunrise/sunset.
+  // Tick every minute so the icon flips at 6am/6pm.
   useEffect(() => {
     setNow(new Date())
     const id = setInterval(() => setNow(new Date()), 60000)
@@ -90,9 +60,7 @@ export default function Moon({ size = 18 }: { size?: number }) {
 
   if (!now) return null // avoid SSR/client hydration mismatch
 
-  const isDay = coords
-    ? sunAltitude(now, coords.lat, coords.lon) > (-0.833 * Math.PI) / 180
-    : now.getHours() >= 6 && now.getHours() < 18
+  const isDay = now.getHours() >= 6 && now.getHours() < 18
 
   if (isDay) {
     return <Sun size={size} aria-label="Daytime" />
