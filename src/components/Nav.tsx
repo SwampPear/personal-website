@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import Clock from './Clock'
 import Moon from './Moon'
 
@@ -38,12 +39,19 @@ function SocialLinks() {
 }
 
 export default function Nav() {
+  const pathname = usePathname()
+  const isHome = pathname === '/'
+  const copyright = `© Michael Vaden ${new Date().getFullYear()}`
   return (
     <nav className="font-serif text-[14px] font-bold tracking-[0.08em] pb-4 flex items-start justify-between">
       <div className="flex flex-col gap-y-2">
-        <Link href="/" className="transition-opacity hover:opacity-70">
-          © Michael Vaden {new Date().getFullYear()}
-        </Link>
+        {isHome ? (
+          <span>{copyright}</span>
+        ) : (
+          <Link href="/" className="transition-opacity hover:opacity-70">
+            {copyright}
+          </Link>
+        )}
         <SocialLinks />
       </div>
       <div className="flex items-center gap-x-2">

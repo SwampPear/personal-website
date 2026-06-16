@@ -9,25 +9,23 @@ import { useState } from 'react'
 type Photo = { src: string; title: string; caption: string; aspect: number }
 
 const PHOTOS: Photo[] = [
-  { src: '/images/me.png', title: 'Me', caption: 'the guy behind all this', aspect: 1.002 },
-  { src: '/images/checkered_strat.png', title: 'Maple Walnut Checkered Stratocaster', caption: 'Luthiery Project', aspect: 0.549 },
-  { src: '/images/porco_rosso.png', title: 'Porco Rosso', caption: 'a Studio Ghibli favorite', aspect: 0.667 },
-  { src: '/images/breezin.jpg', title: 'Breezin’ — George Benson', caption: 'smooth jazz on repeat', aspect: 1.0 },
-  { src: '/images/georgia_sunshine.png', title: 'Georgia sunshine', caption: 'home, on a clear day', aspect: 0.964 },
-  { src: '/images/mother_earths_plantasia.png', title: 'Mother Earth’s Plantasia', caption: 'Mort Garson’s synth album for plants', aspect: 1.0 },
-  { src: '/images/oracolo.jpg', title: 'Oracolo', caption: 'a record I keep coming back to', aspect: 1.0 },
-  { src: '/images/mario.png', title: 'Super Mario', caption: 'childhood, pixel by pixel', aspect: 0.997 },
-  { src: '/images/infinite_jest.jpg', title: 'Infinite Jest', caption: 'David Foster Wallace’s doorstop', aspect: 0.649 },
-  { src: '/images/last_chance_to_see.jpg', title: 'Last Chance to See', caption: 'Douglas Adams on endangered species', aspect: 0.639 },
-  { src: '/images/the_feynman_lectures.jpg', title: 'The Feynman Lectures on Physics', caption: 'the best physics ever written', aspect: 0.770 },
-  { src: '/images/allans_wing.png', title: "Allan's Wing Pizza", caption: 'Rocky Mountain Pizza Company, Atlanta', aspect: 1.480 },
-  { src: '/images/attic_sessions.jpeg', title: 'Attic Sessions', caption: 'Arcy Drive', aspect: 1.0 },
+  { src: '/images/me.png', title: 'Fuji Heiwa Park', caption: 'Shizuoka', aspect: 1.002 },
+  { src: '/images/checkered_strat.png', title: 'Maple-Walnut Checkered Strat', caption: 'Luthiery Project', aspect: 0.549 },
+  { src: '/images/porco_rosso.png', title: 'Porco Rosso', caption: 'Studio Ghibli', aspect: 0.667 },
+  { src: '/images/breezin.jpg', title: 'Breezin\'', caption: 'George Benson', aspect: 1.0 },
+  { src: '/images/georgia_sunshine.png', title: 'Georgia Sunshine', caption: 'Jerry Reed', aspect: 0.964 },
+  { src: '/images/mother_earths_plantasia.png', title: 'Mother Earth\'s Plantasia', caption: 'Mort Garson', aspect: 1.0 },
+  { src: '/images/last_chance_to_see.jpg', title: 'Last Chance to See', caption: 'Douglas Adams', aspect: 0.639 },
+  { src: '/images/allans_wing.png', title: "Allan's Wing Pizza", caption: 'Rocky Mountain Pizza, Atlanta', aspect: 1.480 },
   { src: '/images/being_so_normal.jpeg', title: 'Being So Normal', caption: 'Peach Pit', aspect: 1.0 },
   { src: '/images/bifana.png', title: 'Bifana', caption: 'O Trevo, Lisbon', aspect: 1.059 },
   { src: '/images/field_guide_to_north_american_birds.png', title: 'Field Guide to North American Birds', caption: 'Audubon Society', aspect: 0.530 },
   { src: '/images/hairy_lemon.jpg', title: 'The Hairy Lemon', caption: 'The Hairy Lemon, Dublin', aspect: 0.750 },
   { src: '/images/the_autobiography_of_benjamin_franklin.jpg', title: 'The Autobiography of Benjamin Franklin', caption: 'Benjamin Franklin', aspect: 0.667 },
-  { src: '/images/who_is_the_government.jpg', title: 'Who Is the Government', caption: 'Michael Lewis', aspect: 0.662 },
+  { src: '/images/sea_window.jpg', title: 'Window to the Sea', caption: 'Atlantic coast', aspect: 0.75 },
+  { src: '/images/miradouro_buskers.jpeg', title: 'Buskers at the Miradouro', caption: 'Lisbon', aspect: 0.75 },
+  { src: '/images/telephone_box.jpg', title: 'Red Telephone Box', caption: 'Scotland', aspect: 0.75 },
+  { src: '/images/autumn_avenue.jpg', title: 'Autumn Avenue', caption: 'Central Park, New York', aspect: 0.75 },
 ]
 
 const COLS = 5
