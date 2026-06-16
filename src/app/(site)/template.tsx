@@ -2,11 +2,7 @@
 
 import { motion } from 'framer-motion'
 
-/**
- * App-level template re-mounts on every navigation, so this fade plays as you
- * move between the main page and the shelf — pages dissolve through the black
- * background rather than hard-cutting.
- */
+// Templates re-mount on navigation, so this fade plays on every route change.
 export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <motion.div

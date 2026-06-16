@@ -59,7 +59,7 @@ export default function Posts({ posts }: { posts: PostListItem[] }) {
       <div className="font-serif text-[14px] tracking-[0.08em] font-bold">Posts</div>
       {list.length === 0 ? (
         <div className="font-serif text-[10px] italic tracking-[0.08em] text-[var(--muted)]">
-          No posts yet…
+          Check back soon…
         </div>
       ) : (
         list.map((post) => (

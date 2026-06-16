@@ -27,11 +27,8 @@ export const POSTS_QUERY_ALL = defineQuery(
 // everyone who is not authenticated.
 export const POST_QUERY = defineQuery(
   `*[_type == "post" && slug.current == $slug && private != true][0]{
-    _id,
     title,
     publishedAt,
-    excerpt,
-    "isPrivate": private == true,
     sections[]{
       _key,
       content,
@@ -44,11 +41,8 @@ export const POST_QUERY = defineQuery(
 // logged-in Studio user's token (used to render a private post's own page).
 export const POST_QUERY_ANY = defineQuery(
   `*[_type == "post" && slug.current == $slug][0]{
-    _id,
     title,
     publishedAt,
-    excerpt,
-    "isPrivate": private == true,
     sections[]{
       _key,
       content,
