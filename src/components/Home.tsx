@@ -33,7 +33,7 @@ export default function Home({ posts }: { posts: PostListItem[] }) {
         {/* On mobile this moves under Posts (see below). */}
         <MadeWithLove className="mt-24 hidden lg:block" />
       </div>
-      <div className="w-full lg:mt-10 lg:w-auto lg:shrink-0">
+      <div className="w-full lg:mt-10 lg:w-auto lg:min-w-[22rem] lg:shrink-0">
         <Posts posts={posts} />
         <MadeWithLove className="mt-10 lg:hidden" />
       </div>
