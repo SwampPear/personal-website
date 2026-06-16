@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import localFont from 'next/font/local'
+import { Geist, Space_Mono, Inter_Tight } from 'next/font/google'
 import './globals.css'
 
 const geistSans = Geist({
@@ -8,32 +7,37 @@ const geistSans = Geist({
   subsets: ['latin'],
 })
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const spaceMono = Space_Mono({
+  variable: '--font-space-mono',
+  weight: '400',
+  style: ['normal', 'italic'],
   subsets: ['latin'],
+  display: 'swap',
 })
 
-const liquidFont = localFont({
-  src: [
-    { path: '../../public/fonts/SharpGroteskMedium25.woff2', weight: '700', style: 'normal' },
-  ],
-  variable: '--font-liquid',
+const interSerif = Inter_Tight({
+  variable: '--font-inter-serif',
+  weight: '400',
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
   display: 'swap',
 })
 
 export const metadata: Metadata = {
   title: 'Michael Vaden',
-  description: 'Michael Vaden\'s personal portfolio for software development and AI engineering.',
+  description: "Michael Vaden personal website.",
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
-      className={`dark ${geistSans.variable} ${geistMono.variable} ${liquidFont.variable}`}
+      className={`dark ${geistSans.variable} ${spaceMono.variable} ${interSerif.variable}`}
       suppressHydrationWarning
     >
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {children}
+      </body>
     </html>
   )
 }

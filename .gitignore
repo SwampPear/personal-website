@@ -1,2 +1,9 @@
 node_modules/
 .next/
+
+# env (keep secrets like Sanity tokens out of git)
+.env
+.env*.local
+
+# sanity embedded studio runtime
+.sanity/
