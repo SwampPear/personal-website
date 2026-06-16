@@ -24,8 +24,9 @@ const interSerif = Inter_Tight({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://michaeljvaden.xyz'),
   title: 'Michael Vaden',
-  description: "Michael Vaden personal website.",
+  description: 'Michael Vaden personal website.',
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
